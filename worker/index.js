@@ -59,6 +59,8 @@ const handler={async fetch(request,env,ctx){try{
  if(b.action==='repo.save'){
  if(b.id){const r=get(s.repos,b.id);requireManage(a,r.id);r.name=text(b.name,100);r.url=url(b.url);ghRepo(r.url);repoId=r.id;detail={name:r.name,url:r.url};}
  else {if(!a.root)fail(403,'只有总主管可添加项目');const r={id:id(),name:text(b.name,100),url:(ghRepo(b.url),url(b.url)),createdAt:now,rank:-Date.now(),notes:[...s.notes]};s.repos.push(r);repoId=r.id;detail={...r};}visibility='public';
+ }else if(b.action==='repo.archive'){
+ const r=get(s.repos,b.id);if(!a.root)fail(403,'只有总主管可删除项目');if(s.tasks.some(t=>!t.deletedAt&&t.repoId===r.id)||s.accounts.some(t=>!t.deletedAt&&t.repoId===r.id)||s.users.some(t=>!t.deletedAt&&t.repoId===r.id))fail(409,'项目仍有内容，请先处理');r.deletedAt=now;repoId=r.id;visibility='public';detail={id:r.id,name:r.name};
  }else if(b.action==='repo.move'){
  const r=get(s.repos,b.id);requireEdit(a,r.id);if(!Number.isFinite(b.rank))fail(400,'项目顺序无效');r.rank=b.rank;repoId=r.id;visibility='public';detail={id:r.id,rank:r.rank};
  }else if(b.action==='repo.place'){

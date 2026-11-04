@@ -1,5 +1,5 @@
 {
-  "version": 12,
+  "version": 22,
   "columns": [
     "待开发",
     "修复",
@@ -14,112 +14,8 @@
     "先认领接单，再安排开发",
     "已完成并通过验收"
   ],
-  "repos": [
-    {
-      "id": "656a51bf-3de7-450e-a1ed-d427597a1086",
-      "name": "示例 · 产品迭代",
-      "url": "https://github.com/trlstdin/team-noticeboard",
-      "createdAt": "2026-11-04T14:16:18.077Z",
-      "role": "viewer",
-      "canEdit": false,
-      "canManage": false
-    },
-    {
-      "id": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
-      "name": "示例 · 团队协作",
-      "url": "https://github.com/trlstdin/team-noticeboard",
-      "createdAt": "2026-11-04T14:18:01.977Z",
-      "role": "viewer",
-      "canEdit": false,
-      "canManage": false
-    }
-  ],
-  "tasks": [
-    {
-      "id": "c60564bf-87fa-4d84-9153-6503715e032a",
-      "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
-      "title": "示例：增加公告订阅",
-      "body": "体验用事项。可编辑标题、说明和提出者，也可拖动到其他栏目。",
-      "proposer": "示例成员 · 小林",
-      "finisher": "",
-      "column": 1,
-      "rank": 0,
-      "createdAt": "2026-11-04T14:18:13.987Z",
-      "updatedAt": "2026-11-04T15:42:35.909Z"
-    },
-    {
-      "id": "14d43f55-7a0e-4bb7-a514-0d8dc2185ba7",
-      "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
-      "title": "示例：补充移动端说明",
-      "body": "这是一条示例需求，不代表真实开发计划。试试把它拖到同栏另一条事项上方。",
-      "proposer": "示例成员 · 小陈",
-      "finisher": "",
-      "column": 0,
-      "rank": -1793801896081,
-      "createdAt": "2026-11-04T14:18:16.081Z",
-      "updatedAt": "2026-11-04T14:18:16.081Z"
-    },
-    {
-      "id": "41141439-7f20-4181-9acf-69dc5bed2e51",
-      "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
-      "title": "示例：修复长标题显示",
-      "body": "模拟问题：标题较长时需要保持可读。可点击“编辑 / 移动”修改栏目。",
-      "proposer": "示例成员 · 小林",
-      "finisher": "",
-      "column": 1,
-      "rank": 1024,
-      "createdAt": "2026-11-04T14:18:17.801Z",
-      "updatedAt": "2026-11-04T14:18:17.801Z"
-    },
-    {
-      "id": "257041d5-d1af-42cc-9e49-912c73fb1de6",
-      "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
-      "title": "示例：优化搜索体验",
-      "body": "体验用事项。可以在上方搜索框输入“搜索”，观察列表筛选。",
-      "proposer": "示例成员 · 小陈",
-      "finisher": "",
-      "column": 2,
-      "rank": -1793801899768,
-      "createdAt": "2026-11-04T14:18:19.768Z",
-      "updatedAt": "2026-11-04T14:18:19.768Z"
-    },
-    {
-      "id": "b9df22a5-3406-4d55-b1d7-33f23ac2641c",
-      "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
-      "title": "示例：整理项目说明",
-      "body": "点击项目标题可以折叠同一项目在不同栏目下的事项。",
-      "proposer": "示例成员 · 小周",
-      "finisher": "",
-      "column": 2,
-      "rank": -1793801901376,
-      "createdAt": "2026-11-04T14:18:21.376Z",
-      "updatedAt": "2026-11-04T14:18:21.376Z"
-    },
-    {
-      "id": "5034bdd9-e2a5-42ab-b18b-db947d6d07d8",
-      "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
-      "title": "示例：认领团队文档整理",
-      "body": "模拟先接单后开发：在“完成者”中填上名字，或拖到其他栏目安排后续工作。",
-      "proposer": "示例成员 · 小林",
-      "finisher": "",
-      "column": 3,
-      "rank": -1793801902920,
-      "createdAt": "2026-11-04T14:18:22.920Z",
-      "updatedAt": "2026-11-04T14:18:22.920Z"
-    },
-    {
-      "id": "350c94ae-8dad-4677-8154-0910b2cfc9b0",
-      "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
-      "title": "示例：深色告示板体验验收",
-      "body": "这是一条示例验收记录。已验收栏目同样支持折叠和拖拽。",
-      "proposer": "示例成员 · 小陈",
-      "finisher": "示例成员 · 小周",
-      "column": 4,
-      "rank": -1793801904434,
-      "createdAt": "2026-11-04T14:18:24.434Z",
-      "updatedAt": "2026-11-04T14:18:24.434Z"
-    }
-  ],
+  "repos": [],
+  "tasks": [],
   "accounts": [],
   "users": [],
   "tokens": [],
@@ -129,18 +25,16 @@
     "root": false,
     "edit": false,
     "manage": false,
-    "canAccounts": false,
-    "githubLogin": null,
-    "githubId": null
+    "canAccounts": false
   },
-  "historyCount": 12,
+  "historyCount": 22,
   "storage": {
     "shared": true,
     "github": true,
     "repository": "https://github.com/trlstdin/team-noticeboard",
-    "committedVersion": 0,
-    "commit": null,
-    "pending": 12
+    "committedVersion": 12,
+    "commit": "46dbccdbc4fa8ef3e7ead7a00cc701fe1990aa23",
+    "pending": 10
   },
-  "snapshotAt": "2026-11-04T15:43:03.331Z"
+  "snapshotAt": "2026-11-04T18:25:40.346Z"
 }

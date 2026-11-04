@@ -1,0 +1,24 @@
+{
+  "id": "36ea8918-9932-4b88-a0ff-479af202423e",
+  "seq": 7,
+  "time": "2026-11-04T14:18:17.801Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "task.save",
+  "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+  "visibility": "public",
+  "detail": {
+    "id": "41141439-7f20-4181-9acf-69dc5bed2e51",
+    "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+    "title": "示例：修复长标题显示",
+    "body": "模拟问题：标题较长时需要保持可读。可点击“编辑 / 移动”修改栏目。",
+    "proposer": "示例成员 · 小林",
+    "finisher": "",
+    "column": 1,
+    "rank": -1793801897801,
+    "createdAt": "2026-11-04T14:18:17.801Z",
+    "updatedAt": "2026-11-04T14:18:17.801Z"
+  },
+  "previousHash": "3965208925a1b74ca8b5cbddcfeb7bd604100d002704047038c863ad9f34d50f",
+  "hash": "944d9dcfce31b23a81803567efc4ec6828c664b44e162dc65a812ed54136aa6d"
+}

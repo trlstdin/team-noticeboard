@@ -1,5 +1,5 @@
 {
-  "version": 11,
+  "version": 12,
   "columns": [
     "待开发",
     "修复",
@@ -42,10 +42,10 @@
       "body": "体验用事项。可编辑标题、说明和提出者，也可拖动到其他栏目。",
       "proposer": "示例成员 · 小林",
       "finisher": "",
-      "column": 0,
-      "rank": -1793801893987,
+      "column": 1,
+      "rank": 0,
       "createdAt": "2026-11-04T14:18:13.987Z",
-      "updatedAt": "2026-11-04T14:18:13.987Z"
+      "updatedAt": "2026-11-04T15:42:35.909Z"
     },
     {
       "id": "14d43f55-7a0e-4bb7-a514-0d8dc2185ba7",
@@ -67,7 +67,7 @@
       "proposer": "示例成员 · 小林",
       "finisher": "",
       "column": 1,
-      "rank": -1793801897801,
+      "rank": 1024,
       "createdAt": "2026-11-04T14:18:17.801Z",
       "updatedAt": "2026-11-04T14:18:17.801Z"
     },
@@ -129,13 +129,18 @@
     "root": false,
     "edit": false,
     "manage": false,
-    "signedIn": false,
-    "identityId": null
+    "canAccounts": false,
+    "githubLogin": null,
+    "githubId": null
   },
-  "historyCount": 11,
+  "historyCount": 12,
   "storage": {
     "shared": true,
-    "github": false
+    "github": true,
+    "repository": "https://github.com/trlstdin/team-noticeboard",
+    "committedVersion": 0,
+    "commit": null,
+    "pending": 12
   },
-  "snapshotAt": "2026-11-04T14:47:58.797634+00:00"
+  "snapshotAt": "2026-11-04T15:43:03.331Z"
 }

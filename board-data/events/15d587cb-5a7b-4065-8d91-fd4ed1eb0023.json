@@ -1,0 +1,24 @@
+{
+  "id": "15d587cb-5a7b-4065-8d91-fd4ed1eb0023",
+  "seq": 8,
+  "time": "2026-11-04T14:18:19.768Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "task.save",
+  "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+  "visibility": "public",
+  "detail": {
+    "id": "257041d5-d1af-42cc-9e49-912c73fb1de6",
+    "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+    "title": "示例：优化搜索体验",
+    "body": "体验用事项。可以在上方搜索框输入“搜索”，观察列表筛选。",
+    "proposer": "示例成员 · 小陈",
+    "finisher": "",
+    "column": 2,
+    "rank": -1793801899768,
+    "createdAt": "2026-11-04T14:18:19.768Z",
+    "updatedAt": "2026-11-04T14:18:19.768Z"
+  },
+  "previousHash": "944d9dcfce31b23a81803567efc4ec6828c664b44e162dc65a812ed54136aa6d",
+  "hash": "5051902706fc066cbac93e5269d086480ff108d6a7374454d20e088775c63a37"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "dc42dd03-329a-4ec6-a6bb-afb98665e5ee",
+  "seq": 4,
+  "time": "2026-11-04T14:18:01.977Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "repo.save",
+  "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+  "visibility": "public",
+  "detail": {
+    "id": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+    "name": "示例 · 团队协作",
+    "url": "https://github.com/trlstdin/team-noticeboard",
+    "createdAt": "2026-11-04T14:18:01.977Z"
+  },
+  "previousHash": "638f8b72d9a716f165055397d7204dafefc07ac5915c25bdd088670a4590807e",
+  "hash": "9a92ee8f1b94a4fb6af7ea955357e4dcb7bb852e2b2f6ba30464f4d025156941"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "9c1b48c5-53a3-44fe-a0e0-8ad6ac36585c",
+  "seq": 5,
+  "time": "2026-11-04T14:18:13.987Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "task.save",
+  "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+  "visibility": "public",
+  "detail": {
+    "id": "c60564bf-87fa-4d84-9153-6503715e032a",
+    "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+    "title": "示例：增加公告订阅",
+    "body": "体验用事项。可编辑标题、说明和提出者，也可拖动到其他栏目。",
+    "proposer": "示例成员 · 小林",
+    "finisher": "",
+    "column": 0,
+    "rank": -1793801893987,
+    "createdAt": "2026-11-04T14:18:13.987Z",
+    "updatedAt": "2026-11-04T14:18:13.987Z"
+  },
+  "previousHash": "9a92ee8f1b94a4fb6af7ea955357e4dcb7bb852e2b2f6ba30464f4d025156941",
+  "hash": "84243c4cb195919eb410e73e75526b2e190853b95a20a83edf4bc15fcc3b8312"
+}

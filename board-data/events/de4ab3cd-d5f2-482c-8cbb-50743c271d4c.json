@@ -1,0 +1,15 @@
+{
+  "id": "de4ab3cd-d5f2-482c-8cbb-50743c271d4c",
+  "seq": 1,
+  "time": "2026-11-04T12:18:20.439Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "note.save",
+  "visibility": "public",
+  "detail": {
+    "column": 0,
+    "note": "待安排开发的新功能与需求，按项目归类。"
+  },
+  "previousHash": null,
+  "hash": "978f05b71d0e366edc9c9d19f3ae98e3c2b227921dd8509a946c64aa6dbde744"
+}

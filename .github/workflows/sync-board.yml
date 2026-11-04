@@ -1,0 +1,44 @@
+name: Persist board content and append-only history
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - scripts/sync-github.mjs
+      - .github/workflows/sync-board.yml
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: board-content-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Append immutable events and save public board
+        id: sync
+        env:
+          BOARD_SYNC_KEY: ${{ secrets.BOARD_SYNC_KEY }}
+        run: node scripts/sync-github.mjs
+      - name: Build current public board
+        if: steps.sync.outputs.changed == 'true'
+        run: node scripts/build.mjs
+      - uses: actions/configure-pages@v5
+        if: steps.sync.outputs.changed == 'true'
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.sync.outputs.changed == 'true'
+        with:
+          path: dist/pages
+      - uses: actions/deploy-pages@v4
+        if: steps.sync.outputs.changed == 'true'

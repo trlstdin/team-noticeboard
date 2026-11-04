@@ -1,3 +1,5 @@
+> 历史版本证据：固定像素分区已被新的自然布局取代。本目录不代表当前界面。
+
 # 公网截图像素面积核算
 
 截图来源：https://trlstdin.github.io/team-noticeboard/?pixel-layout=7dfdc3e 。浏览器缩放100%，设备像素比1。

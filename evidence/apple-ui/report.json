@@ -1,0 +1,27 @@
+{
+  "url": "https://trlstdin.github.io/team-noticeboard/?design=af0225e",
+  "screenshots": [
+    {
+      "width": 1600,
+      "height": 1000,
+      "columns": 5,
+      "lastColumn": "▾ 已验收0",
+      "overflow": false,
+      "notesAbove": true,
+      "fixedPixelLayout": false,
+      "cards": 0,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "columns": 5,
+      "lastColumn": "▾ 已验收0",
+      "overflow": false,
+      "notesAbove": true,
+      "fixedPixelLayout": false,
+      "cards": 0,
+      "errors": []
+    }
+  ]
+}

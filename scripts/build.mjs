@@ -9,6 +9,7 @@ const server=await readFile('worker/index.js','utf8');const design=await readFil
 await writeFile('dist/server/index.js','const PAGE='+JSON.stringify(page)+';\nconst DESIGN_DOCUMENT='+JSON.stringify(design)+';\n'+server);
 await cp('.openai/hosting.json','dist/.openai/hosting.json');
 await mkdir('dist/pages',{recursive:true});const backend='https://team-noticeboard-trlstdin.taproom-61-rumples.chatgpt.site';
-const staticPage=page.replace('window.BOARD_CONFIG='+JSON.stringify(config),()=> 'window.BOARD_CONFIG='+JSON.stringify({...config,apiBase:backend,static:true})).replace('href="/design.md"','href="./DESIGN.md"');
-await writeFile('dist/pages/index.html',staticPage);await cp('DESIGN.md','dist/pages/DESIGN.md');
+let publicSnapshot=null;try{publicSnapshot=JSON.parse(await readFile('public-state.json','utf8'));if(publicSnapshot.actor.edit||publicSnapshot.accounts.length||publicSnapshot.users.length||publicSnapshot.tokens.length)throw Error('Snapshot must contain public data only')}catch(e){if(e.code!=='ENOENT')throw e}
+const staticPage=page.replace('window.BOARD_CONFIG='+JSON.stringify(config),()=> 'window.BOARD_CONFIG='+JSON.stringify({...config,apiBase:backend,static:true,publicSnapshot})).replace('href="/design.md"','href="./DESIGN.md"');
+await writeFile('dist/pages/index.html',staticPage);await cp('DESIGN.md','dist/pages/DESIGN.md');if(publicSnapshot)await writeFile('dist/pages/public-state.json',JSON.stringify(publicSnapshot));
 console.log('Built Worker and static frontend');

@@ -1,0 +1,500 @@
+{
+  "url": "https://trlstdin.github.io/team-noticeboard/?pixel-layout=7dfdc3e",
+  "reports": [
+    {
+      "viewport": [
+        1600,
+        1000
+      ],
+      "totalPixels": 1600000,
+      "coveredPixels": 1600000,
+      "unclassifiedPixels": 0,
+      "cards": 0,
+      "javascriptErrors": [],
+      "horizontalOverflow": false,
+      "regions": {
+        "content": {
+          "pixels": 1280000,
+          "target": 80,
+          "actual": 80,
+          "errorPercentagePoints": 0,
+          "children": {
+            "title": 30,
+            "body": 35,
+            "repo": 15,
+            "meta": 15,
+            "decor": 5
+          },
+          "childErrors": {
+            "title": 0,
+            "body": 0,
+            "repo": 0,
+            "meta": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "title": 0,
+            "body": 0,
+            "repo": 0,
+            "meta": 0,
+            "decor": 0
+          }
+        },
+        "head": {
+          "pixels": 112000,
+          "target": 7,
+          "actual": 7,
+          "errorPercentagePoints": 0,
+          "children": {
+            "name": 70,
+            "count": 25,
+            "decor": 5
+          },
+          "childErrors": {
+            "name": 0,
+            "count": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "name": 0,
+            "count": 0,
+            "decor": 0
+          }
+        },
+        "notes": {
+          "pixels": 80000,
+          "target": 5,
+          "actual": 5,
+          "errorPercentagePoints": 0,
+          "children": {
+            "body": 60,
+            "label": 20,
+            "save": 15,
+            "decor": 5
+          },
+          "childErrors": {
+            "body": 0,
+            "label": 0,
+            "save": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "body": 0,
+            "label": 0,
+            "save": 0,
+            "decor": 0
+          }
+        },
+        "tools": {
+          "pixels": 64000,
+          "target": 4,
+          "actual": 4,
+          "errorPercentagePoints": 0,
+          "children": {
+            "primary": 50,
+            "search": 45,
+            "decor": 5
+          },
+          "childErrors": {
+            "primary": 0,
+            "search": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "primary": 0,
+            "search": 0,
+            "decor": 0
+          }
+        },
+        "mode": {
+          "pixels": 32000,
+          "target": 2,
+          "actual": 2,
+          "errorPercentagePoints": 0,
+          "children": {
+            "text": 95,
+            "decor": 5
+          },
+          "childErrors": {
+            "text": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "text": 0,
+            "decor": 0
+          }
+        },
+        "identity": {
+          "pixels": 24000,
+          "target": 1.5,
+          "actual": 1.5,
+          "errorPercentagePoints": 0,
+          "children": {
+            "status": 45,
+            "user": 50,
+            "decor": 5
+          },
+          "childErrors": {
+            "status": 0,
+            "user": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "status": 0,
+            "user": 0,
+            "decor": 0
+          }
+        },
+        "footer": {
+          "pixels": 8000,
+          "target": 0.5,
+          "actual": 0.5,
+          "errorPercentagePoints": 0,
+          "children": {
+            "text": 95,
+            "decor": 5
+          },
+          "childErrors": {
+            "text": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "text": 0,
+            "decor": 0
+          }
+        }
+      },
+      "pass": true
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "totalPixels": 2073600,
+      "coveredPixels": 2073600,
+      "unclassifiedPixels": 0,
+      "cards": 0,
+      "javascriptErrors": [],
+      "horizontalOverflow": false,
+      "regions": {
+        "content": {
+          "pixels": 1658880,
+          "target": 80,
+          "actual": 80,
+          "errorPercentagePoints": 0,
+          "children": {
+            "title": 29.976852,
+            "body": 35.069444,
+            "repo": 14.930556,
+            "meta": 15.046296,
+            "decor": 4.976852
+          },
+          "childErrors": {
+            "title": 0.023147999999999058,
+            "body": 0.06944399999999717,
+            "repo": 0.06944400000000073,
+            "meta": 0.04629599999999989,
+            "decor": 0.023147999999999946
+          },
+          "boundaryRoundingPixels": {
+            "title": 0.2,
+            "body": 0.6,
+            "repo": 0.6,
+            "meta": 0.4,
+            "decor": 0.2
+          }
+        },
+        "head": {
+          "pixels": 145920,
+          "target": 7,
+          "actual": 7.037037,
+          "errorPercentagePoints": 0.037037,
+          "children": {
+            "name": 70.052083,
+            "count": 25,
+            "decor": 4.947917
+          },
+          "childErrors": {
+            "name": 0.052082999999996105,
+            "count": 0,
+            "decor": 0.05208299999999966
+          },
+          "boundaryRoundingPixels": {
+            "name": 0.201033,
+            "count": 0,
+            "decor": 0.201033
+          }
+        },
+        "notes": {
+          "pixels": 103680,
+          "target": 5,
+          "actual": 5,
+          "errorPercentagePoints": 0,
+          "children": {
+            "body": 59.895833,
+            "label": 20.052083,
+            "save": 15.104167,
+            "decor": 4.947917
+          },
+          "childErrors": {
+            "body": 0.10416699999999679,
+            "label": 0.05208299999999966,
+            "save": 0.10416700000000034,
+            "decor": 0.05208299999999966
+          },
+          "boundaryRoundingPixels": {
+            "body": 0.4,
+            "label": 0.2,
+            "save": 0.4,
+            "decor": 0.2
+          }
+        },
+        "tools": {
+          "pixels": 82560,
+          "target": 4,
+          "actual": 3.981481,
+          "errorPercentagePoints": 0.018519,
+          "children": {
+            "primary": 50,
+            "search": 45,
+            "decor": 5
+          },
+          "childErrors": {
+            "primary": 0,
+            "search": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "primary": 0,
+            "search": 0,
+            "decor": 0
+          }
+        },
+        "mode": {
+          "pixels": 41280,
+          "target": 2,
+          "actual": 1.990741,
+          "errorPercentagePoints": 0.009259,
+          "children": {
+            "text": 95,
+            "decor": 5
+          },
+          "childErrors": {
+            "text": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "text": 0,
+            "decor": 0
+          }
+        },
+        "identity": {
+          "pixels": 30960,
+          "target": 1.5,
+          "actual": 1.493056,
+          "errorPercentagePoints": 0.006944,
+          "children": {
+            "status": 45,
+            "user": 50,
+            "decor": 5
+          },
+          "childErrors": {
+            "status": 0,
+            "user": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "status": 0,
+            "user": 0,
+            "decor": 0
+          }
+        },
+        "footer": {
+          "pixels": 10320,
+          "target": 0.5,
+          "actual": 0.497685,
+          "errorPercentagePoints": 0.002315,
+          "children": {
+            "text": 95,
+            "decor": 5
+          },
+          "childErrors": {
+            "text": 0,
+            "decor": 0
+          },
+          "boundaryRoundingPixels": {
+            "text": 0,
+            "decor": 0
+          }
+        }
+      },
+      "pass": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "totalPixels": 329160,
+      "coveredPixels": 329160,
+      "unclassifiedPixels": 0,
+      "cards": 0,
+      "javascriptErrors": [],
+      "horizontalOverflow": false,
+      "regions": {
+        "content": {
+          "pixels": 263250,
+          "target": 80,
+          "actual": 79.976303,
+          "errorPercentagePoints": 0.023697,
+          "children": {
+            "title": 29.925926,
+            "body": 35.111111,
+            "repo": 14.962963,
+            "meta": 14.962963,
+            "decor": 5.037037
+          },
+          "childErrors": {
+            "title": 0.07407399999999953,
+            "body": 0.11111100000000107,
+            "repo": 0.037036999999999765,
+            "meta": 0.037036999999999765,
+            "decor": 0.037036999999999765
+          },
+          "boundaryRoundingPixels": {
+            "title": 0.5,
+            "body": 0.75,
+            "repo": 0.25,
+            "meta": 0.25,
+            "decor": 0.25
+          }
+        },
+        "head": {
+          "pixels": 23010,
+          "target": 7,
+          "actual": 6.990521,
+          "errorPercentagePoints": 0.009479,
+          "children": {
+            "name": 70.512821,
+            "count": 24.358974,
+            "decor": 5.128205
+          },
+          "childErrors": {
+            "name": 0.5128210000000024,
+            "count": 0.6410260000000001,
+            "decor": 0.12820500000000035
+          },
+          "boundaryRoundingPixels": {
+            "name": 0.399471,
+            "count": 0.499339,
+            "decor": 0.099868
+          }
+        },
+        "notes": {
+          "pixels": 16380,
+          "target": 5,
+          "actual": 4.976303,
+          "errorPercentagePoints": 0.023697,
+          "children": {
+            "body": 60.25641,
+            "label": 19.230769,
+            "save": 15.384615,
+            "decor": 5.128205
+          },
+          "childErrors": {
+            "body": 0.25641000000000247,
+            "label": 0.7692310000000013,
+            "save": 0.38461500000000015,
+            "decor": 0.12820500000000035
+          },
+          "boundaryRoundingPixels": {
+            "body": 0.199037,
+            "label": 0.597112,
+            "save": 0.298556,
+            "decor": 0.099519
+          }
+        },
+        "tools": {
+          "pixels": 13260,
+          "target": 4,
+          "actual": 4.028436,
+          "errorPercentagePoints": 0.028436,
+          "children": {
+            "primary": 50,
+            "search": 45.128205,
+            "decor": 4.871795
+          },
+          "childErrors": {
+            "primary": 0,
+            "search": 0.12820500000000123,
+            "decor": 0.12820500000000035
+          },
+          "boundaryRoundingPixels": {
+            "primary": 0,
+            "search": 0.503471,
+            "decor": 0.503471
+          }
+        },
+        "mode": {
+          "pixels": 6630,
+          "target": 2,
+          "actual": 2.014218,
+          "errorPercentagePoints": 0.014218,
+          "children": {
+            "text": 94.871795,
+            "decor": 5.128205
+          },
+          "childErrors": {
+            "text": 0.12820499999999413,
+            "decor": 0.12820500000000035
+          },
+          "boundaryRoundingPixels": {
+            "text": 0.251852,
+            "decor": 0.251852
+          }
+        },
+        "identity": {
+          "pixels": 4964,
+          "target": 1.5,
+          "actual": 1.508081,
+          "errorPercentagePoints": 0.008081,
+          "children": {
+            "status": 45.205479,
+            "user": 50,
+            "decor": 4.794521
+          },
+          "childErrors": {
+            "status": 0.20547899999999686,
+            "user": 0,
+            "decor": 0.2054790000000004
+          },
+          "boundaryRoundingPixels": {
+            "status": 0.302222,
+            "user": 0,
+            "decor": 0.302222
+          }
+        },
+        "footer": {
+          "pixels": 1666,
+          "target": 0.5,
+          "actual": 0.506137,
+          "errorPercentagePoints": 0.006137,
+          "children": {
+            "text": 95.918367,
+            "decor": 4.081633
+          },
+          "childErrors": {
+            "text": 0.9183670000000035,
+            "decor": 0.9183669999999999
+          },
+          "boundaryRoundingPixels": {
+            "text": 0.453333,
+            "decor": 0.453333
+          }
+        }
+      },
+      "pass": true
+    }
+  ]
+}

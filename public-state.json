@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "columns": [
+    "待开发",
+    "修复",
+    "优化",
+    "先接单后开发",
+    "已验收"
+  ],
+  "notes": [
+    "待安排开发的新功能与需求，按项目归类。",
+    "已发现的问题与缺陷",
+    "体验、性能与流程优化",
+    "先认领接单，再安排开发",
+    "已完成并通过验收"
+  ],
+  "repos": [],
+  "tasks": [],
+  "accounts": [],
+  "users": [],
+  "tokens": [],
+  "actor": {
+    "id": "anonymous",
+    "name": "访客",
+    "root": false,
+    "edit": false,
+    "manage": false,
+    "signedIn": false,
+    "identityId": null
+  },
+  "historyCount": 1,
+  "storage": {
+    "shared": true,
+    "github": false
+  },
+  "snapshotAt": "2026-11-04T12:34:09.342092+00:00"
+}

@@ -11,11 +11,9 @@ async function load(env){if(!env.BUCKET)fail(503,'共享存储尚未配置');con
 function cookie(request){return /(?:^|;\s*)board_session=([^;]*)/.exec(request.headers.get('cookie')||'')?.[1]||''}
 async function identity(request,env,s){
  const raw=request.headers.get('authorization')?.replace(/^Bearer /,'')||cookie(request);
- const ownerId=request.headers.get('oai-authenticated-user-id');const ownerEmail=request.headers.get('oai-authenticated-user-email');
- if(ownerId&&env.OWNER_EMAIL&&ownerEmail?.toLowerCase()===env.OWNER_EMAIL.toLowerCase())return {root:true,name:'仓库主管',id:ownerId,edit:true,manage:true,signedIn:true,identityId:ownerId};
  if(raw&&env.ADMIN_TOKEN&&await hash(raw)===await hash(env.ADMIN_TOKEN))return {root:true,name:'仓库主管',id:'root',edit:true,manage:true};
  let t=raw?s.tokens.find(t=>t.hash):null;if(raw){const h=await hash(raw);t=s.tokens.find(t=>t.hash===h&&!t.revokedAt)}else t=null;
- const who=request.headers.get('oai-authenticated-user-id');
+ const who=null;
  const users=t?.userId?s.users.filter(u=>u.id===t.userId):who?s.users.filter(u=>u.identity===who):[];
  return {root:false,id:users[0]?.id||t?.id||who||'anonymous',name:users[0]?.name||t?.label||'访客',users,token:t,edit:users.some(u=>['editor','supervisor'].includes(u.role))&&(!t||t.scopes.includes('edit')),manage:users.some(u=>u.role==='supervisor')&&(!t||t.scopes.includes('manage')),signedIn:!!who,identityId:who||null};
 }

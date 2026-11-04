@@ -9,6 +9,6 @@ const server=await readFile('worker/index.js','utf8');const design=await readFil
 await writeFile('dist/server/index.js','const PAGE='+JSON.stringify(page)+';\nconst DESIGN_DOCUMENT='+JSON.stringify(design)+';\n'+server);
 await cp('.openai/hosting.json','dist/.openai/hosting.json');
 await mkdir('dist/pages',{recursive:true});const backend='https://team-noticeboard-trlstdin.taproom-61-rumples.chatgpt.site';
-const staticPage=page.replace('window.BOARD_CONFIG='+JSON.stringify(config),()=> 'window.BOARD_CONFIG='+JSON.stringify({...config,apiBase:backend,static:true})).replaceAll('href="/signin-with-chatgpt?', 'href="'+backend+'/signin-with-chatgpt?').replace('href="/design.md"','href="./DESIGN.md"');
+const staticPage=page.replace('window.BOARD_CONFIG='+JSON.stringify(config),()=> 'window.BOARD_CONFIG='+JSON.stringify({...config,apiBase:backend,static:true})).replace('href="/design.md"','href="./DESIGN.md"');
 await writeFile('dist/pages/index.html',staticPage);await cp('DESIGN.md','dist/pages/DESIGN.md');
 console.log('Built Worker and static frontend');

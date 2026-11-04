@@ -1,4 +1,4 @@
-import { ghRequest, ghRepo, ghProfile, githubIdentity } from './github-auth.js';
+import { ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute } from './github-auth.js';
 const KEY='noticeboard/journal-v1.json';
 const COLUMNS=['待开发','修复','优化','先接单后开发','已验收'];
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
@@ -33,6 +33,7 @@ async function github(event,env){if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)re
  if(res.status===422){const old=await fetch('https://api.github.com/repos/'+env.GITHUB_REPOSITORY+'/contents/.noticeboard/events/'+event.id+'.json',{headers:{Authorization:'Bearer '+env.GITHUB_TOKEN,Accept:'application/vnd.github+json','User-Agent':'TeamNoticeboard'}});if(!old.ok)throw Error('GitHub retry verification failed');const data=await old.json();if(!data.content||decodeURIComponent(escape(atob(data.content.replace(/\s/g,''))))!==JSON.stringify(event,null,2))throw Error('GitHub history differs');}else if(!res.ok)throw Error('GitHub sync HTTP '+res.status);return {configured:true};}
 const handler={async fetch(request,env,ctx){try{
  const p=new URL(request.url).pathname;
+ if(p==='/auth/github'||p==='/auth/github/callback')return await githubAuthRoute(request,env);
  if(p.startsWith('/api/repository/'))return await repositoryRoute(request,env);
  if(p==='/design.md')return new Response(DESIGN_DOCUMENT,{headers:{'content-type':'text/markdown; charset=utf-8','content-disposition':'attachment; filename=noticeboard-design.md'}});
  if(p==='/'||p==='/index.html')return new Response(PAGE,{headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com"}});

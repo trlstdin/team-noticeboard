@@ -1,0 +1,25 @@
+{
+  "id": "78ab3093-5beb-4cd5-bc0e-534b006f9811",
+  "seq": 20,
+  "time": "2026-11-04T18:25:36.733Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "task.archive",
+  "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+  "visibility": "public",
+  "detail": {
+    "id": "350c94ae-8dad-4677-8154-0910b2cfc9b0",
+    "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+    "title": "示例：深色告示板体验验收",
+    "body": "这是一条示例验收记录。已验收栏目同样支持折叠和拖拽。",
+    "proposer": "示例成员 · 小陈",
+    "finisher": "示例成员 · 小周",
+    "column": 4,
+    "rank": -1793801904434,
+    "createdAt": "2026-11-04T14:18:24.434Z",
+    "updatedAt": "2026-11-04T14:18:24.434Z",
+    "deletedAt": "2026-11-04T18:25:36.733Z"
+  },
+  "previousHash": "0267cfb03a2c64a0db7b75982abb30fd1c779824e97660dc150307bad0c76754",
+  "hash": "73fb28517d87c5ee1d54c7094bfaf88dfed2f6600054f5e024c5888efb2289cf"
+}

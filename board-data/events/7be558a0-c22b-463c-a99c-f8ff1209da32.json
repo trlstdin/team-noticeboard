@@ -1,0 +1,16 @@
+{
+  "id": "7be558a0-c22b-463c-a99c-f8ff1209da32",
+  "seq": 22,
+  "time": "2026-11-04T18:25:39.430Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "repo.archive",
+  "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+  "visibility": "public",
+  "detail": {
+    "id": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+    "name": "示例 · 团队协作"
+  },
+  "previousHash": "59300f27a540630b368369f47a01fcb089d32834fdbc7beecba7d970414d3943",
+  "hash": "db904d168c5ff32c09b6c3fabb4747c33134380e22514235eeec905917e64758"
+}

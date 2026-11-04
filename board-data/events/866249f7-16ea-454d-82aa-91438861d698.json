@@ -1,0 +1,25 @@
+{
+  "id": "866249f7-16ea-454d-82aa-91438861d698",
+  "seq": 19,
+  "time": "2026-11-04T18:25:35.899Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "task.archive",
+  "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+  "visibility": "public",
+  "detail": {
+    "id": "5034bdd9-e2a5-42ab-b18b-db947d6d07d8",
+    "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+    "title": "示例：认领团队文档整理",
+    "body": "模拟先接单后开发：在“完成者”中填上名字，或拖到其他栏目安排后续工作。",
+    "proposer": "示例成员 · 小林",
+    "finisher": "",
+    "column": 3,
+    "rank": -1793801902920,
+    "createdAt": "2026-11-04T14:18:22.920Z",
+    "updatedAt": "2026-11-04T14:18:22.920Z",
+    "deletedAt": "2026-11-04T18:25:35.899Z"
+  },
+  "previousHash": "93927c6da35ca6b70f3c86db2f591770f0f957a68d59bbab322db0ae77ad395b",
+  "hash": "0267cfb03a2c64a0db7b75982abb30fd1c779824e97660dc150307bad0c76754"
+}

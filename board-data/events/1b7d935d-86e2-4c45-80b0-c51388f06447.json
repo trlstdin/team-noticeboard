@@ -1,0 +1,25 @@
+{
+  "id": "1b7d935d-86e2-4c45-80b0-c51388f06447",
+  "seq": 18,
+  "time": "2026-11-04T18:25:34.972Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "task.archive",
+  "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+  "visibility": "public",
+  "detail": {
+    "id": "b9df22a5-3406-4d55-b1d7-33f23ac2641c",
+    "repoId": "1bf847dd-9cfe-4628-8fc5-122d4303334a",
+    "title": "示例：整理项目说明",
+    "body": "点击项目标题可以折叠同一项目在不同栏目下的事项。",
+    "proposer": "示例成员 · 小周",
+    "finisher": "",
+    "column": 1,
+    "rank": 0,
+    "createdAt": "2026-11-04T14:18:21.376Z",
+    "updatedAt": "2026-11-04T18:20:14.748Z",
+    "deletedAt": "2026-11-04T18:25:34.972Z"
+  },
+  "previousHash": "a4402fc97ddddd7a8e51fb46494253a7d650e94092322044877ac6640ff543fa",
+  "hash": "93927c6da35ca6b70f3c86db2f591770f0f957a68d59bbab322db0ae77ad395b"
+}

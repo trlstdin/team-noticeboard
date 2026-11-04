@@ -25,7 +25,9 @@
     "root": false,
     "edit": false,
     "manage": false,
-    "canAccounts": false
+    "canAccounts": false,
+    "githubLogin": null,
+    "githubId": null
   },
   "historyCount": 22,
   "storage": {
@@ -36,5 +38,5 @@
     "commit": "46dbccdbc4fa8ef3e7ead7a00cc701fe1990aa23",
     "pending": 10
   },
-  "snapshotAt": "2026-11-04T18:25:40.346Z"
+  "snapshotAt": "2026-11-04T18:26:56.114Z"
 }

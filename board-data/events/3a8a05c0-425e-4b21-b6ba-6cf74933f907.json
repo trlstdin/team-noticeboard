@@ -1,0 +1,16 @@
+{
+  "id": "3a8a05c0-425e-4b21-b6ba-6cf74933f907",
+  "seq": 21,
+  "time": "2026-11-04T18:25:38.378Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "repo.archive",
+  "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+  "visibility": "public",
+  "detail": {
+    "id": "656a51bf-3de7-450e-a1ed-d427597a1086",
+    "name": "示例 · 产品迭代"
+  },
+  "previousHash": "73fb28517d87c5ee1d54c7094bfaf88dfed2f6600054f5e024c5888efb2289cf",
+  "hash": "59300f27a540630b368369f47a01fcb089d32834fdbc7beecba7d970414d3943"
+}

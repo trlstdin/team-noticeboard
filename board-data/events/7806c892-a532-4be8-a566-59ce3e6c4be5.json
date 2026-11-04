@@ -1,0 +1,25 @@
+{
+  "id": "7806c892-a532-4be8-a566-59ce3e6c4be5",
+  "seq": 15,
+  "time": "2026-11-04T18:25:31.267Z",
+  "actor": "仓库主管",
+  "actorId": "root",
+  "action": "task.archive",
+  "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+  "visibility": "public",
+  "detail": {
+    "id": "14d43f55-7a0e-4bb7-a514-0d8dc2185ba7",
+    "repoId": "656a51bf-3de7-450e-a1ed-d427597a1086",
+    "title": "示例：补充移动端说明",
+    "body": "这是一条示例需求，不代表真实开发计划。试试把它拖到同栏另一条事项上方。",
+    "proposer": "示例成员 · 小陈",
+    "finisher": "",
+    "column": 0,
+    "rank": -1793801896081,
+    "createdAt": "2026-11-04T14:18:16.081Z",
+    "updatedAt": "2026-11-04T14:18:16.081Z",
+    "deletedAt": "2026-11-04T18:25:31.267Z"
+  },
+  "previousHash": "72f925a52629615c92772307fe21d6403c3867b443295bc9cd417b799c2abfc6",
+  "hash": "66fdadbe398104826af822e935962592566aeb8a5b561b20c77505593c62e7f5"
+}

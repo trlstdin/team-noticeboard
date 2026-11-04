@@ -32,13 +32,13 @@ jobs:
           BOARD_SYNC_KEY: ${{ secrets.BOARD_SYNC_KEY }}
         run: node scripts/sync-github.mjs
       - name: Build current public board
-        if: steps.sync.outputs.changed == 'true'
+        if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         run: node scripts/build.mjs
       - uses: actions/configure-pages@v5
-        if: steps.sync.outputs.changed == 'true'
+        if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
       - uses: actions/upload-pages-artifact@v3
-        if: steps.sync.outputs.changed == 'true'
+        if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         with:
           path: dist/pages
       - uses: actions/deploy-pages@v4
-        if: steps.sync.outputs.changed == 'true'
+        if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'

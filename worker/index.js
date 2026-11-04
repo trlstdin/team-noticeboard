@@ -1,4 +1,4 @@
-import { ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute, githubDeviceRoute } from './github-auth.js';
+import { ghRequest, ghRepo, ghProfile, githubIdentity } from './github-auth.js';
 const KEY='noticeboard/journal-v1.json';
 const COLUMNS=['待开发','修复','优化','先接单后开发','已验收'];
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
@@ -10,15 +10,12 @@ const url=v=>{let u;try{u=new URL(text(v,4000))}catch{fail(400,'请输入完整�
 const initial=()=>({version:0,repos:[],tasks:[],accounts:[],users:[],tokens:[],notes:['等待开发的需求与新功能','已发现的问题与缺陷','体验、性能与流程优化','先认领接单，再安排开发','已完成并通过验收'],events:[]});
 async function load(env){if(!env.BUCKET)fail(503,'共享存储尚未配置');const o=await env.BUCKET.get(KEY);return {s:o?await o.json():initial(),etag:o?.etag||null};}
 function cookie(request){return /(?:^|;\s*)board_session=([^;]*)/.exec(request.headers.get('cookie')||'')?.[1]||''}
+function anonymousActor(){return {root:false,id:'anonymous',name:'访客',users:[],edit:false,manage:false,signedIn:false}}
+function capabilityActor(t,s,sessionLookupKey){const user=t&&!t.revokedAt?s.users.find(u=>!u.deletedAt&&u.id===t.userId):null;if(!user)return anonymousActor();return {root:false,id:user.id,name:user.name,users:[user],token:t,edit:['editor','supervisor'].includes(user.role)&&t.scopes.includes('edit'),manage:user.role==='supervisor'&&t.scopes.includes('manage'),signedIn:false,sessionLookupKey}}
 async function identity(request,env,s){
- const raw=request.headers.get('authorization')?.replace(/^Bearer /,'')||cookie(request);
- if(raw&&env.ADMIN_TOKEN&&await hash(raw)===await hash(env.ADMIN_TOKEN))return {root:true,name:'仓库主管',id:'root',edit:true,manage:true};
- const gh=await githubIdentity(raw,request,env,s);if(gh)return gh;
- let t=raw?s.tokens.find(t=>t.hash):null;if(raw){const h=await hash(raw);t=s.tokens.find(t=>t.hash===h&&!t.revokedAt)}else t=null;
- const who=null;
- if(t?.userId&&!s.users.some(u=>!u.deletedAt&&u.id===t.userId))t=null;
- const users=t?.userId?s.users.filter(u=>!u.deletedAt&&u.id===t.userId):who?s.users.filter(u=>u.identity===who):[];
- return {root:false,id:users[0]?.id||t?.id||who||'anonymous',name:users[0]?.name||t?.label||'访客',users,token:t,edit:users.some(u=>['editor','supervisor'].includes(u.role))&&(!t||t.scopes.includes('edit')),manage:users.some(u=>u.role==='supervisor')&&(!t||t.scopes.includes('manage')),signedIn:!!who,identityId:who||null};
+ const raw=request.headers.get('authorization')?.replace(/^Bearer /,'')||cookie(request);if(!raw)return anonymousActor();const rawHash=await hash(raw);const sessionLookupKey='sessions/'+rawHash;const sessionObject=await env.BUCKET.get(sessionLookupKey);
+ if(sessionObject){const session=await sessionObject.json();if(session.revokedAt||session.expiresAt<Date.now())return anonymousActor();if(session.parentType==='admin'){if(session.parentHash!==await hash(env.ADMIN_TOKEN||''))return anonymousActor();return {root:true,id:'root',name:'仓库主管',edit:true,manage:true,sessionLookupKey}}if(session.parentType==='token')return capabilityActor(s.tokens.find(t=>t.id===session.parentId),s,sessionLookupKey);if(session.parentType==='github'){const gh=await githubIdentity(await decrypt(session.parentSecret,env),request,env,s);return gh?{...gh,sessionLookupKey}:anonymousActor()}return anonymousActor()}
+ if(env.ADMIN_TOKEN&&rawHash===await hash(env.ADMIN_TOKEN))return {root:true,name:'仓库主管',id:'root',edit:true,manage:true};const gh=await githubIdentity(raw,request,env,s);if(gh)return gh;return capabilityActor(s.tokens.find(t=>t.hash===rawHash&&!t.revokedAt),s);
 }
 function repoRole(a,repoId){if(a.root)return 'supervisor';if(a.token&&!a.token.repoIds.includes(repoId))return 'viewer';return a.users?.find(u=>u.repoId===repoId)?.role||'viewer'}
 const canEdit=(a,r)=>a.root||['editor','supervisor'].includes(repoRole(a,r))&&(!a.token||a.token.scopes.includes('edit'));
@@ -36,9 +33,7 @@ async function github(event,env){if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)re
  if(res.status===422){const old=await fetch('https://api.github.com/repos/'+env.GITHUB_REPOSITORY+'/contents/.noticeboard/events/'+event.id+'.json',{headers:{Authorization:'Bearer '+env.GITHUB_TOKEN,Accept:'application/vnd.github+json','User-Agent':'TeamNoticeboard'}});if(!old.ok)throw Error('GitHub retry verification failed');const data=await old.json();if(!data.content||decodeURIComponent(escape(atob(data.content.replace(/\s/g,''))))!==JSON.stringify(event,null,2))throw Error('GitHub history differs');}else if(!res.ok)throw Error('GitHub sync HTTP '+res.status);return {configured:true};}
 const handler={async fetch(request,env,ctx){try{
  const p=new URL(request.url).pathname;
- if(p.startsWith('/api/github/device/'))return json(await githubDeviceRoute(request,env));
  if(p.startsWith('/api/repository/'))return await repositoryRoute(request,env);
- if(p.startsWith('/auth/github'))return await githubAuthRoute(request,env);
  if(p==='/design.md')return new Response(DESIGN_DOCUMENT,{headers:{'content-type':'text/markdown; charset=utf-8','content-disposition':'attachment; filename=noticeboard-design.md'}});
  if(p==='/'||p==='/index.html')return new Response(PAGE,{headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com"}});
  if(!p.startsWith('/api/'))return json({error:'Not found'},404);
@@ -53,9 +48,9 @@ const handler={async fetch(request,env,ctx){try{
  if(Number(request.headers.get('content-length')||0)>100000)fail(413,'请求过大');
  const raw=await request.text();if(raw.length>100000)fail(413,'请求过大');let b;try{b=JSON.parse(raw)}catch{fail(400,'请求格式错误')}
  if(p==='/api/session'){
- const temp={headers:new Headers(request.headers)};temp.headers.set('authorization','Bearer '+text(b.token,200));temp.headers.delete('cookie');const actor=await identity(temp,env,s);if(!actor.root&&!actor.token&&!actor.signedIn)fail(403,'链接无效或已被撤销');
- const res=json({ok:true});res.headers.set('set-cookie','board_session='+b.token+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=2592000');return res;}
- if(p==='/api/logout'){if(a.sessionKey)await env.BUCKET.put('auth/'+await hash(a.sessionKey),JSON.stringify({revokedAt:Date.now(),expiresAt:0}));const res=json({ok:true});res.headers.set('set-cookie','board_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0');return res;}
+ const incoming=text(b.token,200),temp={method:'POST',headers:new Headers(request.headers)};temp.headers.set('authorization','Bearer '+incoming);temp.headers.delete('cookie');const actor=await identity(temp,env,s);if(!actor.root&&!actor.token&&!actor.signedIn)fail(403,'链接无效或已撤销');const session=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(n=>n.toString(16).padStart(2,'0')).join('');let parent;if(actor.sessionLookupKey){const previous=await env.BUCKET.get(actor.sessionLookupKey);const old=await previous.json();parent={parentType:old.parentType,parentHash:old.parentHash,parentId:old.parentId,parentSecret:old.parentSecret}}else parent=actor.root?{parentType:'admin',parentHash:await hash(env.ADMIN_TOKEN)}:actor.token?{parentType:'token',parentId:actor.token.id}:{parentType:'github',parentSecret:await encrypt(incoming,env)};await env.BUCKET.put('sessions/'+await hash(session),JSON.stringify({...parent,expiresAt:Date.now()+14*86400000}));const res=json({ok:true,session});res.headers.set('set-cookie','board_session='+session+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600');return res;
+ }
+ if(p==='/api/logout'){if(a.sessionLookupKey)await env.BUCKET.put(a.sessionLookupKey,JSON.stringify({revokedAt:Date.now(),expiresAt:0}));const res=json({ok:true});res.headers.set('set-cookie','board_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0');return res;}
  if(p==='/api/copy'){const acc=get(s.accounts,b.id);if(!canAccount(a,acc))fail(403,'没有该账号的复制权限');return json({url:await decrypt(acc.secret,env)});}
  if(p==='/api/sync'){if(!a.root)fail(403,'仅主管可同步');if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)fail(503,'尚未配置 GitHub 仓库存储凭据');let count=0;for(const e of s.events.filter(e=>e.visibility==='public')){await github(e,env);count++}return json({count});}
  if(p!=='/api/change')fail(404,'Not found');
@@ -66,6 +61,8 @@ const handler={async fetch(request,env,ctx){try{
  else {if(!a.root)fail(403,'只有总主管可添加项目');const r={id:id(),name:text(b.name,100),url:(ghRepo(b.url),url(b.url)),createdAt:now,rank:-Date.now(),notes:[...s.notes]};s.repos.push(r);repoId=r.id;detail={...r};}visibility='public';
  }else if(b.action==='repo.move'){
  const r=get(s.repos,b.id);requireEdit(a,r.id);if(!Number.isFinite(b.rank))fail(400,'项目顺序无效');r.rank=b.rank;repoId=r.id;visibility='public';detail={id:r.id,rank:r.rank};
+ }else if(b.action==='repo.place'){
+ const r=get(s.repos,b.id);requireEdit(a,r.id);const list=s.repos.filter(v=>!v.deletedAt);if(!Array.isArray(b.order)||new Set(b.order).size!==list.length||b.order.length!==list.length||list.some(v=>!b.order.includes(v.id)))fail(409,'项目列表已变化');const i=b.order.indexOf(r.id),before=s.repos.find(v=>v.id===b.order[i-1]),after=s.repos.find(v=>v.id===b.order[i+1]);const x=before?(before.rank??-Date.parse(before.createdAt)):undefined,y=after?(after.rank??-Date.parse(after.createdAt)):undefined;r.rank=x===undefined?(y??0)-1024:y===undefined?x+1024:(x+y)/2;repoId=r.id;visibility='public';detail={id:r.id,rank:r.rank,order:b.order};
  }else if(b.action==='task.place'){
  const t=get(s.tasks,b.id);repoId=t.repoId;requireEdit(a,repoId);if(!Number.isInteger(b.column)||b.column<0||b.column>4||!Array.isArray(b.order))fail(400,'无效的拖拽位置');
  const expected=s.tasks.filter(x=>!x.deletedAt&&x.repoId===repoId&&x.id!==t.id&&x.column===b.column).map(x=>x.id);if(b.order.length!==expected.length+1||new Set(b.order).size!==b.order.length||!b.order.includes(t.id)||expected.some(i=>!b.order.includes(i)))fail(409,'列表已变化，请刷新后拖动');

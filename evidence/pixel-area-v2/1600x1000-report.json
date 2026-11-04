@@ -1,0 +1,165 @@
+{
+  "viewport": [
+    1600,
+    1000
+  ],
+  "totalPixels": 1600000,
+  "coveredPixels": 1600000,
+  "unclassifiedPixels": 0,
+  "cards": 0,
+  "javascriptErrors": [],
+  "horizontalOverflow": false,
+  "regions": {
+    "content": {
+      "pixels": 1280000,
+      "target": 80,
+      "actual": 80.0,
+      "errorPercentagePoints": 0.0,
+      "children": {
+        "title": 8.0,
+        "body": 72.0,
+        "repo": 8.0,
+        "meta": 10.0,
+        "decor": 2.0
+      },
+      "childErrors": {
+        "title": 0.0,
+        "body": 0.0,
+        "repo": 0.0,
+        "meta": 0.0,
+        "decor": 0.0
+      },
+      "boundaryRoundingPixels": {
+        "title": 0.0,
+        "body": 0.0,
+        "repo": 0.0,
+        "meta": 0.0,
+        "decor": 0.0
+      }
+    },
+    "head": {
+      "pixels": 112000,
+      "target": 7,
+      "actual": 7.0,
+      "errorPercentagePoints": 0.0,
+      "children": {
+        "name": 70.0,
+        "count": 25.0,
+        "decor": 5.0
+      },
+      "childErrors": {
+        "name": 0.0,
+        "count": 0.0,
+        "decor": 0.0
+      },
+      "boundaryRoundingPixels": {
+        "name": 0.0,
+        "count": 0.0,
+        "decor": 0.0
+      }
+    },
+    "notes": {
+      "pixels": 80000,
+      "target": 5,
+      "actual": 5.0,
+      "errorPercentagePoints": 0.0,
+      "children": {
+        "body": 60.0,
+        "label": 20.0,
+        "save": 15.0,
+        "decor": 5.0
+      },
+      "childErrors": {
+        "body": 0.0,
+        "label": 0.0,
+        "save": 0.0,
+        "decor": 0.0
+      },
+      "boundaryRoundingPixels": {
+        "body": 0.0,
+        "label": 0.0,
+        "save": 0.0,
+        "decor": 0.0
+      }
+    },
+    "tools": {
+      "pixels": 64000,
+      "target": 4,
+      "actual": 4.0,
+      "errorPercentagePoints": 0.0,
+      "children": {
+        "primary": 50.0,
+        "search": 45.0,
+        "decor": 5.0
+      },
+      "childErrors": {
+        "primary": 0.0,
+        "search": 0.0,
+        "decor": 0.0
+      },
+      "boundaryRoundingPixels": {
+        "primary": 0.0,
+        "search": 0.0,
+        "decor": 0.0
+      }
+    },
+    "mode": {
+      "pixels": 32000,
+      "target": 2,
+      "actual": 2.0,
+      "errorPercentagePoints": 0.0,
+      "children": {
+        "text": 95.0,
+        "decor": 5.0
+      },
+      "childErrors": {
+        "text": 0.0,
+        "decor": 0.0
+      },
+      "boundaryRoundingPixels": {
+        "text": 0.0,
+        "decor": 0.0
+      }
+    },
+    "identity": {
+      "pixels": 24000,
+      "target": 1.5,
+      "actual": 1.5,
+      "errorPercentagePoints": 0.0,
+      "children": {
+        "status": 45.0,
+        "user": 50.0,
+        "decor": 5.0
+      },
+      "childErrors": {
+        "status": 0.0,
+        "user": 0.0,
+        "decor": 0.0
+      },
+      "boundaryRoundingPixels": {
+        "status": 0.0,
+        "user": 0.0,
+        "decor": 0.0
+      }
+    },
+    "footer": {
+      "pixels": 8000,
+      "target": 0.5,
+      "actual": 0.5,
+      "errorPercentagePoints": 0.0,
+      "children": {
+        "text": 95.0,
+        "decor": 5.0
+      },
+      "childErrors": {
+        "text": 0.0,
+        "decor": 0.0
+      },
+      "boundaryRoundingPixels": {
+        "text": 0.0,
+        "decor": 0.0
+      }
+    }
+  },
+  "pass": true
+}

@@ -1,0 +1,8 @@
+from PIL import Image
+from collections import Counter
+import sys,json
+p=sys.argv[1]; d=json.load(open(p+'-input.json')); im=Image.open(p+'-mask.png').convert('RGB'); counts=Counter(im.get_flattened_data()); total=im.width*im.height; regions={}; covered=0; passed=not d['errors'] and d['geometry']['scrollWidth']<=im.width
+for region,v in d['targets'].items():
+ leaves={k:counts[tuple(d['colors'][region+':'+k])] for k in v['leaves']}; area=sum(leaves.values()); covered+=area; share=area/total*100; children={k:round(n/area*100,6) if area else 0 for k,n in leaves.items()}; error=abs(share-v['share']); errors={k:abs(children[k]-v['leaves'][k]) for k in children}; passed=passed and error<=.1 and all(abs(leaves[k]-area*v['leaves'][k]/100)<=sum((g['w'] if region=='content' else g['h']) for g in d['geometry']['leaves'] if g['region']==region and g['leaf']==k)+1 for k in leaves); regions[region]={'pixels':area,'target':v['share'],'actual':round(share,6),'errorPercentagePoints':round(error,6),'children':children,'childErrors':errors,'boundaryRoundingPixels':{k:round(abs(leaves[k]-area*v['leaves'][k]/100)/max(1,sum((g['w'] if region=='content' else g['h']) for g in d['geometry']['leaves'] if g['region']==region and g['leaf']==k)),6) for k in leaves}}
+passed=passed and covered==total
+r={'viewport':[im.width,im.height],'totalPixels':total,'coveredPixels':covered,'unclassifiedPixels':total-covered,'cards':d['geometry']['cards'],'javascriptErrors':d['errors'],'horizontalOverflow':d['geometry']['scrollWidth']>im.width,'regions':regions,'pass':passed};json.dump(r,open(p+'-report.json','w'),indent=2);print(json.dumps(r))

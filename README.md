@@ -1,3 +1,5 @@
+> 当前公网主站：https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/ 。权限与最新部署状态见 [AUTH_ROLLOUT.md](AUTH_ROLLOUT.md)：固定 alistrode 成员与 trlstdin 账号，不使用 GitHub 应用 Secret。
+
 # 一起 · 团队协作告示板
 
 公开网址：https://trlstdin.github.io/team-noticeboard/

@@ -15,13 +15,14 @@ function render(){
  $('#actor').textContent=state.actor.name;$('#logout').hidden=state.actor.id==='anonymous';$('#mode').disabled=!state.actor.edit;$('#mode').textContent=editing?'✎ 编辑模式':'◉ 只读模式';$('#mode').classList.toggle('editing',editing);
  $('#mode-hint').textContent=editing?'按住整张卡片拖入目标栏目或行间；也可拖动项目':'当前只读；使用有效会话或编辑链接后可拖拽';
  $('#add-task').hidden=!editing;$('#add-project').hidden=!state.actor.root||!editing;
+ $('#supervisor-link').hidden=!state.actor.root;
  const canAccounts=!!state.actor.canAccounts;$('.tab[data-view="accounts"]').hidden=!canAccounts;if(view==='accounts'&&!canAccounts)view='board';const manage=state.actor.manage;$('.tab[data-view="manage"]').hidden=!manage; if(view==='manage'&&!manage)view='board';
  for(const tab of $$('.tab'))tab.classList.toggle('active',tab.dataset.view===view);
  for(const v of $$('.view'))v.hidden=v.id!==view+'-view';
  const done=state.tasks.filter(t=>t.column===4).length;
  $('#stats').innerHTML='<div class="stat"><strong>'+state.tasks.length+'</strong><span>全部事项</span></div><div class="stat"><strong>'+state.tasks.filter(t=>t.column!==4).length+'</strong><span>进行中</span></div><div class="stat"><strong>'+done+'</strong><span>已验收</span></div>';
  const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter))$('#project-filter').value=filter;
- renderBoard();renderAccounts();if(manage)renderManage();
+ renderBoard();if(canAccounts)renderAccounts();else $('#accounts').replaceChildren();if(manage)renderManage();else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}
 }
 function orderedRepos(){return [...state.repos].sort((a,b)=>(a.rank??-Date.parse(a.createdAt))-(b.rank??-Date.parse(b.createdAt)))}
 function renderBoard(){
@@ -87,7 +88,7 @@ $('#export-history').onclick=async()=>{try{let before=null,events=[];do{const pa
 async function consumeAuthorizationFragment(){const fragment=new URLSearchParams(location.hash.slice(1));const token=fragment.get('session')||fragment.get('admin')||fragment.get('token')||fragment.get('edit');if(!token)return '';history.replaceState(null,'',location.pathname+location.search);try{await activateToken(token);editing=true;return ''}catch(e){sessionToken='';return e.message}}
 window.addEventListener('hashchange',async()=>{if(!location.hash)return;const error=await consumeAuthorizationFragment();await refresh();if(error)$('#notice').textContent='授权未完成，当前仅可查看。'+error});
 
-function authorize(){openDialog('使用授权链接',[field('link','粘贴主管或成员专属链接','text','',{required:true,help:'链接中的密钥决定可用权限，无需登录。'})],async f=>{let key=f.get('link').trim();if(!/^[a-f0-9]{64}$/i.test(key)){let u;try{u=new URL(key)}catch{throw Error('请粘贴完整授权链接')}const h=new URLSearchParams(u.hash.slice(1));key=h.get('admin')||h.get('token')||h.get('edit')||'';}if(!key)throw Error('链接中没有授权密钥');try{await activateToken(key);editing=true;await refresh()}catch(e){sessionToken='';throw e}})}
+function authorize(){openDialog('使用授权链接',[field('link','粘贴主管或成员专属链接','text','',{required:true,help:'链接中的密钥决定可用权限，无需登录。'})],async f=>{let key=f.get('link').trim();if(!/^[a-f0-9]{64}$/i.test(key)){let u;try{u=new URL(key)}catch{throw Error('请粘贴完整授权链接')}const h=new URLSearchParams(u.hash.slice(1));key=h.get('session')||h.get('token')||h.get('edit')||'';}if(!key)throw Error('链接中没有授权密钥');try{await activateToken(key);editing=true;await refresh()}catch(e){sessionToken='';throw e}})}
 $('#authorize').onclick=()=>{openDialog('登录或使用授权链接',[{type:'html',value:'<button type="button" id="github-login" class="primary">GitHub 登录 / 主管登录</button><button type="button" id="token-login">使用专属链接</button>'}],null);$('#github-login').onclick=()=>startGithubLogin();$('#token-login').onclick=()=>{$('#dialog').close();authorize()}};
 
 async function deleteUsers(ids){if(!ids.length)return toast('先选择用户');if(!confirm('删除 '+ids.length+' 个用户，并撤销其全部授权链接？历史保留。'))return;try{await change({action:'user.archive',ids});toast('用户权限与链接已撤销')}catch(e){toast(e.message)}}
@@ -105,3 +106,5 @@ function readModeCookie(){return /(?:^|;\s*)board_mode=(edit|read)/.exec(documen
 function clearAuthorization(){sessionToken='';sessionStorage.removeItem('board-session');sessionStorage.removeItem('board-mode');document.cookie='board_auth=; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=0';document.cookie='board_mode=; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=0'}
 async function startGithubLogin(automatic=false){try{const config=await api('auth/config');if(!config.github){if(!automatic)toast('GitHub 登录尚未配置');return}sessionStorage.setItem('board-auto-login','attempted');location.assign((CONFIG.apiBase||location.origin)+'/auth/github')}catch(e){if(!automatic)toast(e.message)}}
 async function activateToken(key){const previous=sessionToken;sessionToken=key;try{const response=await api('session',{token:key});persistAuthorization(response.session||key)}catch(error){sessionToken=previous;throw error}}
+
+$('#supervisor-link').onclick=async()=>{try{const r=await api('supervisor-link',{});openDialog('主管免登录链接',[field('link','直接打开即获得主管权限','text',r.url,{readonly:true,help:'有效期至 '+new Date(r.expiresAt).toLocaleString('zh-CN')}),{type:'html',value:'<button type="button" id="copy-supervisor">复制主管链接</button>'}],null);$('#copy-supervisor').onclick=()=>copyText(r.url)}catch(e){toast(e.message)}};

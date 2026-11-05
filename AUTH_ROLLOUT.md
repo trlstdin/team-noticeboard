@@ -24,7 +24,7 @@ GitHub Pages 保留为镜像。远端 Edge 实际访问 Pages 曾返回 ERR_CONN
 
 每个登录页使用独立 HttpOnly 临时 Cookie 与服务端绑定，多个标签页或窗口不会覆盖彼此。原先单个临时 Cookie 会导致“登录会话不匹配”，已修复并加入回归检查。前端请求等待时间由 7 秒调整为 30 秒，以适应真实身份查询延迟。
 
-GitHub 要求组织所有者确认应用对 alistrode 的组织访问时，会弹出账号密码确认。这是 GitHub 的安全步骤，不是应用 Secret；助手没有读取、代填或猜测密码。远端成员接口已经返回 403，表明组织成员访问尚未放行。确认窗口保留在远端；这一步未通过前，组织成员的实际可用性没有完成，不能把你的主管登录成功等同于全部权限完成。
+GitHub 要求组织所有者确认应用对 alistrode 的组织访问时，会弹出账号密码确认。这是 GitHub 的安全步骤，不是应用 Secret；助手没有读取、代填或猜测密码。组织访问现已放行。远端浏览器实际调用成员接口返回 GitHub 200、organization=alistrode、member=true、role=admin；实际授予 OAuth scope 仅为 read:org、read:user。没有读取或代填密码，没有生成应用 Secret。
 
 ## 存储与同步
 
@@ -38,6 +38,6 @@ GitHub 要求组织所有者确认应用对 alistrode 的组织访问时，会�
 
 24 项针对性检查通过，包含组织固定为 alistrode、跨项目编辑、非成员只读、仓库权限不提权、指定主管映射、链接权限即时调整、旧主管入口失效、设备授权无应用 Secret、多窗口登录互不覆盖、重复换取令牌的并发保护，以及同步身份限制。构建与生成 Worker 语法检查通过。
 
-最新 Worker 保存版本 12，源码 `829b6ce8079e9be3b9e6c27d05d9b476c4081d78`，部署 `appgdep_6aecc27ba19481918360662e06db6724` 已成功。
+最新 Worker 保存版本 13，源码 `430efddfd93866014876028546b1f4863ba6c3bd`，部署 `appgdep_6aecc9f0b60481918bc3f2829f60e643` 已成功。
 
-远端 5.6 连接已建立并记住设备，官方 gh 客户端实际返回账号 trlstdin 与上述数字 ID。早期临时主管会话曾在浏览器显示编辑和权限管理；该入口现已撤除。GitHub 曾实际显示设备连接成功，但旧版返回页遇到多窗口 Cookie 冲突，因此该历史结果不作为当前权限完整完成的依据。最新远端浏览器已实际显示 trlstdin、编辑模式、权限管理和新建项目可用；通过浏览器 Cookie 请求 /api/state 返回 signedIn=true、githubId=215798043、root/edit/manage 均为 true。/api/github/membership 实测返回 organization=alistrode、githubStatus=403、member=false。组织成员访问仍被 GitHub 拒绝，组织确认窗口要求账号密码，助手没有读取或代填。不能把主管成功写成全部组织成员已可用。
+远端 5.6 连接已建立并记住设备，官方 gh 客户端实际返回账号 trlstdin 与上述数字 ID。早期临时主管会话曾在浏览器显示编辑和权限管理；该入口现已撤除。GitHub 曾实际显示设备连接成功，但旧版返回页遇到多窗口 Cookie 冲突，因此该历史结果不作为当前权限完整完成的依据。最新远端浏览器已实际显示 trlstdin、编辑模式、权限管理和新建项目可用；重新打开独立浏览器窗口后，这些权限仍由 Cookie 恢复。通过浏览器 Cookie 请求 /api/state 返回 signedIn=true、githubId=215798043、root/edit/manage 均为 true。/api/github/membership 最终实测返回 organization=alistrode、githubStatus=200、member=true、role=admin，组织访问已放行。该实测使用你的账号；其他成员及非成员的角色边界由针对性检查覆盖，没有冒称已用其他真实账号逐一登录。

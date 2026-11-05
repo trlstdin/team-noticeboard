@@ -1,0 +1,77 @@
+{
+  "screenshot": "screenshot.png",
+  "viewport": [
+    1600,
+    1000
+  ],
+  "tasks": 0,
+  "method": "Read-only DOM bounding rectangles mapped onto the original screenshot pixel grid; no DOM or CSS injection; no altered screenshot colors.",
+  "regions": {
+    "content": {
+      "pixels": 941220,
+      "target": 84.4,
+      "actual": 58.82625,
+      "errorPercentagePoints": -25.57375,
+      "overlappingPixels": 0
+    },
+    "head": {
+      "pixels": 76194,
+      "target": 7,
+      "actual": 4.762125,
+      "errorPercentagePoints": -2.237875,
+      "overlappingPixels": 0
+    },
+    "notes": {
+      "pixels": 93432,
+      "target": 1,
+      "actual": 5.8395,
+      "errorPercentagePoints": 4.8395,
+      "overlappingPixels": 0
+    },
+    "tools": {
+      "pixels": 65536,
+      "target": 4,
+      "actual": 4.096,
+      "errorPercentagePoints": 0.096,
+      "overlappingPixels": 0
+    },
+    "mode": {
+      "pixels": 5576,
+      "target": 2,
+      "actual": 0.3485,
+      "errorPercentagePoints": -1.6515,
+      "overlappingPixels": 0
+    },
+    "identity": {
+      "pixels": 5085,
+      "target": 1.5,
+      "actual": 0.3178125,
+      "errorPercentagePoints": -1.1821875,
+      "overlappingPixels": 0
+    },
+    "footer": {
+      "pixels": 58976,
+      "target": 0.1,
+      "actual": 3.686,
+      "errorPercentagePoints": 3.586,
+      "overlappingPixels": 0
+    }
+  },
+  "unclassifiedPixels": 353981,
+  "unclassifiedPercent": 22.1238125,
+  "sourceBefore": {
+    "web/app.js": "a0dff6309c3c0e6b99db615848c44ed350b59913ec888a7588d8342a7ec5eb11",
+    "web/style.css": "6e0180e9651057ba73222c3848eacc8d7c3c568765464579a04d75d2800f732f",
+    "web/index.html": "ae60040e115a08e67587ece18d49480b55862cf19126bae9dbe1e24ef343b0ab",
+    "index.html": "26c14cd4bccf8d34ec8c9dcf19bc9bc95681aa30e4f80a8ccbd9646a739f1da0"
+  },
+  "sourceAfter": {
+    "web/app.js": "a0dff6309c3c0e6b99db615848c44ed350b59913ec888a7588d8342a7ec5eb11",
+    "web/style.css": "6e0180e9651057ba73222c3848eacc8d7c3c568765464579a04d75d2800f732f",
+    "web/index.html": "ae60040e115a08e67587ece18d49480b55862cf19126bae9dbe1e24ef343b0ab",
+    "index.html": "26c14cd4bccf8d34ec8c9dcf19bc9bc95681aa30e4f80a8ccbd9646a739f1da0"
+  },
+  "uiSourceUnchanged": true,
+  "matchesExactly": false,
+  "domOrStyleInjected": false
+}

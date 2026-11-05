@@ -1,0 +1,169 @@
+{
+  "viewport": {
+    "width": 1600,
+    "height": 1000
+  },
+  "url": "https://trlstdin.github.io/team-noticeboard/?readonly-measure=c7ca3ba",
+  "tasks": 0,
+  "regions": {
+    "content": [
+      {
+        "x": 25,
+        "y": 331.5,
+        "width": 298.796875,
+        "height": 629.5
+      },
+      {
+        "x": 337.796875,
+        "y": 331.5,
+        "width": 298.796875,
+        "height": 629.5
+      },
+      {
+        "x": 650.59375,
+        "y": 331.5,
+        "width": 298.796875,
+        "height": 629.5
+      },
+      {
+        "x": 963.390625,
+        "y": 331.5,
+        "width": 298.796875,
+        "height": 629.5
+      },
+      {
+        "x": 1276.1875,
+        "y": 331.5,
+        "width": 298.796875,
+        "height": 629.5
+      }
+    ],
+    "head": [
+      {
+        "x": 25,
+        "y": 198,
+        "width": 298.796875,
+        "height": 51
+      },
+      {
+        "x": 337.796875,
+        "y": 198,
+        "width": 298.796875,
+        "height": 51
+      },
+      {
+        "x": 650.59375,
+        "y": 198,
+        "width": 298.796875,
+        "height": 51
+      },
+      {
+        "x": 963.390625,
+        "y": 198,
+        "width": 298.796875,
+        "height": 51
+      },
+      {
+        "x": 1276.1875,
+        "y": 198,
+        "width": 298.796875,
+        "height": 51
+      }
+    ],
+    "notes": [
+      {
+        "x": 37,
+        "y": 249,
+        "width": 274.796875,
+        "height": 68.5
+      },
+      {
+        "x": 349.796875,
+        "y": 249,
+        "width": 274.796875,
+        "height": 68.5
+      },
+      {
+        "x": 662.59375,
+        "y": 249,
+        "width": 274.796875,
+        "height": 68.5
+      },
+      {
+        "x": 975.390625,
+        "y": 249,
+        "width": 274.796875,
+        "height": 68.5
+      },
+      {
+        "x": 1288.1875,
+        "y": 249,
+        "width": 274.796875,
+        "height": 68.5
+      }
+    ],
+    "tools": [
+      {
+        "x": 24,
+        "y": 72,
+        "width": 82.921875,
+        "height": 50
+      },
+      {
+        "x": 1549.75,
+        "y": 80.5,
+        "width": 26.25,
+        "height": 33
+      },
+      {
+        "x": 24,
+        "y": 140,
+        "width": 1552,
+        "height": 39
+      }
+    ],
+    "mode": [
+      {
+        "x": 26,
+        "y": 15,
+        "width": 136,
+        "height": 41
+      }
+    ],
+    "identity": [
+      {
+        "x": 1441.96875,
+        "y": 19,
+        "width": 132.03125,
+        "height": 33
+      },
+      {
+        "x": 1486.75,
+        "y": 94.5,
+        "width": 5,
+        "height": 5
+      },
+      {
+        "x": 1498.75,
+        "y": 89,
+        "width": 44,
+        "height": 16
+      }
+    ],
+    "footer": [
+      {
+        "x": 24,
+        "y": 962,
+        "width": 1552,
+        "height": 39
+      },
+      {
+        "x": 24,
+        "y": 1009,
+        "width": 1552,
+        "height": 52
+      }
+    ]
+  },
+  "method": "Read-only DOM bounding rectangles mapped onto the original screenshot pixel grid; no DOM or CSS injection; no altered screenshot colors."
+}

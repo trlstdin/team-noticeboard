@@ -15,30 +15,31 @@ async function githubIdentity(raw,request,env,s){if(!raw)return null;const objec
 function githubClientId(env){return env.GITHUB_CLIENT_ID||'Ov23liS0697dsfZdr4JL'}
 function isGithubRoot(user,env){return env.ROOT_GITHUB_ID?String(user.id)===String(env.ROOT_GITHUB_ID):!!env.ROOT_GITHUB_LOGIN&&user.login.toLowerCase()===env.ROOT_GITHUB_LOGIN.toLowerCase()}
 function deviceResponse(value,status=200){return new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','Referrer-Policy':'no-referrer'}})}
-function deviceCookie(request){return /(?:^|;\s*)board_github_device=([a-f0-9]{64})(?:;|$)/.exec(request.headers.get('cookie')||'')?.[1]||''}
+function deviceCookies(request){return (request.headers.get('cookie')||'').split(';').map(v=>/^board_github_device_([a-f0-9]{64})=([a-f0-9]{64})$/.exec(v.trim())).filter(Boolean).map(v=>({id:v[1],binding:v[2]}))}
+function deviceCookie(request,id){return deviceCookies(request).find(v=>v.id===id)?.binding||''}
 function randomSession(){return Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b=>b.toString(16).padStart(2,'0')).join('')}
 function githubFrontend(request,env){const origin=new URL(request.url).origin,target=new URL(env.FRONTEND_URL||origin);if(target.protocol!=='https:'||![origin,env.PUBLIC_ORIGIN].includes(target.origin))fail(503,'登录返回地址配置无效');return target}
 async function githubAuthRoute(request,env){
  const requestUrl=new URL(request.url),send=env.GH_FETCH||fetch;
  if(requestUrl.pathname==='/auth/github'){
   if(request.method!=='GET')fail(405,'不支持的请求方式');
-  const previousId=deviceCookie(request);if(previousId){const previous=await env.BUCKET.get('device-login/'+await hash(previousId));if(previous){const saved=await previous.json();if(saved.doneSession&&saved.expiresAt>Date.now()){const target=githubFrontend(request,env);target.hash='session='+await decrypt(saved.doneSession,env);return new Response(null,{status:302,headers:{Location:target.href,'Cache-Control':'no-store','Referrer-Policy':'no-referrer'}})}}}
+
   const response=await send('https://github.com/login/device/code',{method:'POST',headers:{Accept:'application/json','Content-Type':'application/x-www-form-urlencoded','User-Agent':'TeamNoticeboard'},body:new URLSearchParams({client_id:githubClientId(env),scope:'read:user read:org'})});
   if(!response.ok)fail(502,'GitHub 登录暂时不可用');const token=await response.json();
   if(!token.device_code||!token.user_code||!/^[A-Z0-9-]{4,20}$/.test(token.user_code))fail(503,'GitHub 登录尚未启用，请稍后重试');
   const verification=new URL(token.verification_uri);if(verification.origin!=='https://github.com'||verification.pathname!=='/login/device')fail(502,'GitHub 返回了无效的授权地址');
-  githubFrontend(request,env);const flow=randomSession(),interval=Math.max(5,Math.min(60,Number(token.interval)||5));
-  await env.BUCKET.put('device-login/'+await hash(flow),JSON.stringify({secret:await encrypt(token.device_code,env),userCode:token.user_code,expiresAt:Date.now()+Math.min(900,Number(token.expires_in)||900)*1000,interval,nextPollAt:Date.now()+interval*1000}));
+  githubFrontend(request,env);const flow=randomSession(),binding=randomSession(),interval=Math.max(5,Math.min(60,Number(token.interval)||5));
+  await env.BUCKET.put('device-login/'+await hash(flow),JSON.stringify({bindingHash:await hash(binding),secret:await encrypt(token.device_code,env),userCode:token.user_code,expiresAt:Date.now()+Math.min(900,Number(token.expires_in)||900)*1000,interval,nextPollAt:Date.now()+interval*1000}));
   verification.searchParams.set('user_code',token.user_code);
   const html='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GitHub 登录</title><style>body{background:#0c1725;color:#d4e5f4;font:16px system-ui;max-width:34rem;margin:12vh auto;padding:24px;line-height:1.7}a{color:#65d6bc}code{display:block;font-size:32px;margin:20px 0;letter-spacing:3px}button,a.action{background:#65d6bc;color:#0c1725;border:0;padding:12px 18px;border-radius:8px;text-decoration:none}</style><h1>GitHub 登录</h1><p>在 GitHub 确认以下代码。授权后，本页会自动继续。</p><code>'+token.user_code+'</code><a class="action" href="'+verification.href.replace(/&/g,'&amp;')+'" target="_blank" rel="noopener noreferrer">前往 GitHub</a><p id="status">等待 GitHub 授权…</p><a href="/auth/github">重新登录</a><script>const flow='+JSON.stringify(flow)+',target='+JSON.stringify(verification.href)+';let delay='+interval*1000+';let done=false;window.open(target,"noticeboard-github","noopener");async function poll(){try{const r=await fetch("/auth/github/device/poll",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({flow}),credentials:"same-origin",cache:"no-store"});const v=await r.json();if(!r.ok){document.getElementById("status").textContent=v.error||"登录未完成，请重试";return}if(v.session){done=true;location.replace(v.frontend+"#session="+v.session);return}delay=Math.max(5000,(v.interval||5)*1000)}catch(e){document.getElementById("status").textContent="连接中断，正在重试…"}if(!done)setTimeout(poll,delay)}setTimeout(poll,delay);</script></html>';
-  return new Response(html,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':'board_github_device='+flow+'; Path=/auth/github; HttpOnly; Secure; SameSite=Strict; Max-Age=900','Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
+  return new Response(html,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':'board_github_device_'+flow+'='+binding+'; Path=/auth/github; HttpOnly; Secure; SameSite=Strict; Max-Age=900','Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
  }
  if(requestUrl.pathname!=='/auth/github/device/poll')fail(404,'Not found');
  if(request.method!=='POST')fail(405,'不支持的请求方式');
  const origin=request.headers.get('origin');if(origin&&origin!==requestUrl.origin)fail(403,'不允许跨站登录操作');
  const raw=await request.text();if(raw.length>300)fail(413,'请求过大');let body;try{body=JSON.parse(raw)}catch{fail(400,'请求格式错误')}
- const flowId=deviceCookie(request);if(!flowId||body.flow!==flowId)fail(403,'登录会话不匹配，请重新登录');
- const key='device-login/'+await hash(flowId),object=await env.BUCKET.get(key);if(!object)fail(410,'登录已过期，请重试');const flow=await object.json();if(flow.expiresAt<=Date.now())fail(410,'登录已过期，请重试');
+ const flowId=body.flow;if(typeof flowId!=='string'||!/^[a-f0-9]{64}$/.test(flowId))fail(403,'登录会话不匹配，请重新登录');const binding=deviceCookie(request,flowId);if(!binding)fail(403,'登录会话不匹配，请重新登录');
+ const key='device-login/'+await hash(flowId),object=await env.BUCKET.get(key);if(!object)fail(410,'登录已过期，请重试');const flow=await object.json();if(flow.bindingHash!==await hash(binding))fail(403,'登录会话不匹配，请重新登录');if(flow.expiresAt<=Date.now())fail(410,'登录已过期，请重试');
  const frontend=githubFrontend(request,env).href;
  if(flow.doneSession)return deviceResponse({session:await decrypt(flow.doneSession,env),frontend});
  if(flow.nextPollAt>Date.now())return deviceResponse({pending:true,interval:flow.interval});

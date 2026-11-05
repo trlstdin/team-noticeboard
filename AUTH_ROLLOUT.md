@@ -1,24 +1,15 @@
-# GitHub 登录与链接权限发布说明
+# 登录与链接权限重建记录
 
-此改动提供 `/auth/github`、`/auth/github/callback` 和 `/api/auth/config`。
-前端在服务端报告 OAuth 已配置且当前身份为匿名时自动跳转一次；主动退出后本标签页不会立即重新登录，可从原授权按钮选择 GitHub 登录。有效专属链接仍按独立授权生效。
+2026-11-05：按用户要求重建后端。新项目 `appgprj_6aec63d8c2688191b924e400030188b1`，服务地址 https://team-noticeboard-rebuilt.loneivy1.chatgpt.site 。原项目保留。
 
-GitHub 普通用户只有组织成员才能取得组织项目编辑权限，外部协作者即使拥有 push、maintain 或 admin 权限也只读。个人仓库所有者保留主管身份。总主管通过服务端 `ROOT_GITHUB_ID`（优先）或 `ROOT_GITHUB_LOGIN` 与 GitHub 验证身份匹配；不依据 URL 用户名或前端字段授权。
+功能：GitHub OAuth 自动登录、经 GitHub 验证的数字 ID 主管映射、非组织成员只读、已有专属链接的权限调整。专属 Token 授权独立生效。GitHub 仓库拥有者身份及明确配置的总主管保留管理权。
 
-后台每条有效链接新增权限编辑，可调整名称和 copy/edit/manage 范围，空范围表示停用全部能力；已撤销链接不可重新启用。已有会话每次请求重新读取链接范围。修改管理链接仅总主管可执行。
+总主管映射为 trlstdin（GitHub ID 215798043），与当前仓库已授权 GitHub 账号一致。新的主管会话可恢复后台访问；不在仓库中记录凭据。
 
-## 发布顺序
+若缺少 OAuth 应用配置，主管可在原登录按钮中选择“启用 GitHub 登录”，由 GitHub 确认应用登记，服务器校验回调 state、浏览器 Cookie、一次性状态及应用所有者后，将登录凭据加密保存到 R2 `config/github-oauth`。已有环境变量凭据优先，不重复登记已配置的应用。首次登记和授权仍需 GitHub 账号本人确认。确认前不能宣称 GitHub 登录已完成。
 
-1. 恢复 `.openai/hosting.json` 指向的原 Sites 项目访问，保留 audience、R2、DATA_KEY 和其他已有配置，不能新建空项目代替。
-2. 复用已有 GitHub OAuth App，回调设置为 `https://team-noticeboard-trlstdin.taproom-61-rumples.chatgpt.site/auth/github/callback`。在 Sites 配置 `GITHUB_CLIENT_ID`、`GITHUB_CLIENT_SECRET`，不写入 Git。
-3. 确认总主管账号后，以其 GitHub 数字 ID 配置 `ROOT_GITHUB_ID`。当前公开 API 返回 trlstdin 的 ID 为 `215798043`，但该记录不是变更主管配置的确认。
-4. 保持 `PUBLIC_ORIGIN=https://trlstdin.github.io`、`FRONTEND_URL=https://trlstdin.github.io/team-noticeboard/`。
-5. 先构建并发布 Worker，确认 OAuth 配置与回调，再合并发布 GitHub Pages，避免前端调用旧后端。
-6. 使用实际 GitHub 登录检查主管、成员、非成员和链接权限调整；不要往生产添加示例数据。
+新存储恢复了仓库公开快照版本 22 及全部 22 条公开历史。旧站 GET /api/state 确认同为版本 22，活动项目和事项为空。旧站私密账号、用户、凭据、会话及未公开归档对象未迁移，原项目仍保留；不得把这写成完整 R2 备份。
 
-## 已执行检查与限制
+Worker v2 已成功部署（部署 appgdep_6aec877dca408191a0a1ccc5119bdacc，源码 793987d3bbdd4f9d3282323eabb129580857e7f6）。Pages 从 main 独立发布，实际状态以对应 Actions 结果为准。BOARD_SYNC_KEY 在新 Worker 和 GitHub Actions 两侧同步配置，DATA_KEY 为新项目独立密钥。
 
-`node --test tests/permissions.test.mjs`：14 项通过；`npm run build`、生成 Worker 语法检查、`git diff --check` 通过。
-新增检查覆盖非成员拥有仓库管理权限仍只读、GitHub 数字 ID 主管映射、已有会话随链接范围即时变化、OAuth Cookie/state 匹配与一次使用、凭据加密。
-
-当前 Sites 的 get_site 和源码写凭据接口均返回 project_not_found。因此此记录不代表已部署，也不代表真实 OAuth 往返已验收；恢复项目访问并完成 OAuth 配置后才能发布。未改动样式、布局或生产数据。
+验证：15 项权限检查通过，包括 OAuth 回调防重放、应用所有者核对、凭据加密、非成员拥有仓库管理权限仍只读、主管映射、已有会话权限即时变化。构建和 Worker 语法检查通过。公开 API 返回 HTTP 200，历史版本 22。实际 GitHub 浏览器往返需账号本人完成，未完成前保留此验证边界。未改配色或布局。

@@ -10,6 +10,8 @@
 
 新存储恢复了仓库公开快照版本 22 及全部 22 条公开历史。旧站 GET /api/state 确认同为版本 22，活动项目和事项为空。旧站私密账号、用户、凭据、会话及未公开归档对象未迁移，原项目仍保留；不得把这写成完整 R2 备份。
 
-Worker v2 已成功部署（部署 appgdep_6aec877dca408191a0a1ccc5119bdacc，源码 793987d3bbdd4f9d3282323eabb129580857e7f6）。Pages 从 main 独立发布，实际状态以对应 Actions 结果为准。GitHub 集成不能修改 Actions Secret，故常规同步改为 GitHub Actions OIDC：服务端验签，并固定仓库数字 ID、main、工作流路径与 audience；原 BOARD_SYNC_KEY 仅作兼容服务授权。DATA_KEY 为新项目独立密钥。
+Worker v5 已成功部署（部署 appgdep_6aec89c650a081918420f174cccdfa15，源码 a750616c36d4d2990d0ea4522080f4267b5ed135）。Pages 从 main 独立发布，实际状态以对应 Actions 结果为准。GitHub 集成不能修改 Actions Secret，故常规同步改为 GitHub Actions OIDC：服务端验签，并固定仓库数字 ID、main、工作流路径与 audience；原 BOARD_SYNC_KEY 仅作兼容服务授权。DATA_KEY 为新项目独立密钥。
 
-验证：16 项权限检查通过，包括 OAuth 回调防重放、应用所有者核对、凭据加密、非成员拥有仓库管理权限仍只读、主管映射、已有会话权限即时变化。构建和 Worker 语法检查通过。公开 API 返回 HTTP 200，历史版本 22。实际 GitHub 浏览器往返需账号本人完成，未完成前保留此验证边界。未改配色或布局。
+验证：16 项权限检查通过，包括 OAuth 回调防重放、应用所有者核对、凭据加密、非成员拥有仓库管理权限仍只读、主管映射、已有会话权限即时变化。构建和 Worker 语法检查通过。新增两项现有标签页 hash 授权回归检查通过，前端修复提交 9da6f60702e9fa7ff9a4409b986b8758f2b04914 已成功发布（Actions 42040377540）。公开 API 返回 HTTP 200，历史版本 22。Actions 同步 42038834406 最后一次执行成功，后端 committedVersion=22、pending=0。实际 GitHub 浏览器往返需账号本人完成，未完成前保留此验证边界。未改配色或布局。
+
+主管链接现在也响应已打开页面的 hashchange；交付链接使用版本查询参数避免旧页面缓存。浏览器中的实际权限恢复与 GitHub 授权仍待验证，接口已验证的主管权限不能代替浏览器验收。

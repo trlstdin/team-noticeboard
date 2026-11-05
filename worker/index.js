@@ -1,4 +1,4 @@
-import { ghRequest, ghRepo, ghProfile, githubIdentity } from './github-auth.js';
+import { ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute } from './github-auth.js';
 const KEY='noticeboard/journal-v1.json';
 const COLUMNS=['待开发','修复','优化','先接单后开发','已验收'];
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
@@ -33,6 +33,8 @@ async function github(event,env){if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)re
  if(res.status===422){const old=await fetch('https://api.github.com/repos/'+env.GITHUB_REPOSITORY+'/contents/.noticeboard/events/'+event.id+'.json',{headers:{Authorization:'Bearer '+env.GITHUB_TOKEN,Accept:'application/vnd.github+json','User-Agent':'TeamNoticeboard'}});if(!old.ok)throw Error('GitHub retry verification failed');const data=await old.json();if(!data.content||decodeURIComponent(escape(atob(data.content.replace(/\s/g,''))))!==JSON.stringify(event,null,2))throw Error('GitHub history differs');}else if(!res.ok)throw Error('GitHub sync HTTP '+res.status);return {configured:true};}
 const handler={async fetch(request,env,ctx){try{
  const p=new URL(request.url).pathname;
+ if(p==='/auth/github'||p==='/auth/github/callback')return await githubAuthRoute(request,env);
+ if(p==='/api/auth/config'&&request.method==='GET')return json({github:!!(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET)});
  if(p.startsWith('/api/repository/'))return await repositoryRoute(request,env);
  if(p==='/design.md')return new Response(DESIGN_DOCUMENT,{headers:{'content-type':'text/markdown; charset=utf-8','content-disposition':'attachment; filename=noticeboard-design.md'}});
  if(p==='/'||p==='/index.html')return new Response(PAGE,{headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com"}});
@@ -96,6 +98,8 @@ const handler={async fetch(request,env,ctx){try{
  const u=get(s.users,b.userId);repoId=u.repoId;requireManage(a,repoId);if(u.role==='supervisor'&&!a.root)fail(403,'不能签发主管链接');
  if(!Array.isArray(b.scopes)||b.scopes.some(x=>!['edit','copy','manage'].includes(x)))fail(400,'权限范围无效');if(b.scopes.includes('manage')&&!a.root)fail(403,'只有总主管可签发管理链接');
  const secret=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,'0')).join('');const t={id:id(),userId:u.id,label:text(b.label||u.name,100),repoIds:[repoId],scopes:b.scopes,hash:await hash(secret),createdAt:now};s.tokens.push(t);result={token:secret};detail={tokenId:t.id,label:t.label,scopes:t.scopes};
+ }else if(b.action==='token.update'){
+ const t=get(s.tokens,b.id);if(t.revokedAt)fail(409,'链接已撤销，不能重新启用');for(const r of t.repoIds)requireManage(a,r);if((t.scopes.includes('manage')||b.scopes?.includes('manage'))&&!a.root)fail(403,'只有总主管可修改管理链接');if(!Array.isArray(b.scopes)||b.scopes.some(x=>!['edit','copy','manage'].includes(x)))fail(400,'权限范围无效');t.scopes=[...new Set(b.scopes)];if(b.label!==undefined)t.label=text(b.label,100);repoId=t.repoIds[0];detail={tokenId:t.id,label:t.label,scopes:t.scopes};
  }else if(b.action==='token.revoke'){
  const t=get(s.tokens,b.id);for(const r of t.repoIds)requireManage(a,r);if(t.scopes.includes('manage')&&!a.root)fail(403,'只有总主管可撤销管理链接');t.revokedAt=now;repoId=t.repoIds[0];detail={tokenId:t.id,label:t.label};
  }else fail(400,'不支持的操作');

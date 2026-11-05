@@ -50,6 +50,11 @@ const handler={async fetch(request,env,ctx){try{
  const origin=request.headers.get('origin');if(origin&&origin!==new URL(request.url).origin&&!(origin===env.PUBLIC_ORIGIN&&request.headers.get('authorization')?.startsWith('Bearer ')))fail(403,'不允许跨站操作');
  if(Number(request.headers.get('content-length')||0)>100000)fail(413,'请求过大');
  const raw=await request.text();if(raw.length>100000)fail(413,'请求过大');let b;try{b=JSON.parse(raw)}catch{fail(400,'请求格式错误')}
+ if(p==='/api/supervisor-link'){
+ if(!a.root||!a.signedIn||!a.sessionKey)fail(403,'仅总主管可签发主管链接');
+ const source=await env.BUCKET.get('auth/'+await hash(a.sessionKey));if(!source)fail(403,'主管会话已失效');const auth=await source.json();const expiresAt=Math.min(auth.expiresAt,Date.now()+14*86400000);if(!(expiresAt>Date.now()))fail(403,'主管会话已失效');
+ const secret=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(n=>n.toString(16).padStart(2,'0')).join('');await env.BUCKET.put('sessions/'+await hash(secret),JSON.stringify({parentType:'github',parentSecret:await encrypt(a.sessionKey,env),expiresAt}));const link=new URL(env.FRONTEND_URL||new URL(request.url).origin);link.hash='session='+secret;return json({url:link.href,expiresAt});
+ }
  if(p==='/api/session'){
  const incoming=text(b.token,200),temp={method:'POST',headers:new Headers(request.headers)};temp.headers.set('authorization','Bearer '+incoming);temp.headers.delete('cookie');const actor=await identity(temp,env,s);if(!actor.token&&!actor.signedIn)fail(403,'链接无效或已撤销');const session=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(n=>n.toString(16).padStart(2,'0')).join('');let parent;if(actor.sessionLookupKey){const previous=await env.BUCKET.get(actor.sessionLookupKey);const old=await previous.json();parent={parentType:old.parentType,parentHash:old.parentHash,parentId:old.parentId,parentSecret:old.parentSecret}}else parent=actor.token?{parentType:'token',parentId:actor.token.id}:{parentType:'github',parentSecret:await encrypt(incoming,env)};await env.BUCKET.put('sessions/'+await hash(session),JSON.stringify({...parent,expiresAt:Date.now()+14*86400000}));const res=json({ok:true,session});res.headers.set('set-cookie','board_session='+session+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600');return res;
  }

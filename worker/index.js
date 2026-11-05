@@ -1,4 +1,4 @@
-import { ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute, githubSetupRoute, githubRuntimeConfig } from './github-auth.js';
+import { ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute } from './github-auth.js';
 const KEY='noticeboard/journal-v1.json';
 const COLUMNS=['待开发','修复','优化','先接单后开发','已验收'];
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
@@ -32,11 +32,9 @@ async function github(event,env){if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)re
  const res=await fetch('https://api.github.com/repos/'+env.GITHUB_REPOSITORY+'/contents/.noticeboard/events/'+event.id+'.json',{method:'PUT',headers:{Authorization:'Bearer '+env.GITHUB_TOKEN,Accept:'application/vnd.github+json','User-Agent':'TeamNoticeboard','Content-Type':'application/json'},body:JSON.stringify({message:'board: '+event.action,content:btoa(unescape(encodeURIComponent(JSON.stringify(event,null,2))))})});
  if(res.status===422){const old=await fetch('https://api.github.com/repos/'+env.GITHUB_REPOSITORY+'/contents/.noticeboard/events/'+event.id+'.json',{headers:{Authorization:'Bearer '+env.GITHUB_TOKEN,Accept:'application/vnd.github+json','User-Agent':'TeamNoticeboard'}});if(!old.ok)throw Error('GitHub retry verification failed');const data=await old.json();if(!data.content||decodeURIComponent(escape(atob(data.content.replace(/\s/g,''))))!==JSON.stringify(event,null,2))throw Error('GitHub history differs');}else if(!res.ok)throw Error('GitHub sync HTTP '+res.status);return {configured:true};}
 const handler={async fetch(request,env,ctx){try{
- env=await githubRuntimeConfig(env);
  const p=new URL(request.url).pathname;
- if(p==='/auth/github/setup'||p==='/auth/github/manifest')return await githubSetupRoute(request,env);
- if(p==='/auth/github'||p==='/auth/github/callback')return await githubAuthRoute(request,env);
- if(p==='/api/auth/config'&&request.method==='GET')return json({github:!!(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET)});
+ if(p==='/auth/github'||p==='/auth/github/device/poll')return await githubAuthRoute(request,env);
+ if(p==='/api/auth/config'&&request.method==='GET')return json({github:true});
  if(p.startsWith('/api/repository/'))return await repositoryRoute(request,env);
  if(p==='/design.md')return new Response(DESIGN_DOCUMENT,{headers:{'content-type':'text/markdown; charset=utf-8','content-disposition':'attachment; filename=noticeboard-design.md'}});
  if(p==='/'||p==='/index.html')return new Response(PAGE,{headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com"}});
@@ -54,7 +52,6 @@ const handler={async fetch(request,env,ctx){try{
  if(p==='/api/session'){
  const incoming=text(b.token,200),temp={method:'POST',headers:new Headers(request.headers)};temp.headers.set('authorization','Bearer '+incoming);temp.headers.delete('cookie');const actor=await identity(temp,env,s);if(!actor.root&&!actor.token&&!actor.signedIn)fail(403,'链接无效或已撤销');const session=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(n=>n.toString(16).padStart(2,'0')).join('');let parent;if(actor.sessionLookupKey){const previous=await env.BUCKET.get(actor.sessionLookupKey);const old=await previous.json();parent={parentType:old.parentType,parentHash:old.parentHash,parentId:old.parentId,parentSecret:old.parentSecret}}else parent=actor.root?{parentType:'admin',parentHash:await hash(env.ADMIN_TOKEN)}:actor.token?{parentType:'token',parentId:actor.token.id}:{parentType:'github',parentSecret:await encrypt(incoming,env)};await env.BUCKET.put('sessions/'+await hash(session),JSON.stringify({...parent,expiresAt:Date.now()+14*86400000}));const res=json({ok:true,session});res.headers.set('set-cookie','board_session='+session+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600');return res;
  }
- if(p==='/api/oauth/setup'){if(!a.root)fail(403,'需要总主管权限');if(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET)fail(409,'GitHub 登录已配置，请直接登录');const ticket=id()+id();await env.BUCKET.put('setup-ticket/'+await hash(ticket),JSON.stringify({expiresAt:Date.now()+300000}));return json({url:new URL(request.url).origin+'/auth/github/setup?ticket='+ticket})}
  if(p==='/api/logout'){if(a.sessionLookupKey)await env.BUCKET.put(a.sessionLookupKey,JSON.stringify({revokedAt:Date.now(),expiresAt:0}));const res=json({ok:true});res.headers.set('set-cookie','board_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0');return res;}
  if(p==='/api/copy'){const acc=get(s.accounts,b.id);if(!canAccount(a,acc))fail(403,'没有该账号的复制权限');return json({url:await decrypt(acc.secret,env)});}
  if(p==='/api/sync'){if(!a.root)fail(403,'仅主管可同步');if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)fail(503,'尚未配置 GitHub 仓库存储凭据');let count=0;for(const e of s.events.filter(e=>e.visibility==='public')){await github(e,env);count++}return json({count});}

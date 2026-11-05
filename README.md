@@ -2,6 +2,8 @@
 
 公开网址：https://trlstdin.github.io/team-noticeboard/
 
+接手入口：[HANDOFF.md](HANDOFF.md)。当前版本、未完成登录流程、UI 修改边界和历史证据口径以交接文档为准；下文部分验收记录来自早期版本，不能视为当前全量验收。
+
 以 [DESIGN.md](DESIGN.md) 的 F01—F12 为验收依据。文档按用户最新要求修正：**无主动登录、无授权码，已有本站授权 Cookie 自动恢复；Token URL 直接进入对应权限。**不能读取 github.com 的 Cookie，也不伪称已识别组织成员。
 
 ## 操作

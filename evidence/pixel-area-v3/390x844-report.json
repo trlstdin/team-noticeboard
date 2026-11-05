@@ -1,0 +1,165 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "totalPixels": 329160,
+  "coveredPixels": 329160,
+  "unclassifiedPixels": 0,
+  "cards": 0,
+  "javascriptErrors": [],
+  "horizontalOverflow": false,
+  "regions": {
+    "content": {
+      "pixels": 277680,
+      "target": 84.4,
+      "actual": 84.36019,
+      "errorPercentagePoints": 0.03981,
+      "children": {
+        "title": 8.005618,
+        "body": 72.050562,
+        "repo": 8.005618,
+        "meta": 9.97191,
+        "decor": 1.966292
+      },
+      "childErrors": {
+        "title": 0.005618000000000123,
+        "body": 0.05056199999999933,
+        "repo": 0.005618000000000123,
+        "meta": 0.028090000000000614,
+        "decor": 0.03370800000000007
+      },
+      "boundaryRoundingPixels": {
+        "title": 0.04,
+        "body": 0.36,
+        "repo": 0.04,
+        "meta": 0.2,
+        "decor": 0.24
+      }
+    },
+    "head": {
+      "pixels": 23205,
+      "target": 7,
+      "actual": 7.049763,
+      "errorPercentagePoints": 0.049763,
+      "children": {
+        "name": 70.695971,
+        "count": 24.908425,
+        "decor": 4.395604
+      },
+      "childErrors": {
+        "name": 0.6959710000000001,
+        "count": 0.09157499999999885,
+        "decor": 0.6043960000000004
+      },
+      "boundaryRoundingPixels": {
+        "name": 0.478408,
+        "count": 0.062948,
+        "decor": 0.415459
+      }
+    },
+    "notes": {
+      "pixels": 3315,
+      "target": 1,
+      "actual": 1.007109,
+      "errorPercentagePoints": 0.007109,
+      "children": {
+        "body": 58.974359,
+        "label": 20.512821,
+        "save": 15.384615,
+        "decor": 5.128205
+      },
+      "childErrors": {
+        "body": 1.0256410000000002,
+        "label": 0.5128209999999989,
+        "save": 0.38461500000000015,
+        "decor": 0.12820500000000035
+      },
+      "boundaryRoundingPixels": {
+        "body": 0.402963,
+        "label": 0.201481,
+        "save": 0.151111,
+        "decor": 0.05037
+      }
+    },
+    "tools": {
+      "pixels": 13260,
+      "target": 4,
+      "actual": 4.028436,
+      "errorPercentagePoints": 0.028436,
+      "children": {
+        "primary": 50.0,
+        "search": 45.128205,
+        "decor": 4.871795
+      },
+      "childErrors": {
+        "primary": 0.0,
+        "search": 0.12820500000000123,
+        "decor": 0.12820500000000035
+      },
+      "boundaryRoundingPixels": {
+        "primary": 0.0,
+        "search": 0.503471,
+        "decor": 0.503471
+      }
+    },
+    "mode": {
+      "pixels": 6510,
+      "target": 2,
+      "actual": 1.977762,
+      "errorPercentagePoints": 0.022238,
+      "children": {
+        "text": 94.930876,
+        "decor": 5.069124
+      },
+      "childErrors": {
+        "text": 0.06912400000000218,
+        "decor": 0.06912400000000041
+      },
+      "boundaryRoundingPixels": {
+        "text": 0.148148,
+        "decor": 0.148148
+      }
+    },
+    "identity": {
+      "pixels": 4860,
+      "target": 1.5,
+      "actual": 1.476486,
+      "errorPercentagePoints": 0.023514,
+      "children": {
+        "status": 45.061728,
+        "user": 50.0,
+        "decor": 4.938272
+      },
+      "childErrors": {
+        "status": 0.061728000000002226,
+        "user": 0.0,
+        "decor": 0.06172799999999956
+      },
+      "boundaryRoundingPixels": {
+        "status": 0.098765,
+        "user": 0.0,
+        "decor": 0.098765
+      }
+    },
+    "footer": {
+      "pixels": 330,
+      "target": 0.1,
+      "actual": 0.100255,
+      "errorPercentagePoints": 0.000255,
+      "children": {
+        "text": 90.909091,
+        "decor": 9.090909
+      },
+      "childErrors": {
+        "text": 4.090908999999996,
+        "decor": 4.090909
+      },
+      "boundaryRoundingPixels": {
+        "text": 0.444444,
+        "decor": 0.444444
+      }
+    }
+  },
+  "pass": true
+}

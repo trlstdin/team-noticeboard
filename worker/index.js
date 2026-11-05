@@ -71,7 +71,7 @@ const handler={async fetch(request,env,ctx){try{
  t.column=b.column;if(b.column===4&&!t.finisher)t.finisher=a.name;t.updatedAt=now;for(let i=0;i<b.order.length;i++)get(s.tasks,b.order[i]).rank=i*1024;visibility='public';detail={id:t.id,column:t.column,order:b.order};
  }else if(b.action==='task.save'){
  const old=b.id?get(s.tasks,b.id):null;if(old)requireEdit(a,old.repoId);repoId=text(b.repoId);get(s.repos,repoId);requireEdit(a,repoId);if(!Number.isInteger(b.column)||b.column<0||b.column>4)fail(400,'栏目无效');
- const t={id:old?.id||id(),repoId,title:text(b.title,180),body:typeof b.body==='string'?b.body.slice(0,10000):'',proposer:text(b.proposer,100),finisher:typeof b.finisher==='string'?b.finisher.slice(0,100):'',column:b.column,rank:old?.rank??-Date.now(),createdAt:old?.createdAt||now,updatedAt:now};if(old)Object.assign(old,t);else s.tasks.push(t);visibility='public';detail=t;
+ const t={id:old?.id||id(),repoId,title:text(b.title,180),body:typeof b.body==='string'?b.body.slice(0,10000):'',proposer:text(b.proposer,100),assignee:typeof b.assignee==='string'?b.assignee.trim().slice(0,100):(old?.assignee||''),host:typeof b.host==='string'?b.host.trim().slice(0,200):(old?.host||''),finisher:typeof b.finisher==='string'?b.finisher.slice(0,100):'',column:b.column,rank:old?.rank??-Date.now(),createdAt:old?.createdAt||now,updatedAt:now};if(old)Object.assign(old,t);else s.tasks.push(t);visibility='public';detail=t;
  }else if(b.action==='task.move'){
  const t=get(s.tasks,b.id);repoId=t.repoId;requireEdit(a,repoId);if(!Number.isInteger(b.column)||b.column<0||b.column>4||!Number.isFinite(b.rank))fail(400,'无效的排序');t.column=b.column;t.rank=b.rank;t.updatedAt=now;visibility='public';detail={...t};
  }else if(b.action==='task.archive'){

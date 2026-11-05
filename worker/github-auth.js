@@ -22,6 +22,7 @@ async function githubAuthRoute(request,env){
  const requestUrl=new URL(request.url),send=env.GH_FETCH||fetch;
  if(requestUrl.pathname==='/auth/github'){
   if(request.method!=='GET')fail(405,'不支持的请求方式');
+  const previousId=deviceCookie(request);if(previousId){const previous=await env.BUCKET.get('device-login/'+await hash(previousId));if(previous){const saved=await previous.json();if(saved.doneSession&&saved.expiresAt>Date.now()){const target=githubFrontend(request,env);target.hash='session='+await decrypt(saved.doneSession,env);return new Response(null,{status:302,headers:{Location:target.href,'Cache-Control':'no-store','Referrer-Policy':'no-referrer'}})}}}
   const response=await send('https://github.com/login/device/code',{method:'POST',headers:{Accept:'application/json','Content-Type':'application/x-www-form-urlencoded','User-Agent':'TeamNoticeboard'},body:new URLSearchParams({client_id:githubClientId(env),scope:'read:user read:org'})});
   if(!response.ok)fail(502,'GitHub 登录暂时不可用');const token=await response.json();
   if(!token.device_code||!token.user_code||!/^[A-Z0-9-]{4,20}$/.test(token.user_code))fail(503,'GitHub 登录尚未启用，请稍后重试');

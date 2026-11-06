@@ -1,0 +1,26 @@
+{
+  "id": "5165973f-f2b4-4f62-816c-96a0208375ee",
+  "seq": 26,
+  "time": "2026-11-06T18:10:46.897Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "ed7fd3dc-773b-4207-a2df-a8e11412530e",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "第一页栏位布局：完成截图与目视验收",
+    "body": "核对上排依次为待开发、修复、优化、已验收，下排为先接单后开发。交接记录显示已部署但尚无最新布局截图和目视验收证据。验收时保留栏目原索引及历史；用户只授权移动栏位，未授权调整高度、卡片或其他 UI。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -1793988646897,
+    "createdAt": "2026-11-06T18:10:46.897Z",
+    "updatedAt": "2026-11-06T18:10:46.897Z"
+  },
+  "previousHash": "e7b49bc5b228c7254afbdfbc78163abce0c26bfaa415bf19a6a4fed29675c015",
+  "hash": "a583fcd110dfce50bf259a5516ec6b204936722c2a65847cc7bdf6d7b35121f2"
+}

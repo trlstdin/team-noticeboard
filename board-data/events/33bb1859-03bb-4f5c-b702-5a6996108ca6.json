@@ -1,0 +1,27 @@
+{
+  "id": "33bb1859-03bb-4f5c-b702-5a6996108ca6",
+  "seq": 33,
+  "time": "2026-11-06T18:22:01.978Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "e4d46e6b-caf9-446f-944a-11429c70b9cd",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "确认零项目时添加用户表单的字段与流程",
+    "body": "交接指出：没有项目时，添加用户仍显示所属 GitHub 仓库、项目名称等字段，尚未确认用户是否接受。先确认所需流程再决定是否开发；账号添加只填 URL 的要求已经明确，不能据此擅自推定用户添加流程。不得隐藏按钮或静默返回。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 3,
+    "rank": -1793988662048,
+    "createdAt": "2026-11-06T18:11:02.048Z",
+    "updatedAt": "2026-11-06T18:11:02.048Z",
+    "deletedAt": "2026-11-06T18:22:01.978Z"
+  },
+  "previousHash": "9ffd29bd0be136c7caa502eb6a6cdf97f544df7d6654d543a63fc34f5b0dba7a",
+  "hash": "c29572abaeb01703fbaf7bc05ac8a4a6700ef4c8efdc6b5ae6dbc48ca14eba35"
+}

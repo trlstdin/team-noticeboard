@@ -1,0 +1,26 @@
+{
+  "id": "5d57c600-d004-47b6-8d51-38b2283a9190",
+  "seq": 27,
+  "time": "2026-11-06T18:10:54.293Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "54b84516-e133-44d1-9663-3b3dbd5622c6",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "旧站私密账号：核对迁移完整性",
+    "body": "交接仅确认恢复公开 version22 和 22 条公开事件，没有原旧站私有 R2 的完整迁移证明。先核对可恢复来源、账号、授权与追加历史，再确定缺失项和迁移方案。不得宣称全部私密账号已迁移；不得清理、覆盖历史或覆盖 DATA_KEY。当前未认领，待接单后开展核对。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 3,
+    "rank": -1793988654293,
+    "createdAt": "2026-11-06T18:10:54.293Z",
+    "updatedAt": "2026-11-06T18:10:54.293Z"
+  },
+  "previousHash": "a583fcd110dfce50bf259a5516ec6b204936722c2a65847cc7bdf6d7b35121f2",
+  "hash": "cafba09634659483a65497f6f1416d5e51df41168a16c983d73bb3751e2e02ac"
+}

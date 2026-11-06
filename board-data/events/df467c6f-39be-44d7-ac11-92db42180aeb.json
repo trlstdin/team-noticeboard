@@ -1,0 +1,27 @@
+{
+  "id": "df467c6f-39be-44d7-ac11-92db42180aeb",
+  "seq": 30,
+  "time": "2026-11-06T18:21:43.568Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "9a4a0de7-18a0-4caa-b355-aab77d470992",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "单 URL 添加账号：完成真实浏览器保存验收",
+    "body": "交接中明确尚未完成真实浏览器保存全过程。验证只填写 URL 即可添加账号、名称自动取 hostname、默认 repoId=null；覆盖零项目场景，保存并刷新确认默认池中的账号仍存在。不得在事项或公开快照中填写真实账号凭据。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -1793988638975,
+    "createdAt": "2026-11-06T18:10:38.975Z",
+    "updatedAt": "2026-11-06T18:10:38.975Z",
+    "deletedAt": "2026-11-06T18:21:43.568Z"
+  },
+  "previousHash": "ba2423243d15444187016f79ed530756027b30ba51cbec74ad834bfa8bf9fb19",
+  "hash": "c12d25e22de88593218180a3b3bf9edf2c5f4fb2b796f1a98caea020aee0c6d4"
+}

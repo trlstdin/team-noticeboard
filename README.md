@@ -1,3 +1,7 @@
+## 2026-11-06 第二、第三页 UI 调整
+
+依据 `feat/github-login-link-permissions` 分支 DESIGN.md 的 F01、F07—F10、色调约束与按钮原则：第二页提供项目筛选、账号搜索、可用数量与复制入口；第三页按项目、账号池、用户授权、访问链接组织，批量操作随选择出现，窄屏单列。保留既有服务端鉴权与拖拽分配，不添加示例或更改生产数据。25项测试、构建与脚本语法检查通过；本轮浏览器预览工具不可用，未宣称目视或鼠标拖拽验收通过。
+
 > 当前公网主站：https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/ 。权限与最新部署状态见 [AUTH_ROLLOUT.md](AUTH_ROLLOUT.md)：固定 alistrode 成员与 trlstdin 账号，不使用 GitHub 应用 Secret。
 
 # 一起 · 团队协作告示板

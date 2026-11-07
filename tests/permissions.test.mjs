@@ -48,3 +48,12 @@ test('account grants are independent from viewer, editor and supervisor roles',a
 test('supervisors retain account copying without individual grants',async()=>{const {a,repoId,userId}=await setup();await a.change({action:'account.save',repoId,name:'Managed',url:'https://example.com/managed'});const account=(await a.state()).accounts[0];await a.change({action:'user.save',id:userId,repoId,name:'Editor',role:'supervisor'});const token=(await a.change({action:'token.create',userId,scopes:['manage']})).body.token;assert.equal((await a.call('copy',{id:account.id},token)).status,200)});
 
 test('default pool needs no project and grants across projects without widening link scope',async()=>{const a=app();await a.change({action:'account.save',name:'Pool',url:'https://example.com/pool'});const account=(await a.state()).accounts[0];assert.equal(account.repoId,null);assert.equal((await a.state()).repos.length,0);await a.change({action:'repo.save',name:'A',url:'https://github.com/example/a'});const repoId=(await a.state()).repos[0].id;await a.change({action:'user.save',repoId,name:'Reader',role:'viewer'});const userId=(await a.state()).users[0].id;const key=(await a.change({action:'token.create',userId,scopes:['copy']})).body.token;assert.equal((await a.call('copy',{id:account.id},key)).status,403);await a.change({action:'grant.set',accountIds:[account.id],userIds:[userId]});assert.equal((await a.call('copy',{id:account.id},key)).status,200);assert.equal((await a.state('')).accounts.length,0)});
+
+test('task repository metadata stays explicit, survives edits, and can be cleared',async()=>{
+ const {a,repoId}=await setup();const base={action:'task.save',repoId,title:'原文',body:'原文',proposer:'owner',column:0};
+ assert.equal((await a.change({...base,repositoryUrl:'https://github.com/alistrode/clipboard',personalRepositoryUrl:'https://github.com/trlstdin/rororororo/tree/projects/clipboard'})).status,200);
+ let task=(await a.state()).tasks[0];assert.equal(task.host,'');assert.equal(task.repositoryUrl,'https://github.com/alistrode/clipboard');
+ await a.change({...base,id:task.id});task=(await a.state()).tasks[0];assert.equal(task.personalRepositoryUrl,'https://github.com/trlstdin/rororororo/tree/projects/clipboard');
+ assert.equal((await a.change({...base,id:task.id,repositoryUrl:'https://example.com/invented'})).status,400);
+ await a.change({...base,id:task.id,repositoryUrl:'',personalRepositoryUrl:''});task=(await a.state()).tasks[0];assert.equal(task.repositoryUrl,'');assert.equal(task.personalRepositoryUrl,'');
+});

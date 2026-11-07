@@ -37,3 +37,15 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #board .column-note textarea[readonly]{padding:3px 0;resize:none}
 #board .column-note button{grid-column:2;grid-row:2;align-self:start;min-height:22px;margin:0;padding:3px 5px;font-size:9px}
 @media(max-width:800px){#board .column-notes{margin:0 4px 7px}#board .column-note{font-size:8px}#board .column-note textarea,#board .column-note textarea[readonly]{font-size:9px;line-height:1.5}}
+
+/* Each task starts with its name and a single line taken directly from its body. */
+#board .task{padding:8px 10px}
+#board .task-details>summary{display:block;cursor:pointer;list-style:none;min-width:0}
+#board .task-details>summary::-webkit-details-marker{display:none}
+#board .task-details>summary h3{margin:0 0 3px;padding-left:12px;position:relative}
+#board .task-details>summary h3:before{content:'▸';position:absolute;left:0}
+#board .task-details[open]>summary h3:before{content:'▾'}
+#board .task-overview{margin:0;font-size:12px;line-height:1.7;color:#b0bed0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.7em}
+#board .task-expanded{margin-top:8px}
+#board .task-details[open] .task-overview{display:none}
+@media(max-width:800px){#board .task{padding:6px 5px}#board .task-overview{font-size:10px}}

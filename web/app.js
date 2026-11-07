@@ -127,3 +127,6 @@ function managementProjectFields(project){return project?[field('project','所�
 async function resolveManagementProject(f,repoId){if(repoId)return repoId;const repoUrl=String(f.get('projectUrl')||'').trim();const existing=state.repos.find(r=>r.url.replace(/\/$/,'')===repoUrl.replace(/\/$/,''));if(existing?.canManage)return existing.id;const name=String(f.get('projectName')||'').trim()||new URL(repoUrl).pathname.replace(/\/$/,'').split('/').pop();await change({action:'repo.save',name,url:repoUrl});const created=state.repos.find(r=>r.url.replace(/\/$/,'')===repoUrl.replace(/\/$/,''));if(!created)throw Error('项目保存后未能取得最新数据，请重试保存');manageRepo=created.id;return created.id}
 
 window.addEventListener('error',event=>{if(event.error)toast('操作未完成：'+event.error.message)});window.addEventListener('unhandledrejection',event=>{toast('操作未完成：'+(event.reason?.message||'请重试'))});
+
+// Keep environment-linked accounts current without changing board refresh behavior.
+setInterval(()=>{if(state&&['accounts','manage'].includes(view)&&!document.hidden&&!$('#dialog').open&&!dragTask&&!pendingMutations)refresh()},2000);

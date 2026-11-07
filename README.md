@@ -1,3 +1,5 @@
+[内容规则（用户原文）](CONTENT_RULES.md)
+
 ## 仓库直接推送 Sites（2026-11-07 已验证）
 
 日常前后端修改提交 main，由 Actions 构建后直接推送 Sites。无需每个 AI 连接 Sites、无需新增主机或应用密钥。详见 [PUBLISHING.md](PUBLISHING.md)。已实际验证提交 `14d1fb191739883f9038c67085b6c10b663c4d2d` 经工作流自动激活，未再次部署 Sites 固定加载器；数据 version87、1项目、54事项保持。64项测试通过。

@@ -1,0 +1,29 @@
+{
+  "id": "d4fe3e41-0799-4ac6-af4d-69c1dc9ddd97",
+  "seq": 178,
+  "time": "2026-11-07T16:05:03.893Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "14c89e04-6920-4afa-9015-9b8df26e6e03",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "33. 虚拟机标本复制",
+    "body": "虚拟机标本复制",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 3072,
+    "createdAt": "2026-11-07T06:16:27.697Z",
+    "updatedAt": "2026-11-07T08:39:18.044Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "deletedAt": "2026-11-07T16:05:03.893Z"
+  },
+  "previousHash": "50419d4f16e3a19e4347ffd4ed30757be1bebcb055913a91ed6081ca6a44ab18",
+  "hash": "d61ee7dc1950a573890367bbccaba708d3453b27b521382b90d2e6f33964a1d7"
+}

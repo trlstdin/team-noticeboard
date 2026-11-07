@@ -1,0 +1,28 @@
+{
+  "id": "ca275b70-e0d0-441b-bc21-b2dd5c3e060d",
+  "seq": 200,
+  "time": "2026-11-07T16:44:53.717Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/codex-cli",
+    "id": "487dccea-c2c3-4533-b6bd-a1f835b24995",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "44. 虚拟机codex",
+    "body": "虚拟机codex，修复源码✓待登录\n\n保留修改后的 Codex CLI 和 Linux 启动脚本，按所选环境分开保存登录、会话与历史。\n启动时将 CLI 和授权浏览器绑定到同一编号出口；已有运行快照，当前能否登录仍需实际验证。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -1794032244310,
+    "createdAt": "2026-11-07T06:17:24.310Z",
+    "updatedAt": "2026-11-07T16:44:53.717Z"
+  },
+  "previousHash": "a85737860dc3e5493f191941432e2ab47cd435e691b31c7c58a6fbb5166ed9b7",
+  "hash": "1430431fc618c62f95d10b1f2566f628f362c687a88a0445c6b458baee675e70"
+}

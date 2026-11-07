@@ -1,0 +1,28 @@
+{
+  "id": "59efe4a4-b15a-4af6-b404-870ec9e9d932",
+  "seq": 198,
+  "time": "2026-11-07T16:44:45.194Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/voice-input",
+    "id": "b54009f4-5e6b-43c3-8104-011bebddfe3f",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "34. 语音输入法第三代方案",
+    "body": "手机端和语音输入,依赖编程agent桌面端\n语音第三代方案。\n\n现有分支保留 WeType 在线识别和 Qwen3-ASR 本地识别两条路线，同一段录音可以对照结果。\n网页可录音、编辑和复制文字，桌面端处理热键与输入；这是第三代方案可参考的现有基础。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 2048,
+    "createdAt": "2026-11-07T06:16:32.659Z",
+    "updatedAt": "2026-11-07T16:44:45.194Z"
+  },
+  "previousHash": "655135c7f878a25d40b94aebed7a0a45c83af6b39aaa272304f38c8cc66e0f95",
+  "hash": "65d89d8cbcff36274dd9041eaa5a12289043b5b8dd048e04798273187cf505d9"
+}

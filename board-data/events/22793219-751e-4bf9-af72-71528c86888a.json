@@ -1,0 +1,28 @@
+{
+  "id": "22793219-751e-4bf9-af72-71528c86888a",
+  "seq": 190,
+  "time": "2026-11-07T16:44:09.605Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "https://github.com/alistrode/elixir-sqlite-chunker",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/elixir-sqlite-chunker",
+    "id": "97ce44e4-4633-479a-a20b-b94a8bcb3bc4",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "06. 代码图谱ssh版",
+    "body": "图谱切片\n代码图谱ssh版\n代码图谱cli版\n函数间的通信树\n\n把 Elixir 源码按函数切成独立块存入 SQLite，再把块编号和行号关联到图谱节点。\n读写前检查节点和块的归属，逐块返回结果，并区分块操作成功与图谱写回成功。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 31744,
+    "createdAt": "2026-11-07T06:14:09.573Z",
+    "updatedAt": "2026-11-07T16:44:09.605Z"
+  },
+  "previousHash": "82e4e907b51af50c5736b8aaab35af91b829d58b4db815bde8094e75ab169bba",
+  "hash": "faddf06c58efcb01fda4cac6996e048563f1538b7eda5f0ebf9aeab3227b1bf0"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "c67c15ca-9f46-4cf6-a5dc-5f2a6114b4eb",
+  "seq": 177,
+  "time": "2026-11-07T16:04:40.435Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "3984656a-bf2b-4441-8daf-1efd636e615d",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "告示栏优化",
+    "body": "保存速度太慢，影响手感，希望优化到0.2s内，体感不可察觉为止。2，告示栏问题分几个框，每一点分一个框。项里面还有未上传，位于哪台主机：联系：xxx，3，区分重要紧急四象限，每一栏分组，四栏里面不管有几组，都必须显示四组，默认折叠点击展开，告示栏数据必须存仓库避免丢失，，每个项目根据时间顺序分配当前栏的序号，，每周归档已验收，在管理后台可查看，，告示栏统计只显示百分比",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -1794066765565,
+    "createdAt": "2026-11-07T15:52:45.565Z",
+    "updatedAt": "2026-11-07T16:04:40.435Z"
+  },
+  "previousHash": "9d422f72f50f764f1a2897d70398695e1b8dcd76b4310b03787d17173852b5aa",
+  "hash": "50419d4f16e3a19e4347ffd4ed30757be1bebcb055913a91ed6081ca6a44ab18"
+}

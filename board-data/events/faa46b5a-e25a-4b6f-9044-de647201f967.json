@@ -1,0 +1,28 @@
+{
+  "id": "faa46b5a-e25a-4b6f-9044-de647201f967",
+  "seq": 201,
+  "time": "2026-11-07T16:44:58.693Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/codex-reset-radar",
+    "id": "a4804106-db97-4639-a72e-334f60b2244d",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "46. codex重置雷达",
+    "body": "codex重置雷达✓需要集成\n\n采集指定 X 账号的发帖，通过模型判断是否提到 Codex 用量重置，并保留帖子来源和判定记录。\n可发送命中通知，也能给出当日重置概率；预测与已确认的重置消息分开处理。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -1794032254218,
+    "createdAt": "2026-11-07T06:17:34.218Z",
+    "updatedAt": "2026-11-07T16:44:58.693Z"
+  },
+  "previousHash": "1430431fc618c62f95d10b1f2566f628f362c687a88a0445c6b458baee675e70",
+  "hash": "865a2f9bdf20b261ec3827269e6f458439636aa84a982e89855d0f3582291836"
+}

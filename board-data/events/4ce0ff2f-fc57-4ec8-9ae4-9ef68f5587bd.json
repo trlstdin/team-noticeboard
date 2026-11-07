@@ -1,0 +1,28 @@
+{
+  "id": "4ce0ff2f-fc57-4ec8-9ae4-9ef68f5587bd",
+  "seq": 173,
+  "time": "2026-11-07T16:01:58.895Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "3ab2e1ce-52ba-4c1e-a80c-ef89c3900e46",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "35. 人格化ai助手，日程规划",
+    "body": "人格化ai助手，日程规划。基于人的有限注意力以及传统视觉注意力的饱和占用，我认为提高产能从并行开发五个项目扩产能到十个项目的关键是优化ai的语音汇报和开发状态汇报，开源项目管理，接入记忆和性格，绕过视觉用对话汇报项目状态，像安排行程一样安排大量开源项目进度，把开源项目管理从大脑托管到行程表,沉淀项目管理习惯进行托管",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 1024,
+    "createdAt": "2026-11-07T06:16:37.697Z",
+    "updatedAt": "2026-11-07T16:01:58.895Z"
+  },
+  "previousHash": "091149d63cbaa23255055e7cd7143f86f856e2c5da3e674fb912ebb32c039794",
+  "hash": "1d129b0041b93b386530627f292b5c0ec43dd7b0acdc362848b052155615943d"
+}

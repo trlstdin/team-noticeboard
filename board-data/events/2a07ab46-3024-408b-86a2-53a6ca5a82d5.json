@@ -1,0 +1,28 @@
+{
+  "id": "2a07ab46-3024-408b-86a2-53a6ca5a82d5",
+  "seq": 186,
+  "time": "2026-11-07T16:30:30.259Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "50c2b5c0-4a3e-44e7-b2f1-ce82b46ac3ab",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "32. 影刀和rpa自动化",
+    "body": "逆向影刀和rpa，掌握旧时代的自动化精髓",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 5120,
+    "createdAt": "2026-11-07T06:16:22.777Z",
+    "updatedAt": "2026-11-07T16:30:30.259Z"
+  },
+  "previousHash": "4a33119d83ccef11e7fee45d64d24039b8b72e662850a481636e4dbe2306c73b",
+  "hash": "6f4113ea9be32bb4f8e1dbbefe79824da75d596b0b6ae7c3d06d931320416a94"
+}

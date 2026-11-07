@@ -1,0 +1,28 @@
+{
+  "id": "809868bc-9414-4723-902c-31f3d57831fc",
+  "seq": 197,
+  "time": "2026-11-07T16:44:40.852Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "https://github.com/alistrode/elixir-sqlite-chunker",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/elixir-sqlite-chunker",
+    "id": "a58a9e5d-fe74-46a5-a870-ec2d46bb1ce3",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "20. 逐个函数编辑文件与1000个函数内的接口检测",
+    "body": "逐个函数编辑文件与1000个函数内的接口检测\n\n现有代码支持 Elixir 函数块级别的读写和删除，按图谱节点归属检查权限并逐块返回结果。\n块数据与原文件分开保存，改块不会自动改源码；1000 个函数以内的接口检测尚不能算作已有能力。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 17408,
+    "createdAt": "2026-11-07T06:15:20.292Z",
+    "updatedAt": "2026-11-07T16:44:40.852Z"
+  },
+  "previousHash": "9d07cef23b464b03dbd2d590472dd88893254a28f5ddaeaeca67026807ab4075",
+  "hash": "655135c7f878a25d40b94aebed7a0a45c83af6b39aaa272304f38c8cc66e0f95"
+}

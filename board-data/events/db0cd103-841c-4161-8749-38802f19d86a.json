@@ -1,0 +1,28 @@
+{
+  "id": "db0cd103-841c-4161-8749-38802f19d86a",
+  "seq": 182,
+  "time": "2026-11-07T16:09:06.982Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "https://github.com/alistrode/open-deploy",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/open-deploy",
+    "id": "e7565359-d653-4a9e-aa7d-d2ccae09f380",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "27. 装机盘",
+    "body": "装机盘\n完美系统方案一键做盘，，底层装一个虚拟机系统，在里面虚拟linux、和tiny10之类的极简win10切换，目的是ai可以在底层无缝调试系统的bug和修改",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 10240,
+    "createdAt": "2026-11-07T06:15:57.717Z",
+    "updatedAt": "2026-11-07T16:09:06.982Z"
+  },
+  "previousHash": "c6782fbf244d0f949c9a55b3700b665c49b1e30a576fb68664e08dd713e314e6",
+  "hash": "95cb8eda26400d4ad7354383b40cd3deb3aa5af9b1ef55272b12b7fb2e16a95f"
+}

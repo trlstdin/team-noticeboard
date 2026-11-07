@@ -1,0 +1,29 @@
+{
+  "id": "afe4b4d9-ce5b-4213-986a-e85d3522b985",
+  "seq": 161,
+  "time": "2026-11-07T15:43:57.046Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "e9e7a52e-f124-4e13-bdc0-9d49ef63945b",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "38. 网盘不限速",
+    "body": "网盘不限速。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 0,
+    "createdAt": "2026-11-07T06:16:54.007Z",
+    "updatedAt": "2026-11-07T08:39:34.031Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "deletedAt": "2026-11-07T15:43:57.046Z"
+  },
+  "previousHash": "c29658acdf61cc8fd182e2f68a364a56662ad826038e199698a6063290e5ada6",
+  "hash": "aa1363600eb8248f6c73baf525e2566c50388e8b8d1ed8ae2fe41c914fbdb20e"
+}

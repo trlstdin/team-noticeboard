@@ -1,0 +1,29 @@
+{
+  "id": "85935c69-2a8f-4ec2-a56f-4d60f0df46c7",
+  "seq": 179,
+  "time": "2026-11-07T16:05:24.484Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "129c0cc6-a783-4c11-9ee5-6fb2a7c92aa8",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "48. 微信语音输入法",
+    "body": "微信语音输入法✓",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 7168,
+    "createdAt": "2026-11-07T06:17:45.185Z",
+    "updatedAt": "2026-11-07T08:40:06.164Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "deletedAt": "2026-11-07T16:05:24.484Z"
+  },
+  "previousHash": "d61ee7dc1950a573890367bbccaba708d3453b27b521382b90d2e6f33964a1d7",
+  "hash": "7b086d5a12dde777fa98215d014638cde02a521aee2ffa5ad19f09e441a42499"
+}

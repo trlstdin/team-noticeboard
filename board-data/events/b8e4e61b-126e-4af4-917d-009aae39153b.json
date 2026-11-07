@@ -1,0 +1,28 @@
+{
+  "id": "b8e4e61b-126e-4af4-917d-009aae39153b",
+  "seq": 185,
+  "time": "2026-11-07T16:29:40.160Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "2089de69-44eb-4f2e-a408-2eec8f49a4eb",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "开源版uu远程",
+    "body": "类似uu远程的服务软件，类似爱思远控也行，让ai找几个类似rea的逆向软件逆向一下",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1794068980160,
+    "createdAt": "2026-11-07T16:29:40.160Z",
+    "updatedAt": "2026-11-07T16:29:40.160Z"
+  },
+  "previousHash": "f1520fc80ab89d20514f81544c01224b3b4928bd376e86df1818c7b04105248a",
+  "hash": "4a33119d83ccef11e7fee45d64d24039b8b72e662850a481636e4dbe2306c73b"
+}

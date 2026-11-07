@@ -1,0 +1,29 @@
+{
+  "id": "9885f98f-ab7d-401a-ab18-81d73ec86999",
+  "seq": 165,
+  "time": "2026-11-07T15:49:26.567Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "125c453b-6a11-4302-ad4d-947c667cb6eb",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "02. 破解片",
+    "body": "破解片",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 36864,
+    "createdAt": "2026-11-07T06:13:49.883Z",
+    "updatedAt": "2026-11-07T08:37:45.160Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "deletedAt": "2026-11-07T15:49:26.567Z"
+  },
+  "previousHash": "8b5190cd45ca7030ccdbdd276b8bbcb78e2bf1188052ec109526d626d5287231",
+  "hash": "aada0398766711c4fd1f2db0fe16af753d8a8a2a7e8accad9b3aa3c019887a0a"
+}

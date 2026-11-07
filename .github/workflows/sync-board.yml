@@ -26,6 +26,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - run: npm ci
       - name: Append immutable events and save public board
         id: sync
         env:
@@ -34,6 +35,11 @@ jobs:
       - name: Build current public board
         if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         run: node scripts/build.mjs
+      - name: Publish generated repository artifacts
+        if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        run: node scripts/publish-generated-ui.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/configure-pages@v5
         if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
       - uses: actions/upload-pages-artifact@v3

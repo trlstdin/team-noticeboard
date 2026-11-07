@@ -57,3 +57,19 @@ test('task repository metadata stays explicit, survives edits, and can be cleare
  assert.equal((await a.change({...base,id:task.id,repositoryUrl:'https://example.com/invented'})).status,400);
  await a.change({...base,id:task.id,repositoryUrl:'',personalRepositoryUrl:''});task=(await a.state()).tasks[0];assert.equal(task.repositoryUrl,'');assert.equal(task.personalRepositoryUrl,'');
 });
+
+test('verified organization members get the default pool independently from explicit grants',async()=>{
+ const a=app();const {hash,encrypt}=await import('../worker/index.js');const key='default-pool-org-member';
+ a.env.BUCKET.other.set('auth/'+await hash(key),JSON.stringify({githubId:42,secret:await encrypt('member-access',a.env),expiresAt:Date.now()+100000}));
+ let member=true;
+ a.env.GH_FETCH=async url=>{if(url.endsWith('/user'))return Response.json({id:42,login:'yyxgsgs'});if(url.includes('/memberships/'))return member?Response.json({state:'active',role:'member'}):new Response('{}',{status:404});throw Error('Unexpected GitHub query')};
+ let s=await a.state(key);assert.equal(s.repos.length,0);assert.equal(s.accounts.length,0);assert.equal(s.actor.canAccounts,true);assert.equal(s.actor.organizationMember,true);assert.equal(s.actor.manage,false);
+ await a.change({action:'account.save',name:'Default',url:'https://example.com/default-secret'});const pool=(await a.state()).accounts[0];
+ s=await a.state(key);assert.equal(s.accounts.length,1);assert.equal(s.accounts[0].canCopy,true);assert.deepEqual(s.accounts[0].grants,[]);assert.ok(!JSON.stringify(s).includes('default-secret'));
+ assert.equal((await a.call('copy',{id:pool.id},key)).body.url,'https://example.com/default-secret');
+ await a.change({action:'repo.save',name:'Project',url:'https://github.com/example/project'});const repoId=(await a.state()).repos[0].id;
+ await a.change({action:'account.save',repoId,name:'Project-only',url:'https://example.com/project-secret'});const scoped=(await a.state()).accounts.find(x=>x.repoId===repoId);
+ assert.equal((await a.call('copy',{id:scoped.id},key)).status,403);assert.equal((await a.change({action:'account.archive',id:pool.id},key)).status,403);
+ assert.equal((await a.call('copy',{id:pool.id},'')).status,403);
+ member=false;assert.equal((await a.call('copy',{id:pool.id},key)).status,403);s=await a.state(key);assert.equal(s.actor.canAccounts,false);assert.equal(s.accounts.length,0);
+});

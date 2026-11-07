@@ -1,0 +1,26 @@
+{
+  "id": "e7c5dc08-cc5e-453c-9293-f42b811d052c",
+  "seq": 37,
+  "time": "2026-11-07T06:13:59.747Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "797fbccd-dcac-4f15-902a-21ee257133f0",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "04. AI 评测平台",
+    "body": "评测环境、主流测试集。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1794032039747,
+    "createdAt": "2026-11-07T06:13:59.747Z",
+    "updatedAt": "2026-11-07T06:13:59.747Z"
+  },
+  "previousHash": "f276b9721a57e24deee14bf54ff3c43a3d6071872da141db0cda4c90964228d5",
+  "hash": "a84a49194fd5bc36b20859bac64125bc4f3377bffb9f2f47603aaf9acb5752df"
+}

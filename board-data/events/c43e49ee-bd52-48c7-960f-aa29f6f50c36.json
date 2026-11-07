@@ -1,0 +1,26 @@
+{
+  "id": "c43e49ee-bd52-48c7-960f-aa29f6f50c36",
+  "seq": 38,
+  "time": "2026-11-07T06:14:04.728Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "a239cd16-4270-4749-8fb0-276c878c6df5",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "05. 就业系统",
+    "body": "AI 面试模拟、AI 投简历。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1794032044728,
+    "createdAt": "2026-11-07T06:14:04.728Z",
+    "updatedAt": "2026-11-07T06:14:04.728Z"
+  },
+  "previousHash": "a84a49194fd5bc36b20859bac64125bc4f3377bffb9f2f47603aaf9acb5752df",
+  "hash": "9b7dfb6a8b4c3eaf158c89cec5fc9e9b51ebe6b0e0f5570151d22f7af2344c5c"
+}

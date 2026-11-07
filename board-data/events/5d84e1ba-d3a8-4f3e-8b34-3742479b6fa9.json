@@ -1,0 +1,26 @@
+{
+  "id": "5d84e1ba-d3a8-4f3e-8b34-3742479b6fa9",
+  "seq": 34,
+  "time": "2026-11-07T06:13:44.804Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "73321398-6205-47af-a254-ce2f2ea03d48",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "01. AI 破甲",
+    "body": "合并“破甲”“AI 破甲***”。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1794032024804,
+    "createdAt": "2026-11-07T06:13:44.804Z",
+    "updatedAt": "2026-11-07T06:13:44.804Z"
+  },
+  "previousHash": "c29572abaeb01703fbaf7bc05ac8a4a6700ef4c8efdc6b5ae6dbc48ca14eba35",
+  "hash": "c3cfc0ec6e836bcf166bee0f6b29c2a593a962fd0940e4a05ff6dc1a8ad1886c"
+}

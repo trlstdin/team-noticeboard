@@ -49,3 +49,11 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #board .task-expanded{margin-top:8px}
 #board .task-details[open] .task-overview{display:none}
 @media(max-width:800px){#board .task{padding:6px 5px}#board .task-overview{font-size:10px}}
+
+/* Both numbers stay on the existing compact title line. */
+#board .task-column-number{color:var(--ink);font-variant-numeric:tabular-nums}
+#board .task-history-number{margin-left:6px;color:var(--muted);font-size:9px;font-weight:400;white-space:nowrap}
+
+#board .task-details>summary h3{display:flex;align-items:baseline;gap:0}
+#board .task-column-number,#board .task-history-number{flex:none}
+#board .task-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

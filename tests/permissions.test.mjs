@@ -73,3 +73,28 @@ test('verified organization members get the default pool independently from expl
  assert.equal((await a.call('copy',{id:pool.id},'')).status,403);
  member=false;assert.equal((await a.call('copy',{id:pool.id},key)).status,403);s=await a.state(key);assert.equal(s.actor.canAccounts,false);assert.equal(s.accounts.length,0);
 });
+
+test('historical numbers survive edits, drag reorder, column moves, archive and reload',async()=>{
+ const {a,repoId}=await setup();const create=title=>a.change({action:'task.save',repoId,title,body:'用户介绍',proposer:'owner',column:0});
+ await create('First');await create('Second');await create('Third');let s=await a.state();let tasks=s.tasks;
+ const original=new Map(tasks.map(t=>[t.id,t.historyNumber]));assert.deepEqual([...original.values()].sort((a,b)=>a-b),[1,2,3]);
+ const order=[...tasks].reverse().map(t=>t.id);assert.equal((await a.change({action:'task.place',id:order[0],column:0,order})).status,200);
+ s=await a.state();for(const [i,id] of order.entries()){const t=s.tasks.find(t=>t.id===id);assert.equal(t.columnNumber,i+1);assert.equal(t.historyNumber,original.get(id))}
+ const moved=s.tasks.find(t=>t.id===order[0]);await a.change({action:'task.place',id:moved.id,column:1,order:[moved.id]});s=await a.state();assert.equal(s.tasks.find(t=>t.id===moved.id).columnNumber,1);assert.deepEqual(s.tasks.filter(t=>t.column===0).map(t=>t.columnNumber).sort(),[1,2]);
+ await a.change({action:'task.save',id:moved.id,repoId,title:'999. Renamed',body:moved.body,proposer:'owner',column:1,historyNumber:999});assert.equal((await a.state()).tasks.find(t=>t.id===moved.id).historyNumber,original.get(moved.id));
+ await a.change({action:'task.archive',id:moved.id});await create('Fourth');s=await a.state();assert.equal(s.tasks.find(t=>t.title==='Fourth').historyNumber,4);
+ const saved=JSON.parse(a.env.BUCKET.value);assert.equal(saved.tasks.find(t=>t.id===moved.id).historyNumber,original.get(moved.id));assert.equal(saved.nextTaskHistoryNumber,5);assert.equal((await a.state()).tasks.find(t=>t.title==='Fourth').historyNumber,4);
+});
+
+test('legacy migration keeps title numbers, reserves archived IDs and never changes user text',async()=>{
+ const {a,repoId,token}=await setup();const saved=JSON.parse(a.env.BUCKET.value);
+ const stamp='2026-01-01T00:00:00.000Z';saved.tasks=[
+ {id:'old',repoId,title:'06. 原名字',body:'原文不改',column:0,rank:0,createdAt:stamp},
+ {id:'archived',repoId,title:'54. 旧事项',body:'历史保留',column:0,rank:1,createdAt:stamp,deletedAt:stamp},
+ {id:'unnumbered',repoId,title:'新名字',body:'原文',column:0,rank:2,createdAt:stamp}];a.env.BUCKET.value=JSON.stringify(saved);
+ let s=await a.state();assert.equal(s.tasks.find(t=>t.id==='old').historyNumber,6);assert.equal(s.tasks.find(t=>t.id==='unnumbered').historyNumber,55);assert.equal(s.tasks.find(t=>t.id==='old').title,'06. 原名字');
+ assert.equal((await a.change({action:'task.numbering'},token)).status,403);assert.equal((await a.change({action:'task.numbering'})).status,200);
+ const persisted=JSON.parse(a.env.BUCKET.value);assert.equal(persisted.tasks.find(t=>t.id==='archived').historyNumber,54);assert.equal(persisted.tasks.find(t=>t.id==='old').body,'原文不改');const events=persisted.events.length;
+ assert.equal((await a.change({action:'task.numbering'})).status,200);assert.equal(JSON.parse(a.env.BUCKET.value).events.length,events);
+ await a.change({action:'task.save',repoId,title:'Next',proposer:'owner',column:1});s=await a.state();assert.equal(s.tasks.find(t=>t.title==='Next').historyNumber,56);
+});

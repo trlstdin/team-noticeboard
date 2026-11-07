@@ -1,0 +1,12 @@
+services:
+  noticeboard:
+    image: ghcr.io/trlstdin/team-noticeboard:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - noticeboard-data:/data
+    stop_grace_period: 30s
+volumes:
+  noticeboard-data:

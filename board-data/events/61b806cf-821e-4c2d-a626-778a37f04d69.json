@@ -1,0 +1,28 @@
+{
+  "id": "61b806cf-821e-4c2d-a626-778a37f04d69",
+  "seq": 113,
+  "time": "2026-11-07T08:38:55.456Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "5260fd6d-b0ab-4cb1-952d-f30f24282c20",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "25. codex试用资格管理器",
+    "body": "codex试用资格管理器",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 13312,
+    "createdAt": "2026-11-07T06:15:48.191Z",
+    "updatedAt": "2026-11-07T08:38:55.456Z"
+  },
+  "previousHash": "f5b39ad72786dd748e3b5ad760017e6da97ae399c58b4b398570a7a4eed6deb4",
+  "hash": "505e6c285848f6bd401c7d38381c0b6e34bfd0921205f0f43cc6517732d03164"
+}

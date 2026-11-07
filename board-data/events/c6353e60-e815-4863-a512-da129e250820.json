@@ -1,0 +1,28 @@
+{
+  "id": "c6353e60-e815-4863-a512-da129e250820",
+  "seq": 141,
+  "time": "2026-11-07T08:40:21.526Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "bc7bba55-4ab5-4679-8e5d-ad946ed3ec42",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "53. mcp隧道稳定化",
+    "body": "mcp隧道稳定化，✓",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": -1794032289908,
+    "createdAt": "2026-11-07T06:18:09.908Z",
+    "updatedAt": "2026-11-07T08:40:21.526Z"
+  },
+  "previousHash": "5bffeb06c25f886bd1bef17982e56f40c2f55e859c01b6a68ba2793ab863e4be",
+  "hash": "dbc7ebc7622490cbe2ae75d7e3e9870d5bdd5bd497b15cb32ea5bb934666b857"
+}

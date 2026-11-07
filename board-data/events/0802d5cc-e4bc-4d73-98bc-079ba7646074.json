@@ -1,0 +1,28 @@
+{
+  "id": "0802d5cc-e4bc-4d73-98bc-079ba7646074",
+  "seq": 122,
+  "time": "2026-11-07T08:39:21.090Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "b54009f4-5e6b-43c3-8104-011bebddfe3f",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "34. 语音第三代方案",
+    "body": "手机端和语音输入,依赖桌面端\n语音第三代方案。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 4096,
+    "createdAt": "2026-11-07T06:16:32.659Z",
+    "updatedAt": "2026-11-07T08:39:21.090Z"
+  },
+  "previousHash": "63a4d335f0d6a2dfe90ca29124f93bc258d7537668843875e1ce80f492f32ce7",
+  "hash": "e86a745d542c5c11ca360c20a5718b098762a6741af20033c66d08dead245b08"
+}

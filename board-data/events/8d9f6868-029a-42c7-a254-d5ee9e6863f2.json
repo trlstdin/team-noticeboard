@@ -1,0 +1,28 @@
+{
+  "id": "8d9f6868-029a-42c7-a254-d5ee9e6863f2",
+  "seq": 93,
+  "time": "2026-11-07T08:37:53.676Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "a239cd16-4270-4749-8fb0-276c878c6df5",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "05. 就业系统",
+    "body": "就业系统。\nai面试模拟\n用ai投简历。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 33792,
+    "createdAt": "2026-11-07T06:14:04.728Z",
+    "updatedAt": "2026-11-07T08:37:53.676Z"
+  },
+  "previousHash": "63ebcdb37461f60fc78a58b4e04c5771a599cdc941f800761b15b47dcd442f34",
+  "hash": "bb8c1390a702fae00f33032b3f1f9f8dc5730d53650276ad6f23cf241547038f"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "e14b3e73-896a-4abc-8802-775cbbb3717e",
+  "seq": 140,
+  "time": "2026-11-07T08:40:18.487Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "044fa874-d239-47f1-a241-0d766f72c314",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "52. zcodce使用",
+    "body": "zcodce使用√",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": -1794032284796,
+    "createdAt": "2026-11-07T06:18:04.796Z",
+    "updatedAt": "2026-11-07T08:40:18.487Z"
+  },
+  "previousHash": "3df73a8f0670a169d0eacff072baf610a29ea9827ea3344d2fb7aa4dcc3d5ab6",
+  "hash": "5bffeb06c25f886bd1bef17982e56f40c2f55e859c01b6a68ba2793ab863e4be"
+}

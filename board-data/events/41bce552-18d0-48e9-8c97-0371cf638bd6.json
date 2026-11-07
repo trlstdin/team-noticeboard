@@ -1,0 +1,28 @@
+{
+  "id": "41bce552-18d0-48e9-8c97-0371cf638bd6",
+  "seq": 128,
+  "time": "2026-11-07T08:39:41.227Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "ff8f7764-d561-4b81-8fbe-731f28956052",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "40. codex多窗口内别抢鼠标",
+    "body": "codex多窗口内别抢鼠标。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 1,
+    "rank": -1794032224372,
+    "createdAt": "2026-11-07T06:17:04.372Z",
+    "updatedAt": "2026-11-07T08:39:41.227Z"
+  },
+  "previousHash": "ef09258b0ca30f381c74183ce4479a18ee630a6088eabc78e7e9274773cc6026",
+  "hash": "4ed7d98705e7185d83c0d55a4197ebcf4cd58312841f9ab16ccc6fee60a33a82"
+}

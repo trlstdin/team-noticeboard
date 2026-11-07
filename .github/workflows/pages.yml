@@ -7,6 +7,7 @@ on:
       - web/**
       - package.json
       - package-lock.json
+      - scripts/push-backend.mjs
       - scripts/backend-release.mjs
       - scripts/build.mjs
       - scripts/publish-generated-ui.mjs
@@ -32,9 +33,13 @@ jobs:
       - run: npm test
       - run: node scripts/build.mjs
       - name: Publish generated UI to repository
+        id: publish
         run: node scripts/publish-generated-ui.mjs
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - name: Push backend release to Sites
+        if: steps.publish.outputs.published == 'true'
+        run: node scripts/push-backend.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

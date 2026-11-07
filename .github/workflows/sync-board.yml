@@ -36,10 +36,14 @@ jobs:
         if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         run: node scripts/build.mjs
       - name: Publish generated repository artifacts
+        id: publish
         if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         run: node scripts/publish-generated-ui.mjs
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - name: Push backend release to Sites
+        if: steps.publish.outputs.published == 'true'
+        run: node scripts/push-backend.mjs
       - uses: actions/configure-pages@v5
         if: steps.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
       - uses: actions/upload-pages-artifact@v3

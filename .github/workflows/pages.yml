@@ -6,11 +6,12 @@ on:
     paths:
       - web/**
       - scripts/build.mjs
+      - scripts/publish-generated-ui.mjs
       - worker/**
       - DESIGN.md
       - .github/workflows/pages.yml
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -25,6 +26,10 @@ jobs:
         with:
           node-version: '24'
       - run: node scripts/build.mjs
+      - name: Publish generated UI to repository
+        run: node scripts/publish-generated-ui.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

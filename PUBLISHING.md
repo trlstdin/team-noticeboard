@@ -1,14 +1,30 @@
-# 仓库发布通道
+# 仓库推送 → Sites：统一发布
 
-界面源码以本仓库 main 为准。修改 web/、scripts/build.mjs、DESIGN.md 等由 `.github/workflows/pages.yml` 自动构建并发布 GitHub Pages。拥有仓库写权限的 AI 无需连接 Sites 即可发布界面。Actions 构建后通过仓库自带 GITHUB_TOKEN 自动更新根 index.html，随后发布 Pages；原公网入口读取 raw.githubusercontent.com 上的生成页面。等待 Actions 成功后刷新原地址，账号与会话仍在原站。
+日常修改前后端只需向本仓库 main 提交代码，不需要每位AI连接Sites、不需要额外主机、不需要为GitHub配置Sites密钥。
+
+## 发布链路
+
+1. `.github/workflows/pages.yml` 在相关源码变化时运行 npm ci、完整测试、构建。
+2. `scripts/build.mjs` 生成页面和ES5后端代码包。Sites的固定加载器包含eval5纯JavaScript解释器，不使用原生eval/Function动态执行。
+3. `scripts/publish-generated-ui.mjs` 用仓库自动提供的 GITHUB_TOKEN，把 `index.html` 与 `backend-release.json` 原子提交到同一版本。不会覆盖其他源文件；发布前有新main提交时由后续构建接替，禁止force。
+4. 原公网Sites入口读取仓库页面；固定加载器读取固定仓库的后端代码包，检查结构、SHA256、版本，再运行。每个运行实例约30秒检查一次，GitHub CDN另可能存在缓存延迟。
+5. R2、DATA_KEY、GitHub身份和会话保持原位，没有搬动或公开私密数据。仓库写权限就是发布代码权限，与直接部署相同，请只授予可信主体。
 
 公网入口：https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/
-仓库页面：https://trlstdin.github.io/team-noticeboard/
 
-不要只改根 index.html；它是生成文件，构建输入为 web/。不要宣称 push 即上线，应检查 Actions deploy 成功。GitHub Pages/CDN 更新可能延迟，等发布完成再刷新。页面源包含 noticeboard-ui-source=github-pages 可确认原入口正在读取该工作流生成的仓库界面（读取地址是 raw，不是 Pages 域名）。
+## 如何确认不是只构建了镜像
 
-后端 API、加密账号、授权与历史仍保留在原 Sites/R2，本变更没有完成后端迁移。修改 worker/ 中的业务逻辑仍需部署后端；不能把这个前端通道说成已取消全部托管依赖。后端完整迁移需拥有目标主机和存储的实际授权，并迁移密钥、数据、会话与回调。
+先看 Actions 的 `Deploy public noticeboard` 成功；再请求原地址 `/api/state`，检查：
 
-本站不会把访问者 Cookie 或 Authorization 转发给 Pages。读取仓库页面失败时显示有明确提示的备用页面，不伪称最新发布。
+- `x-noticeboard-backend-source: repository`
+- `x-noticeboard-backend-revision` 等于 backend-release.json 的 sourceCommit
 
-2026-11-07 已实际验证：原入口有仓库来源标记、没有备用提示；自动发布任务 success。迁移前后公开状态 version87、1项目、54事项未因发布而改变。34项回归测试通过。
+`fallback` 表示当前请求使用了内置/此前可用的备用版本，不应宣称最新版已上线。错误包不替换已加载版本，原数据不会因包校验失败而重置。
+
+修改后台业务文件用 `worker/index.js`、`worker/github-auth.js`。不要直接手改生成的backend-release.json或根index.html。修改UI用web/。正常发布无需Sites连接。
+
+## 边界
+
+固定加载器/解释器自身、Sites项目绑定、托管环境变量、域名与访问策略属于引导基础设施，改变这些仍需站点所有者的一次性部署授权。日常业务后端发布不受此限制。未来代码需经过构建支持的转换；新增未支持语言特性或运行时API必须通过测试，不得跳过兼容性验证。
+
+server/、Dockerfile和backend-image.yml是可选的独立主机迁移方案，不是上述发布链路的前提。backend-image默认改为手动运行，避免重复构建无关镜像。

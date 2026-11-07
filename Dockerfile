@@ -10,6 +10,7 @@ RUN node scripts/build.mjs
 FROM node:24-bookworm-slim
 ENV NODE_ENV=production PORT=3000 DATA_DIR=/data
 WORKDIR /app
+COPY package.json ./
 COPY --from=build /app/dist/server ./dist/server
 COPY server ./server
 RUN mkdir /data && chown node:node /data

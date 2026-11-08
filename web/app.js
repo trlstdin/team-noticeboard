@@ -24,8 +24,22 @@ function render(){
  const done=state.tasks.filter(t=>t.column===4).length;
  $('#stats').innerHTML='<div class="stat"><strong>'+state.tasks.length+'</strong><span>全部事项</span></div><div class="stat"><strong>'+state.tasks.filter(t=>t.column!==4).length+'</strong><span>进行中</span></div><div class="stat"><strong>'+done+'</strong><span>已验收</span></div>';
  const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter))$('#project-filter').value=filter;
- renderBoard();if(canAccounts)renderAccounts();else $('#accounts').replaceChildren();if(manage)renderManage();else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}
+ renderBoard();if(canAccounts)renderAccounts();else $('#accounts').replaceChildren();if(manage)renderManage();else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();
 }
+function renderMemberAccess(){
+ const root=state.actor.root,links=state.memberLinks||[],members=state.organizationMembers||[];
+ $('#member-access').hidden=root?view!=='manage':!state.actor.organizationMember&&!links.length;
+ $('#member-link').hidden=!state.actor.canIssueMemberLinks;$('#add-member-policy').hidden=!root;
+ $('#organization-members').innerHTML=root?members.map(m=>'<article class="token-card"><strong>'+esc(m.githubLogin)+'</strong><p>成员权限：'+(m.accessEnabled===false?'已停用':'启用')+' · 签发权限：'+(m.canIssueLinks===false?'已关闭':'启用')+' · '+(m.verified?'已验证组织成员':'待本人 GitHub 登录验证')+'</p><div class="section-actions"><button data-member-access="'+esc(m.githubId)+'">'+(m.accessEnabled===false?'恢复成员权限':'停用成员权限')+'</button><button data-member-issue="'+esc(m.githubId)+'">'+(m.canIssueLinks===false?'开启签发权限':'关闭签发权限并撤销旧链接')+'</button>'+(m.verified&&m.accessEnabled!==false&&m.canIssueLinks!==false?'<button data-member-create="'+esc(m.githubId)+'">签发成员永久链接</button>':'')+'</div></article>').join(''):'';
+ $('#member-links').innerHTML=links.length?links.map(t=>'<article class="token-card"><strong>'+esc(t.label)+'</strong><p>永久有效 · 成员 '+esc(t.memberId)+' · '+(t.revokedAt?'已撤销':t.active===false?'权限已失效':'有效')+'</p>'+(!t.revokedAt?'<button data-member-revoke="'+esc(t.id)+'">撤销此链接</button>':'')+'</article>').join(''):'<p class="panel-hint">尚无成员永久链接。</p>';
+ for(const b of $$('[data-member-access]'))b.onclick=async()=>{const m=members.find(x=>String(x.githubId)===b.dataset.memberAccess);if(m.accessEnabled!==false&&!confirm('停用该成员，并撤销其全部成员链接？恢复成员权限不会恢复旧链接。'))return;try{await change({action:'member.update',memberId:m.githubId,accessEnabled:m.accessEnabled===false})}catch(e){toast(e.message)}};
+ for(const b of $$('[data-member-issue]'))b.onclick=async()=>{const m=members.find(x=>String(x.githubId)===b.dataset.memberIssue);try{await change({action:'member.update',memberId:m.githubId,canIssueLinks:m.canIssueLinks===false})}catch(e){toast(e.message)}};
+ for(const b of $$('[data-member-create]'))b.onclick=()=>generateMemberLink(b.dataset.memberCreate);
+ for(const b of $$('[data-member-revoke]'))b.onclick=async()=>{if(!confirm('撤销此成员链接及从它签发的后续链接？'))return;try{await change({action:'member.link.revoke',id:b.dataset.memberRevoke})}catch(e){toast(e.message)}};
+ $('#member-link').onclick=()=>generateMemberLink();
+ $('#add-member-policy').onclick=()=>openDialog('设置组织成员权限',[field('login','GitHub 用户名','text','',{required:true,max:39}),{type:'html',value:'<label><input name="accessEnabled" type="checkbox" checked>启用成员权限</label><label><input name="canIssueLinks" type="checkbox" checked>允许签发成员永久链接</label>'}],f=>change({action:'member.update',login:f.get('login'),accessEnabled:!!f.get('accessEnabled'),canIssueLinks:!!f.get('canIssueLinks')}));
+}
+async function generateMemberLink(memberId){try{const r=await change({action:'member.link.create',...(memberId?{memberId}:{})});const link=new URL(CONFIG.frontendUrl||location.href);link.hash='session='+r.token;openDialog('成员永久链接',[field('link','打开即获得对应成员权限','text',link.href,{readonly:true,help:'不设到期时间；主管可停用成员、关闭签发或撤销链接。'}),{type:'html',value:'<button type="button" id="copy-member-link">复制成员永久链接</button>'}],null);$('#copy-member-link').onclick=()=>copyText(link.href)}catch(e){toast(e.message)}}
 function orderedRepos(){return [...state.repos].sort((a,b)=>(a.rank??-Date.parse(a.createdAt))-(b.rank??-Date.parse(b.createdAt))||a.id.localeCompare(b.id))}
 function renderBoard(){
  const q=$('#search').value.trim().toLowerCase(),filter=$('#project-filter').value;const repos=orderedRepos().filter(r=>!filter||r.id===filter);

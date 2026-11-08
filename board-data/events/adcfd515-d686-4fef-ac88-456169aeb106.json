@@ -1,0 +1,16 @@
+{
+  "id": "adcfd515-d686-4fef-ac88-456169aeb106",
+  "seq": 304,
+  "time": "2026-11-08T15:10:00.214Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.pin",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "97ce44e4-4633-479a-a20b-b94a8bcb3bc4",
+    "pinned": true
+  },
+  "previousHash": "6887c5db711279f364d10a08ef6ae8f2aad710ad03f1fff886c05c9c7e7b08bb",
+  "hash": "8fcea45dc66ef0da46357529dfc5f41d919341f2eb7c1579306f2000f630a95f"
+}

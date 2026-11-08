@@ -1,0 +1,29 @@
+{
+  "id": "89f1029b-4a50-42b4-a30c-4c11ddeee881",
+  "seq": 323,
+  "time": "2026-11-08T15:17:25.293Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 18,
+    "repositoryUrl": "https://github.com/alistrode/omnidispatch",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/omnidispatch",
+    "id": "cd82580f-89b6-4b7b-9b29-0f2f53160da6",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "18. 自动发布油管",
+    "body": "自动发布油管等八个平台\n\n把素材、平台账号和发布时间放进任务队列，接入 YouTube 等平台的发布通道。\n同一账号的任务按顺序执行，提交结果不明时暂停等待核验，不会直接重发造成重复作品。\n\n",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 6144,
+    "createdAt": "2026-11-07T06:15:10.486Z",
+    "updatedAt": "2026-11-08T15:17:25.293Z"
+  },
+  "previousHash": "bdc3389afe652375ff6dedfb9f9355624131d68f094c8b61e52cb193ddf693e5",
+  "hash": "bcc59e4c9fe73bb25f366b8556ddf7ad93593d1d18bc98070edde183c881124c"
+}

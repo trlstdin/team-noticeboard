@@ -1,5 +1,5 @@
 {
-  "version": 287,
+  "version": 340,
   "columns": [
     "待开发",
     "修复",
@@ -60,7 +60,7 @@
       "id": "ced12345-5ac5-4ad4-ad74-d4a10b3ac2b3",
       "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
       "title": "49. 自动剪辑",
-      "body": "自动剪辑✓",
+      "body": "自动剪辑✓疑似未上传",
       "proposer": "trlstdin",
       "assignee": "",
       "host": "",
@@ -68,7 +68,7 @@
       "column": 4,
       "rank": 5120,
       "createdAt": "2026-11-07T06:17:50.014Z",
-      "updatedAt": "2026-11-07T08:40:09.410Z",
+      "updatedAt": "2026-11-08T15:04:42.748Z",
       "repositoryUrl": "",
       "personalRepositoryUrl": "",
       "historyNumber": 49,
@@ -96,7 +96,7 @@
       "id": "044fa874-d239-47f1-a241-0d766f72c314",
       "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
       "title": "52. zcodce使用",
-      "body": "zcodce使用√\n\n组织仓库的 ZCode 使用资料列出了官方入口、配置文档，以及安装、登录和模型供应商的配置步骤。\n配好后用一个临时仓库实际跑代码任务，确认任务能完成，并核对所用模型和计费渠道。",
+      "body": "zcodce使用√\n\n构建好在虚拟机未上传",
       "proposer": "trlstdin",
       "assignee": "",
       "host": "",
@@ -104,8 +104,8 @@
       "column": 4,
       "rank": 2048,
       "createdAt": "2026-11-07T06:18:04.796Z",
-      "updatedAt": "2026-11-08T06:50:51.070Z",
-      "repositoryUrl": "https://github.com/alistrode/ai-deploy-skills",
+      "updatedAt": "2026-11-08T15:04:14.326Z",
+      "repositoryUrl": "",
       "personalRepositoryUrl": "",
       "historyNumber": 52,
       "columnNumber": 3
@@ -122,9 +122,9 @@
       "column": 4,
       "rank": 1024,
       "createdAt": "2026-11-07T06:18:09.908Z",
-      "updatedAt": "2026-11-07T16:45:08.711Z",
-      "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.7",
-      "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.7",
+      "updatedAt": "2026-11-08T15:03:18.176Z",
+      "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.9",
+      "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.9",
       "historyNumber": 53,
       "columnNumber": 2
     },
@@ -132,7 +132,7 @@
       "id": "9a457c7d-6910-4005-be20-a39ad2aa5bb5",
       "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
       "title": "54. 信道稳定化",
-      "body": "日常信道✓与加密信道（信息与文件与电话）\n信道稳定化✓",
+      "body": "日常信道✓信息与文件）网站\n信道稳定化✓\n\n仓库：trlstdin/rororororo；分支：projects/file-bridge（File Bridge）",
       "proposer": "trlstdin",
       "assignee": "",
       "host": "",
@@ -140,9 +140,9 @@
       "column": 4,
       "rank": 0,
       "createdAt": "2026-11-07T06:18:14.838Z",
-      "updatedAt": "2026-11-07T08:40:24.522Z",
+      "updatedAt": "2026-11-08T15:06:56.701Z",
       "repositoryUrl": "",
-      "personalRepositoryUrl": "",
+      "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/file-bridge",
       "historyNumber": 54,
       "columnNumber": 1
     }
@@ -150,6 +150,8 @@
   "accounts": [],
   "users": [],
   "tokens": [],
+  "organizationMembers": [],
+  "memberLinks": [],
   "actor": {
     "id": "anonymous",
     "name": "访客",
@@ -158,17 +160,18 @@
     "manage": false,
     "canAccounts": false,
     "organizationMember": false,
+    "canIssueMemberLinks": false,
     "githubLogin": null,
     "githubId": null
   },
-  "historyCount": 287,
+  "historyCount": 340,
   "storage": {
     "shared": true,
     "github": true,
     "repository": "https://github.com/trlstdin/team-noticeboard",
-    "committedVersion": 239,
-    "commit": "a2b7abbed95f8725e22d0e828b550fa626c8e695",
-    "pending": 48
+    "committedVersion": 287,
+    "commit": "ffaa483371b3de86632d86550a963f670c82d5ba",
+    "pending": 53
   },
-  "snapshotAt": "2026-11-08T13:43:28.716Z"
+  "snapshotAt": "2026-11-08T18:55:40.615Z"
 }

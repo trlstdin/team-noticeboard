@@ -1,0 +1,25 @@
+{
+  "id": "0605e968-caec-46cb-8929-69c8862d19be",
+  "seq": 307,
+  "time": "2026-11-08T15:11:27.910Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.place",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "cd82580f-89b6-4b7b-9b29-0f2f53160da6",
+    "column": 5,
+    "order": [
+      "5ba9f9fc-f839-4ac3-8f8f-515d65786eb1",
+      "3d4a6b0a-eeb9-4538-ac67-5c54fa150bb3",
+      "e0ab93b9-4adc-43c5-a7a4-9fd591097763",
+      "b6e13528-741c-41d9-b0f9-0574f05b4b2b",
+      "cd82580f-89b6-4b7b-9b29-0f2f53160da6",
+      "e7565359-d653-4a9e-aa7d-d2ccae09f380",
+      "a4804106-db97-4639-a72e-334f60b2244d"
+    ]
+  },
+  "previousHash": "810ba3e517e79fad6c888fde9e6427e23fb3c69d6c9c88efec7d6513ebb02bda",
+  "hash": "d148954f2e4fb6d86ade68dde6e6416860916fe0ce0093726bc00f624eb006dd"
+}

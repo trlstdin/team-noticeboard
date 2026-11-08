@@ -1,0 +1,30 @@
+{
+  "id": "a7cb1f4d-9352-4da4-96a3-fc1f5d997ee1",
+  "seq": 338,
+  "time": "2026-11-08T15:53:05.226Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "583d95c8-c951-4ff6-abc5-bcd18409bc6c",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "09. 在线协作",
+    "body": "在线协作\n\n待选型成熟项目接入告示板",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 27648,
+    "createdAt": "2026-11-07T06:14:24.179Z",
+    "updatedAt": "2026-11-08T06:28:20.673Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 9,
+    "deletedAt": "2026-11-08T15:53:05.226Z"
+  },
+  "previousHash": "4f4602e7c0bc76b94aa6a5f5a4254cb663b87f91ffd98343e67ce5c36b4530bd",
+  "hash": "63df4ad10e91b7b8d18b3df8150b7d9191b54a161054b716d6f90bc3a73bffd4"
+}

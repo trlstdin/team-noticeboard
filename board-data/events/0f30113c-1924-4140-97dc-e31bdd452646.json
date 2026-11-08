@@ -1,0 +1,30 @@
+{
+  "id": "0f30113c-1924-4140-97dc-e31bdd452646",
+  "seq": 337,
+  "time": "2026-11-08T15:53:03.754Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "734275d8-cc44-4a74-a9ad-4baf442933b5",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "07. 识图ai 自动化",
+    "body": "识图ai 自动化\n\n用窗口语义树、OCR 和图片模板定位界面元素，再执行点击、输入等操作。\nWindows 与 Android 共用一套操作内核，动作后会读取结果做检查，不只按固定坐标盲点。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 29696,
+    "createdAt": "2026-11-07T06:14:14.295Z",
+    "updatedAt": "2026-11-07T16:44:14.286Z",
+    "repositoryUrl": "https://github.com/alistrode/guio",
+    "personalRepositoryUrl": "",
+    "historyNumber": 7,
+    "deletedAt": "2026-11-08T15:53:03.754Z"
+  },
+  "previousHash": "2ee4a97b6ffc7276adc5b2b6fd18d4a6f77bbeae2f492870e4381c7620750bb9",
+  "hash": "4f4602e7c0bc76b94aa6a5f5a4254cb663b87f91ffd98343e67ce5c36b4530bd"
+}

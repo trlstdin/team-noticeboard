@@ -1,0 +1,29 @@
+{
+  "id": "6a98d51f-df0c-41c5-a4f2-6ef226343900",
+  "seq": 292,
+  "time": "2026-11-08T15:04:14.326Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 52,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "044fa874-d239-47f1-a241-0d766f72c314",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "52. zcodce使用",
+    "body": "zcodce使用√\n\n构建好在虚拟机未上传",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 2048,
+    "createdAt": "2026-11-07T06:18:04.796Z",
+    "updatedAt": "2026-11-08T15:04:14.326Z"
+  },
+  "previousHash": "a7c0509569a9e72cf05d0d7228f409b521b36e660dd0b243cbb1e455a814f707",
+  "hash": "58069b1d6faa73e301d2b7172ac0d87130b38082c43d9a3a6a27b9700cd6a324"
+}

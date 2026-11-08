@@ -1,0 +1,29 @@
+{
+  "id": "f74cf5cb-0783-475d-85d6-fb910c8fee64",
+  "seq": 302,
+  "time": "2026-11-08T15:08:43.258Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 8,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "aad71b68-b460-4cd2-b1c2-7aaa6ed5b7c4",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "08. 前端手绘",
+    "body": "前端手绘，据说做好了，没用过\n\n26. codex 画布\ncodex 画布",
+    "proposer": "trlstdin",
+    "assignee": "l",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 5120,
+    "createdAt": "2026-11-07T06:14:19.235Z",
+    "updatedAt": "2026-11-08T15:08:43.258Z"
+  },
+  "previousHash": "f94f8970216d40631d5cf00769c4bbb89b9d51b277dc71af28be28c18373d5ce",
+  "hash": "1aa17f5f548ad49d6dab9a3341bc44d173150109e4dfdd33f0869fac6a25a946"
+}

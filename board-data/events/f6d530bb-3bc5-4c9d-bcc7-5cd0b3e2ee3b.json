@@ -1,0 +1,29 @@
+{
+  "id": "f6d530bb-3bc5-4c9d-bcc7-5cd0b3e2ee3b",
+  "seq": 291,
+  "time": "2026-11-08T15:04:01.845Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 52,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "044fa874-d239-47f1-a241-0d766f72c314",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "52. zcodce使用",
+    "body": "zcodce使用√\n\n构建好再虚拟机未上传",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 2048,
+    "createdAt": "2026-11-07T06:18:04.796Z",
+    "updatedAt": "2026-11-08T15:04:01.845Z"
+  },
+  "previousHash": "aef8857dff6c65e00060b840485b0e3baafa891b692a3f7810f6c6a73817b8b1",
+  "hash": "a7c0509569a9e72cf05d0d7228f409b521b36e660dd0b243cbb1e455a814f707"
+}

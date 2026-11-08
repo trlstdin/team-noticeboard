@@ -1,0 +1,30 @@
+{
+  "id": "9f8f893c-a0d7-4bd8-addf-a5c86aed603a",
+  "seq": 335,
+  "time": "2026-11-08T15:51:16.059Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "764f607f-a42e-4876-9bcd-52462f7b303f",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "三台电脑的重装系统问题",
+    "body": "组织征用的三台电脑的重装系统问题，采用自动重装开源项目，有gpt和鲸鱼版",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 1,
+    "rank": 3072,
+    "createdAt": "2026-11-07T16:17:13.227Z",
+    "updatedAt": "2026-11-07T16:17:37.719Z",
+    "historyNumber": 62,
+    "deletedAt": "2026-11-08T15:51:16.059Z"
+  },
+  "previousHash": "04b7f6d8a0133a8edb89916950317c46f46873ffbf5ee7c3f06f58966d5b8215",
+  "hash": "d4db7648c0fbafc0eee0ce8a889d523253e6a296bb7e88e5677aa318a22ca96a"
+}

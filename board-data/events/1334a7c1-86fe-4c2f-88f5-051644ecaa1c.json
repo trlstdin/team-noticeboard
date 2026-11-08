@@ -1,0 +1,30 @@
+{
+  "id": "1334a7c1-86fe-4c2f-88f5-051644ecaa1c",
+  "seq": 313,
+  "time": "2026-11-08T15:13:59.011Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "3d2daed2-1abe-4619-8952-7a5daae18019",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "03. 新闻数据爬取",
+    "body": "新闻数据爬取",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 5,
+    "rank": 4096,
+    "createdAt": "2026-11-07T06:13:54.682Z",
+    "updatedAt": "2026-11-08T15:13:47.588Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 3,
+    "deletedAt": "2026-11-08T15:13:59.011Z"
+  },
+  "previousHash": "677c9fa30c3de4ae94772b53c50138e818165af805317ae019cc46a47007f77b",
+  "hash": "bb4a519890635b5408c411790ae8bbf0421578d2cc0a438daa6dff02b30a5ba4"
+}

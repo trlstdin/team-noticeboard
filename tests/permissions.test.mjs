@@ -98,3 +98,27 @@ test('legacy migration keeps title numbers, reserves archived IDs and never chan
  assert.equal((await a.change({action:'task.numbering'})).status,200);assert.equal(JSON.parse(a.env.BUCKET.value).events.length,events);
  await a.change({action:'task.save',repoId,title:'Next',proposer:'owner',column:1});s=await a.state();assert.equal(s.tasks.find(t=>t.title==='Next').historyNumber,56);
 });
+
+test('accepted page isolates visitors and preserves member and supervisor navigation',async()=>{
+ const {a,repoId}=await setup();
+ for(const column of [0,4,5])await a.change({action:'task.save',repoId,title:'column '+column,proposer:'owner',column});
+ await a.change({action:'note.save',repoId,column:0,note:'internal guidance'});
+ const guest=await a.state('');assert.deepEqual(guest.views,['accepted']);assert.deepEqual(guest.tasks.map(t=>t.column),[4]);assert.equal(guest.repos[0].notes[0],'');assert.equal((await a.call('history',undefined,'')).status,403);
+ assert.deepEqual((await a.state()).views,['board','accounts','manage','accepted']);
+ const {hash,encrypt}=await import('../worker/index.js');const key='navigation-member';
+ a.env.BUCKET.other.set('auth/'+await hash(key),JSON.stringify({githubId:42,secret:await encrypt('member-navigation',a.env),expiresAt:Date.now()+100000}));
+ a.env.GH_FETCH=async url=>url.endsWith('/user')?Response.json({id:42,login:'member'}):Response.json({state:'active',role:'member'});
+ const member=await a.state(key);assert.deepEqual(member.views,['board','accounts','accepted']);assert.equal(member.tasks.length,3);assert.equal(member.actor.manage,false);
+});
+
+test('pinning persists, changes priority numbering, and requires edit permission',async()=>{
+ const {a,repoId,token}=await setup();
+ for(const title of ['first','second'])await a.change({action:'task.save',repoId,title,proposer:'owner',column:5});
+ const task=(await a.state()).tasks.find(t=>t.title==='first');
+ assert.equal((await a.change({action:'task.pin',id:task.id,pinned:true},'')).status,403);
+ assert.equal((await a.change({action:'task.pin',id:task.id,pinned:true},token)).status,200);
+ let current=(await a.state()).tasks.find(t=>t.id===task.id);assert.equal(current.pinned,true);assert.equal(current.columnNumber,1);assert.equal(current.historyNumber,task.historyNumber);
+ await a.change({action:'task.save',...current,title:'edited'},token);assert.equal((await a.state()).tasks.find(t=>t.id===task.id).pinned,true);
+ await a.change({action:'task.pin',id:task.id,pinned:false},token);assert.equal((await a.state()).tasks.find(t=>t.id===task.id).pinned,false);
+ const accepted=(await a.state()).tasks.filter(t=>t.column===4).map(t=>t.id);assert.equal((await a.change({action:'task.place',id:task.id,column:4,order:[task.id,...accepted]},token)).status,200);assert.equal((await a.state('')).tasks[0].id,task.id);
+});

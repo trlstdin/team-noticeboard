@@ -1,0 +1,459 @@
+{
+  "date": "2026-11-08",
+  "organization": "alistrode",
+  "privateRepository": "trlstdin/rororororo",
+  "branches": [
+    {
+      "branch": "5.0",
+      "commit": "65bbc3f7c0b0527bcce98e2da1b19d02958b61d3",
+      "files": 254,
+      "truncated": false
+    },
+    {
+      "branch": "5.1",
+      "commit": "495853890bb6bc757cd2b2f96698950fbe7c72e9",
+      "files": 262,
+      "truncated": false
+    },
+    {
+      "branch": "5.2",
+      "commit": "0be42e44f91631bf4211337293956c51774d2312",
+      "files": 263,
+      "truncated": false
+    },
+    {
+      "branch": "5.3",
+      "commit": "659ffe4b952c23e6d63dec3bdb3dbf9e3b6490cd",
+      "files": 281,
+      "truncated": false
+    },
+    {
+      "branch": "5.4",
+      "commit": "c2403c697f9ca6cbead5da706a915954cf14c40e",
+      "files": 281,
+      "truncated": false
+    },
+    {
+      "branch": "5.5",
+      "commit": "507fbb2ce7cdeb3e4d1d592ef4d9690fdfbb6bfd",
+      "files": 270,
+      "truncated": false
+    },
+    {
+      "branch": "5.6",
+      "commit": "3f95ce89ea66b0091d61c41ceaea25a82c3ebe13",
+      "files": 271,
+      "truncated": false
+    },
+    {
+      "branch": "5.7",
+      "commit": "a99f2633ae9a65451285b8c6e7d9c62a7427545a",
+      "files": 321,
+      "truncated": false
+    },
+    {
+      "branch": "5.8",
+      "commit": "9d69a71caaa0f0e1af9529bdbd079aaa5f0d949f",
+      "files": 323,
+      "truncated": false
+    },
+    {
+      "branch": "5.9",
+      "commit": "5a0bdfd860afb46b9237233ee6c96756b85b14cb",
+      "files": 319,
+      "truncated": false
+    },
+    {
+      "branch": "6.0",
+      "commit": "354c601054bad1d39cbd387d11f872fd883b3401",
+      "files": 420,
+      "truncated": false
+    },
+    {
+      "branch": "clash-ntp-fix",
+      "commit": "6de7589dfac37fa12a898b8e420956bc2b44ff1c",
+      "files": 276,
+      "truncated": false
+    },
+    {
+      "branch": "fix/clash-persistent-startup-20261016",
+      "commit": "71e8beaba95055b6c6d2066b6bdd1cf8da6796b1",
+      "files": 828,
+      "truncated": false
+    },
+    {
+      "branch": "fix/5.6-bounded-diagnostics",
+      "commit": "29a974238651ab1e6d80f9e46ecb427716c21775",
+      "files": 279,
+      "truncated": false
+    },
+    {
+      "branch": "handoff/session-20261027",
+      "commit": "c4f9f7032ee3a3ce24d174cf8ff9f129423b820c",
+      "files": 263,
+      "truncated": false
+    },
+    {
+      "branch": "main",
+      "commit": "9ba45cc30cf13918d2941f4da801b256e4015bcd",
+      "files": 130,
+      "truncated": false
+    },
+    {
+      "branch": "projects/alistrode-live",
+      "commit": "53d61e773c9a2d64bae6cf47bb31f353526b3fa6",
+      "files": 38,
+      "truncated": false
+    },
+    {
+      "branch": "projects/auto-trading",
+      "commit": "2d6414148e72f6fe895d7f8b6e0f4bcb2928013d",
+      "files": 29,
+      "truncated": false
+    },
+    {
+      "branch": "projects/browser-public-cast",
+      "commit": "1b835283cf4ad37c06fdd76c12451b1878e10421",
+      "files": 743,
+      "truncated": false
+    },
+    {
+      "branch": "projects/ccodex-rotate",
+      "commit": "51dc10388b7f0ebac7c5d4d0e8aacca041fffc51",
+      "files": 72,
+      "truncated": false
+    },
+    {
+      "branch": "projects/chatgpt-login",
+      "commit": "0099119f4b198b77ae6c66472d6a0c6fbe04159e",
+      "files": 21,
+      "truncated": false
+    },
+    {
+      "branch": "projects/clipboard",
+      "commit": "4e735c3754078c94fbb82e805b725fdb330114c6",
+      "files": 232,
+      "truncated": false
+    },
+    {
+      "branch": "projects/clipboard-2.0",
+      "commit": "f82ad0e9869d4a89a3264858fcc0090967c01d86",
+      "files": 191,
+      "truncated": false
+    },
+    {
+      "branch": "projects/codex-cli",
+      "commit": "36c07f58b9a6eaa8d61afbe66b6320e79e3d0363",
+      "files": 11728,
+      "truncated": false
+    },
+    {
+      "branch": "projects/codex-portable-disk",
+      "commit": "809f4416ffcb1ac7d0bad232f3cfa71967d5ba1a",
+      "files": 15,
+      "truncated": false
+    },
+    {
+      "branch": "projects/codex-portable-disk-copy-20261108",
+      "commit": "73973b49212cbb237f4512f721d7709cbf8071d2",
+      "files": 30,
+      "truncated": false
+    },
+    {
+      "branch": "projects/codex-reset-radar",
+      "commit": "7b90ecd906b92a6de188e816eef7e8d7c5fbbafa",
+      "files": 881,
+      "truncated": false
+    },
+    {
+      "branch": "projects/devspace-vm-20261030",
+      "commit": "838a211cb7146a1247edd4e701f708289f97715b",
+      "files": 71,
+      "truncated": false
+    },
+    {
+      "branch": "projects/elixir-sqlite-chunker",
+      "commit": "d6a7e5f5bcd4029fb0ded07ea3d3d07055008082",
+      "files": 22,
+      "truncated": false
+    },
+    {
+      "branch": "projects/file-bridge",
+      "commit": "d347f1c88d83dae559d20cb2441bb85f09774b97",
+      "files": 84,
+      "truncated": false
+    },
+    {
+      "branch": "projects/omnidispatch",
+      "commit": "842f3f19d9f828745c69918511fdaaa5401b9520",
+      "files": 84,
+      "truncated": false
+    },
+    {
+      "branch": "projects/open-deploy",
+      "commit": "dd725efeee18ca7702a8c856dcda202c689dffb7",
+      "files": 1533,
+      "truncated": false
+    },
+    {
+      "branch": "projects/project-manager",
+      "commit": "f3dadbcc82a97f4eb7cdec43a68bea0681ad53a8",
+      "files": 3982,
+      "truncated": false
+    },
+    {
+      "branch": "projects/v2ray",
+      "commit": "2ac864321303f70c673e07d5425f868305f2999b",
+      "files": 3589,
+      "truncated": false
+    },
+    {
+      "branch": "projects/vm-unified-gui",
+      "commit": "a3b7c9d52ecb79bed84a160b1f3848d11991a49b",
+      "files": 610,
+      "truncated": false
+    },
+    {
+      "branch": "projects/vm-usability",
+      "commit": "ca3631f590d8907fc763a16f215d89449e31c199",
+      "files": 803,
+      "truncated": false
+    },
+    {
+      "branch": "projects/voice-input",
+      "commit": "ccabdb992dd1f3d2987ab2ad617cac045768d381",
+      "files": 137,
+      "truncated": false
+    },
+    {
+      "branch": "release/6.0.3",
+      "commit": "bcf6bf9d9f29be3a1b300d7b6af6baaaa7a40e7f",
+      "files": 363,
+      "truncated": false
+    },
+    {
+      "branch": "release/6.0.5",
+      "commit": "07abd88f9a8898db38567a1257eb9b25f3eb496b",
+      "files": 380,
+      "truncated": false
+    },
+    {
+      "branch": "release/6.0.6",
+      "commit": "95f83d1202f4b43dfcc19f7ca180e0ec0c1e1b11",
+      "files": 418,
+      "truncated": false
+    },
+    {
+      "branch": "share/win10-ai1-20261019",
+      "commit": "b476f3008da432487e0af2e7d9d16430ae478480",
+      "files": 155,
+      "truncated": false
+    },
+    {
+      "branch": "share/win10-short-code-20261019",
+      "commit": "bd3a91eabdfdbf15869dae620aa577cd85333290",
+      "files": 157,
+      "truncated": false
+    },
+    {
+      "branch": "temp-files",
+      "commit": "e2a94b2b303613216d77749e54a488af8843609e",
+      "files": 67,
+      "truncated": false
+    },
+    {
+      "branch": "versions/1.0",
+      "commit": "41c0c9d3ecb64fe395b28386b43cec9d45e87206",
+      "files": 156,
+      "truncated": false
+    },
+    {
+      "branch": "versions/2.0",
+      "commit": "431b20f3140ecdcc4859cb9fcdfd29ccc427df09",
+      "files": 20,
+      "truncated": false
+    },
+    {
+      "branch": "versions/3.0",
+      "commit": "c96d54c97c25a2ea4c9bfb1387dfa063612621f5",
+      "files": 117,
+      "truncated": false
+    },
+    {
+      "branch": "versions/4.0",
+      "commit": "5faea65b96087c89c93f5eb5a1f7d3e713e24f26",
+      "files": 128,
+      "truncated": false
+    }
+  ],
+  "organizationRepositories": [
+    {
+      "repository": "alistrode/devspace-vm",
+      "branch": "main",
+      "files": 71
+    },
+    {
+      "repository": "alistrode/vm-unified-gui",
+      "branch": "main",
+      "files": 610
+    },
+    {
+      "repository": "alistrode/.github",
+      "branch": "main",
+      "files": 2
+    },
+    {
+      "repository": "alistrode/researchdesk",
+      "branch": "main",
+      "files": 27
+    },
+    {
+      "repository": "alistrode/ssh-relay-5.7",
+      "branch": "main",
+      "files": 321
+    },
+    {
+      "repository": "alistrode/guio",
+      "branch": "main",
+      "files": 296
+    },
+    {
+      "repository": "alistrode/ssh-relay-5.8",
+      "branch": "main",
+      "files": 322
+    },
+    {
+      "repository": "alistrode/ai-deploy-skills",
+      "branch": "main",
+      "files": 28
+    },
+    {
+      "repository": "alistrode/elixir-sqlite-chunker",
+      "branch": "main",
+      "files": 22
+    },
+    {
+      "repository": "alistrode/agenthub",
+      "branch": "main",
+      "files": 20
+    },
+    {
+      "repository": "alistrode/project-index",
+      "branch": "main",
+      "files": 1
+    },
+    {
+      "repository": "alistrode/omnidispatch",
+      "branch": "main",
+      "files": 1001
+    },
+    {
+      "repository": "alistrode/project-manager",
+      "branch": "main",
+      "files": 3982
+    },
+    {
+      "repository": "alistrode/workdesk",
+      "branch": "main",
+      "files": 28
+    },
+    {
+      "repository": "alistrode/ssh-relay-3.0",
+      "branch": "main",
+      "files": 117
+    },
+    {
+      "repository": "alistrode/-",
+      "branch": "main"
+    },
+    {
+      "repository": "alistrode/clipboard",
+      "branch": "main",
+      "files": 139
+    },
+    {
+      "repository": "alistrode/promptlab",
+      "branch": "main",
+      "files": 19
+    },
+    {
+      "repository": "alistrode/open-deploy",
+      "branch": "main",
+      "files": 1458
+    },
+    {
+      "repository": "alistrode/file-bridge",
+      "branch": "main",
+      "files": 84
+    }
+  ],
+  "method": "Enumerated every listed branch tree and project documentation; read relevant implementation files online. Missing means no dedicated implementation located; this is not runtime acceptance.",
+  "readSources": [
+    {
+      "repository": "alistrode/ai-deploy-skills",
+      "branch": "main",
+      "path": "scripts/catalog.py",
+      "blobSha": "79f5e888055c84164a8985926c7a5feb3a9050e1"
+    },
+    {
+      "repository": "alistrode/ai-deploy-skills",
+      "branch": "main",
+      "path": "scripts/inspect_environment.py",
+      "blobSha": "beb39044bef718b47127d44d9913c40c1edad222"
+    },
+    {
+      "repository": "alistrode/ai-deploy-skills",
+      "branch": "main",
+      "path": "references/catalog.json",
+      "blobSha": "7595e4101e6af6955fc24641d31fdaff8d9e5a87"
+    },
+    {
+      "repository": "alistrode/ai-deploy-skills",
+      "branch": "main",
+      "path": "references/recipes.md",
+      "blobSha": "003b6f2a20446f82298853c150c67ac802183ce5"
+    },
+    {
+      "repository": "trlstdin/rororororo",
+      "branch": "projects/clipboard",
+      "path": "src/main.cjs",
+      "blobSha": "562f1dc3d035e05ffd474db5d5b5ecda9de71f4f"
+    },
+    {
+      "repository": "trlstdin/rororororo",
+      "branch": "projects/clipboard",
+      "path": "src/db-worker.cjs",
+      "blobSha": "b5d085071199d2685d02aeaaae1b482408e44a65"
+    },
+    {
+      "repository": "trlstdin/rororororo",
+      "branch": "projects/clipboard",
+      "path": "src/own-ime-shift/README.md",
+      "blobSha": "8b4df3537d8a7fa05338e47122ba6f487da4800f"
+    },
+    {
+      "repository": "alistrode/guio",
+      "branch": "main",
+      "path": "src/Drivers/GuIO.Driver.Android/AndroidDriver.cs",
+      "blobSha": "9b0e4d840a7f2b01c6c2593fd406c38deaf0b9d2"
+    },
+    {
+      "repository": "alistrode/guio",
+      "branch": "main",
+      "path": "src/Kernel/ControlLoops.cs",
+      "blobSha": "be6630a20c2cde870e7b58036bd2deed98224d89"
+    },
+    {
+      "repository": "alistrode/omnidispatch",
+      "branch": "main",
+      "path": "omnidispatch/queue.py",
+      "blobSha": "1d208e7df6571b756f547d06ddf70b0baf05cb95"
+    },
+    {
+      "repository": "alistrode/omnidispatch",
+      "branch": "main",
+      "path": "omnidispatch/platform_specs.py",
+      "blobSha": "4aa8bddb30982445eb1f11965b2f4ca43f5079c4"
+    }
+  ]
+}

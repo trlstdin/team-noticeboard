@@ -29,12 +29,53 @@ function numberedTasks(s){
  return active.map(t=>({...t,columnNumber:numbers.get(t.id)}));
 }
 
+// User-approved content only. This fixed update runs once against the existing
+// board, preserves private state, and shares the journal's conditional write.
+async function approvedContentUpdate(s){
+ const key='2026-11-08-software-and-development';
+ const repoId='7d22d89f-9eac-410c-9b29-27f52e26d63c';
+ if(s.contentUpdates?.[key]||!s.repos.some(r=>r.id===repoId&&!r.deletedAt&&r.url==='https://github.com/trlstdin/team-noticeboard'))return false;
+ const ids={jobs:'a239cd16-4270-4749-8fb0-276c878c6df5',phone:'3d4a6b0a-eeb9-4538-ac67-5c54fa150bb3',publish:'cd82580f-89b6-4b7b-9b29-0f2f53160da6',input:'b54009f4-5e6b-43c3-8104-011bebddfe3f',software:'e5a406bf-7040-47e2-a581-b43af2748e35'};
+ const targets={};for(const name of Object.keys(ids)){const task=s.tasks.find(t=>t.id===ids[name]&&t.repoId===repoId&&!t.deletedAt);if(!task)fail(409,'内容合并目标已变化，原数据未覆盖');targets[name]=task;}
+ const now=new Date().toISOString(),changed=[];
+ const append=(task,value)=>{task.body=(task.body||'')+'\n\n'+value;task.updatedAt=now;changed.push({action:'task.save',task});};
+ append(targets.jobs,'开发中：全自动找工作软件\n实时获取各类岗位，按岗位要求整理简历和经验描述，进行 AI 面试模拟，生成面试与沟通话术并自动批量投递。\n按岗位知识库生成职业技术常识和学习材料。目标是帮助使用 AI 胜任工作的求职者完成岗位匹配、面试准备与上岗学习；具体职业能力仍需逐岗验证。');
+ append(targets.publish,'开发中：个体户小店自动发布自媒体获客。\n沿用现有多平台发布队列，管理小店素材、平台账号和发布时间；获客业务与效果统计仍需开发。');
+ append(targets.phone,'开发中：AI 自动调试、修复、修改手机 APP。\n现有 GuIO Android 驱动可读取无障碍树、截图并执行点击、输入和启动应用；自动修改源码、构建与修复闭环仍需开发。\n相关代码：https://github.com/alistrode/guio/tree/main/src/Drivers/GuIO.Driver.Android');
+ const software=targets.software;
+ software.title='47. 开源个人／开发者软件全套与 AI 软件安装部署';
+ software.body='把 AI 软件安装部署、输入法、剪贴板和开源收藏夹放在同一个软件清单里，按实际需要安装和配置。\n已有部署环境探测、产品目录和本地剪贴板代码；剪贴板支持中文搜索与停留上次位置，输入法已有源码，收藏夹尚未找到独立实现。\n\n'+software.body+'\n\n合并原 34. 语音输入法第三代方案：\n'+targets.input.body+'\n\n项目对应：\nAI 软件部署：https://github.com/alistrode/ai-deploy-skills\n剪贴板与自有拼音：https://github.com/trlstdin/rororororo/tree/projects/clipboard\n另一剪贴板分支：https://github.com/trlstdin/rororororo/tree/projects/clipboard-2.0\n语音输入法：https://github.com/trlstdin/rororororo/tree/projects/voice-input\n输入法仍保留原待开发定位；收藏夹和整套统一入口待开发。';
+ software.updatedAt=now;changed.push({action:'task.save',task:software});
+ targets.input.deletedAt=now;targets.input.updatedAt=now;targets.input.mergedInto=software.id;changed.push({action:'task.delete',task:targets.input});
+ const additions=[
+  {id:'b91d731a-3543-48e5-9ef6-4a9d10825623',title:'AI 视频生成',body:'生成 AI 视频，后续可与现有自动剪辑和多平台发布项目衔接。\n组织部署资料已整理 Seedance、Wan、CogVideoX 等视频路线及原任务状态查询步骤；尚未找到独立的视频生成业务项目。',repositoryUrl:'https://github.com/alistrode/ai-deploy-skills'},
+  {id:'b11e7cd8-8041-4247-9646-c955f8e9800d',title:'Grok、Gemini 账号池技术',body:'开发中：继续开发 Grok 和 Gemini 的账号池技术，分别整理两个平台的账号与可用状态。\n已检查组织仓库及私有仓库各分支，暂未找到对应账号池实现；现有 Grok、Gemini 部署资料不等同于账号池。'},
+  {id:'f10f64fa-7303-4f94-966a-c331b5dbeee1',title:'个体户小店财务与供应管理系统',body:'开发中：为个体户和小店整理财务与供应管理，把日常经营记录放在同一个系统里。\n自媒体获客并入现有多平台发布项目；已检索仓库，暂未找到小店财务和供应管理的独立实现。'},
+  {id:'899bb835-d26d-42ee-890e-cbdb76712ba9',title:'小程序制作',body:'开发中：为个体户和小店制作小程序，按经营需求安排页面与业务功能。\n已检查组织仓库及私有仓库各分支，暂未找到独立小程序项目，具体平台与实现待开发。'},
+  {id:'e55a1539-921a-4e98-b5d6-e5c6a9136201',title:'手机 APP 制作',body:'开发中：制作手机 APP，按需求完成页面、业务功能与安装包。\n已有 GuIO Android 代理和操作驱动可供调试参考，但尚未找到独立 APP 制作项目；AI 自动调试修复并入手机调试环境。'}
+ ];
+ let rank=Math.max(0,...s.tasks.filter(t=>t.repoId===repoId&&t.column===0&&!t.deletedAt).map(t=>Number(t.rank)||0));
+ for(const item of additions){
+  const existing=s.tasks.find(t=>t.id===item.id||t.repoId===repoId&&!t.deletedAt&&t.title.replace(/^\s*\d+[.．、]\s*/,'')===item.title);
+  if(existing)continue;
+  rank+=1024;const task={...item,repoId,proposer:'trlstdin',assignee:'',host:'',finisher:'',column:0,rank,createdAt:now,updatedAt:now,historyNumber:s.nextTaskHistoryNumber++,repositoryUrl:item.repositoryUrl||'',personalRepositoryUrl:''};
+  s.tasks.push(task);changed.push({action:'task.save',task});
+ }
+ for(const {action,task} of changed){
+  const event={id:id(),seq:s.version+1,time:now,actor:'trlstdin',actorId:'repository:trlstdin/team-noticeboard',action,repoId,visibility:'public',detail:action==='task.delete'?{id:task.id,mergedInto:task.mergedInto}:{...task},contentUpdate:key,previousHash:s.events.at(-1)?.hash||null};
+  event.hash=await hash(JSON.stringify(event));s.events.push(event);s.version++;
+ }
+ s.contentUpdates={...s.contentUpdates,[key]:{at:now,version:s.version}};
+ return true;
+}
+
 async function load(env){
- if(!env.BUCKET)fail(503,'共享存储尚未配置');const o=await env.BUCKET.get(KEY),s=o?await o.json():initial();ensureTaskNumbering(s);
+ if(!env.BUCKET)fail(503,'共享存储尚未配置');const o=await env.BUCKET.get(KEY),s=o?await o.json():initial();ensureTaskNumbering(s);let etag=o?.etag||null;
+ if(await approvedContentUpdate(s)){const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(!saved)fail(409,'内容更新期间有其他修改，请重试，原数据未覆盖');etag=saved.etag;}
  const sources=[...new Set(s.accounts.filter(v=>v.castSource&&!v.deletedAt).map(v=>v.castSource))];
  const leases=await Promise.all(sources.map(async source=>{const value=await env.BUCKET.get('noticeboard/cast-presence/'+source+'.json');return {source,lease:value?await value.json():null};}));
  for(const {source,lease} of leases)for(const acc of s.accounts)if(acc.castSource===source)acc.castExpiresAt=lease?.accountIds?.includes(acc.id)?Number(lease.expiresAt)||0:0;
- return {s,etag:o?.etag||null};
+ return {s,etag};
 }
 function cookie(request){return /(?:^|;\s*)board_session=([^;]*)/.exec(request.headers.get('cookie')||'')?.[1]||''}
 function anonymousActor(){return {root:false,id:'anonymous',name:'访客',users:[],edit:false,manage:false,signedIn:false}}

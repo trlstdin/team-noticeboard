@@ -1,16 +1,25 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
 import native from '../worker/index.js';
 import interpreted from './interpreted-backend.mjs';
 
-const snapshot=JSON.parse(await readFile(new URL('../public-state.json',import.meta.url),'utf8'));
 const marker='2026-11-08-software-and-development';
 const journalKey='noticeboard/journal-v1.json';
 const softwareId='e5a406bf-7040-47e2-a581-b43af2748e35';
 const inputId='b54009f4-5e6b-43c3-8104-011bebddfe3f';
 function fixture(){
- const s=structuredClone(snapshot);
+ // The public snapshot intentionally contains only accepted tasks after sync.
+ // Keep this fixture independent of that generated, frequently changing file.
+ const repoId='7d22d89f-9eac-410c-9b29-27f52e26d63c';
+ const entries=[
+  ['a239cd16-4270-4749-8fb0-276c878c6df5',5,'05. 就业系统','就业系统',0],
+  ['3d4a6b0a-eeb9-4538-ac67-5c54fa150bb3',13,'13. 手机调试环境','手机调试环境',0],
+  ['cd82580f-89b6-4b7b-9b29-0f2f53160da6',18,'18. 自动发布油管（采购？）','已有发布说明',0],
+  [inputId,34,'34. 语音输入法第三代方案','语音第三代方案',0],
+  [softwareId,47,'47. 开源剪贴板','已有剪贴板说明',2],
+  ['unrelated-task',63,'其他项目','不应改变的内容',1]
+ ];
+ const s={repos:[{id:repoId,url:'https://github.com/trlstdin/team-noticeboard',name:'team-noticeboard'}],notes:['原有栏目说明'],tasks:entries.map(([id,historyNumber,title,body,column],i)=>({id,repoId,historyNumber,title,body,column,rank:i*1024,createdAt:'2026-11-07T00:00:00.000Z',assignee:'existing assignee',host:'existing host'}))};
  s.version=277;s.events=[{id:'private-existing-event',hash:'previous-private-hash',visibility:'private'}];
  s.accounts=[{id:'private-account',secret:{iv:[1],data:[2]},name:'private',grants:[]}];
  s.users=[{id:'private-user',role:'viewer',name:'private'}];s.tokens=[{id:'private-token',hash:'private-hash',repoIds:[s.repos[0].id]}];

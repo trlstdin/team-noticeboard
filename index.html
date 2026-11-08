@@ -67,11 +67,18 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #board .task-pin[aria-pressed=true]{color:#d6ad52}
 #board .task-pin[aria-pressed=true] svg{fill:currentColor}
 #board .task-pin:disabled{opacity:.6}
+#member-policy{line-height:1.7;margin:12px 0}
+#member-access{margin:14px 0;padding:18px;border:1px solid var(--line);border-radius:12px}
+#member-access .token-card{padding:14px;margin:10px 0;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}
+#member-access .section-actions{flex-wrap:wrap}
+#organization-members{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:12px}
 </style></head><body>
 <header><button id="mode" class="mode" disabled>◉ 只读模式</button><div class="brand"><span class="mark" aria-hidden="true">▦</span><div>告示板<span class="subtitle">TEAM WORKSPACE</span></div></div><div class="header-actions"><div class="identity-summary" aria-live="polite"><span id="actor">正在确认身份</span><span id="permission-summary">正在核对权限…</span></div><button id="authorize">GitHub 登录</button><button id="logout" hidden>退出授权</button></div></header>
 <main><section class="intro" hidden><div><div class="eyebrow">ONE TEAM. ONE PLACE.</div><h1>让每一件事，都有着落。</h1><p>从一个想法，到一次交付。团队的进展，在这里一起发生。</p></div><div id="stats" class="stats"></div></section>
 <nav aria-label="功能区"><button class="tab active" data-view="board">协作告示板 <span>01</span></button><button class="tab" data-view="accounts" hidden>公有账号 <span>02</span></button><button class="tab" data-view="manage" hidden>权限管理 <span>03</span></button><button class="tab" data-view="accepted">已验收 <span>04</span></button><div class="nav-tail"><span class="live-dot"></span><span id="sync-status">连接中</span><button id="refresh" title="刷新">↻</button></div></nav>
 <div id="notice" role="status" aria-live="polite"></div>
+<p id="member-policy" class="panel-hint">建议组织成员可以也可以签发组织成员的永久链接。。。。但主管可以后台取消组织成员权限，自然权限和签发权限都可以后台取消</p>
+<section id="member-access" class="management-panel" hidden><div class="section-head"><div><h2>组织成员永久链接</h2><p>成员链接不设到期时间。取消成员权限或签发权限，新旧链接及派生会话立即失效；恢复权限后须重新签发。</p></div><div class="section-actions"><button id="member-link" hidden>签发我的成员永久链接</button><button id="add-member-policy" hidden>设置成员权限…</button></div></div><div id="organization-members"></div><div id="member-links"></div></section>
 <section id="board-view" class="view"><div class="toolbar"><div class="filters"><label class="sr-only" for="project-filter">项目</label><select id="project-filter"><option value="">全部项目</option></select><label class="search">⌕ <input id="search" placeholder="搜索事项、提出者、完成者" aria-label="搜索事项"></label></div><div><button id="history">变更记录</button> <button id="add-project" hidden>＋ 新建项目</button> <button id="add-task" class="primary" hidden>＋ 添加事项</button></div></div><div id="board" class="board"></div><div class="board-foot"><span>按项目折叠 · 新事项默认置顶</span><span id="mode-hint">当前为只读，可展开项目查看详情</span></div></section>
 <section id="accounts-view" class="view workspace-view" hidden>
 <div class="section-head"><div><div class="eyebrow">公有账号 · 02</div><h2>我的授权账号</h2><p>只显示你有权使用的账号，复制时会重新核对权限。</p></div><span id="accounts-count" class="count-badge"></span></div>
@@ -132,8 +139,22 @@ function render(){
  const done=state.tasks.filter(t=>t.column===4).length;
  $('#stats').innerHTML='<div class="stat"><strong>'+state.tasks.length+'</strong><span>全部事项</span></div><div class="stat"><strong>'+state.tasks.filter(t=>t.column!==4).length+'</strong><span>进行中</span></div><div class="stat"><strong>'+done+'</strong><span>已验收</span></div>';
  const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter))$('#project-filter').value=filter;
- renderBoard();if(canAccounts)renderAccounts();else $('#accounts').replaceChildren();if(manage)renderManage();else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}
+ renderBoard();if(canAccounts)renderAccounts();else $('#accounts').replaceChildren();if(manage)renderManage();else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();
 }
+function renderMemberAccess(){
+ const root=state.actor.root,links=state.memberLinks||[],members=state.organizationMembers||[];
+ $('#member-access').hidden=root?view!=='manage':!state.actor.organizationMember&&!links.length;
+ $('#member-link').hidden=!state.actor.canIssueMemberLinks;$('#add-member-policy').hidden=!root;
+ $('#organization-members').innerHTML=root?members.map(m=>'<article class="token-card"><strong>'+esc(m.githubLogin)+'</strong><p>成员权限：'+(m.accessEnabled===false?'已停用':'启用')+' · 签发权限：'+(m.canIssueLinks===false?'已关闭':'启用')+' · '+(m.verified?'已验证组织成员':'待本人 GitHub 登录验证')+'</p><div class="section-actions"><button data-member-access="'+esc(m.githubId)+'">'+(m.accessEnabled===false?'恢复成员权限':'停用成员权限')+'</button><button data-member-issue="'+esc(m.githubId)+'">'+(m.canIssueLinks===false?'开启签发权限':'关闭签发权限并撤销旧链接')+'</button>'+(m.verified&&m.accessEnabled!==false&&m.canIssueLinks!==false?'<button data-member-create="'+esc(m.githubId)+'">签发成员永久链接</button>':'')+'</div></article>').join(''):'';
+ $('#member-links').innerHTML=links.length?links.map(t=>'<article class="token-card"><strong>'+esc(t.label)+'</strong><p>永久有效 · 成员 '+esc(t.memberId)+' · '+(t.revokedAt?'已撤销':t.active===false?'权限已失效':'有效')+'</p>'+(!t.revokedAt?'<button data-member-revoke="'+esc(t.id)+'">撤销此链接</button>':'')+'</article>').join(''):'<p class="panel-hint">尚无成员永久链接。</p>';
+ for(const b of $$('[data-member-access]'))b.onclick=async()=>{const m=members.find(x=>String(x.githubId)===b.dataset.memberAccess);if(m.accessEnabled!==false&&!confirm('停用该成员，并撤销其全部成员链接？恢复成员权限不会恢复旧链接。'))return;try{await change({action:'member.update',memberId:m.githubId,accessEnabled:m.accessEnabled===false})}catch(e){toast(e.message)}};
+ for(const b of $$('[data-member-issue]'))b.onclick=async()=>{const m=members.find(x=>String(x.githubId)===b.dataset.memberIssue);try{await change({action:'member.update',memberId:m.githubId,canIssueLinks:m.canIssueLinks===false})}catch(e){toast(e.message)}};
+ for(const b of $$('[data-member-create]'))b.onclick=()=>generateMemberLink(b.dataset.memberCreate);
+ for(const b of $$('[data-member-revoke]'))b.onclick=async()=>{if(!confirm('撤销此成员链接及从它签发的后续链接？'))return;try{await change({action:'member.link.revoke',id:b.dataset.memberRevoke})}catch(e){toast(e.message)}};
+ $('#member-link').onclick=()=>generateMemberLink();
+ $('#add-member-policy').onclick=()=>openDialog('设置组织成员权限',[field('login','GitHub 用户名','text','',{required:true,max:39}),{type:'html',value:'<label><input name="accessEnabled" type="checkbox" checked>启用成员权限</label><label><input name="canIssueLinks" type="checkbox" checked>允许签发成员永久链接</label>'}],f=>change({action:'member.update',login:f.get('login'),accessEnabled:!!f.get('accessEnabled'),canIssueLinks:!!f.get('canIssueLinks')}));
+}
+async function generateMemberLink(memberId){try{const r=await change({action:'member.link.create',...(memberId?{memberId}:{})});const link=new URL(CONFIG.frontendUrl||location.href);link.hash='session='+r.token;openDialog('成员永久链接',[field('link','打开即获得对应成员权限','text',link.href,{readonly:true,help:'不设到期时间；主管可停用成员、关闭签发或撤销链接。'}),{type:'html',value:'<button type="button" id="copy-member-link">复制成员永久链接</button>'}],null);$('#copy-member-link').onclick=()=>copyText(link.href)}catch(e){toast(e.message)}}
 function orderedRepos(){return [...state.repos].sort((a,b)=>(a.rank??-Date.parse(a.createdAt))-(b.rank??-Date.parse(b.createdAt))||a.id.localeCompare(b.id))}
 function renderBoard(){
  const q=$('#search').value.trim().toLowerCase(),filter=$('#project-filter').value;const repos=orderedRepos().filter(r=>!filter||r.id===filter);

@@ -1,0 +1,29 @@
+{
+  "id": "a046fcc6-60b4-44d1-808e-52566bd1852b",
+  "seq": 355,
+  "time": "2026-11-08T19:24:35.770Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 7,
+    "repositoryUrl": "https://github.com/alistrode/guio",
+    "personalRepositoryUrl": "",
+    "id": "734275d8-cc44-4a74-a9ad-4baf442933b5",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "07. 识图ai 自动化",
+    "body": "识图ai 自动化，问题是能耗太高了，通用性据L说有问题\n\n用窗口语义树、OCR 和图片模板定位界面元素，再执行点击、输入等操作。\nWindows 与 Android 共用一套操作内核，动作后会读取结果做检查，不只按固定坐标盲点。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 9216,
+    "createdAt": "2026-11-07T06:14:14.295Z",
+    "updatedAt": "2026-11-08T19:24:35.770Z"
+  },
+  "previousHash": "64e93fa170c0135b21b14ea6719d8c7abc5b30d7f3a201aafba528afdb31c014",
+  "hash": "b14d2d8d810990265effab32778617b4caf665aac1243adf05452a6e56e462f8"
+}

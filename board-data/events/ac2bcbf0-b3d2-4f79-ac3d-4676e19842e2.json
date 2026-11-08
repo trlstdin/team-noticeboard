@@ -1,0 +1,30 @@
+{
+  "id": "ac2bcbf0-b3d2-4f79-ac3d-4676e19842e2",
+  "seq": 363,
+  "time": "2026-11-08T19:28:54.808Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "98fb697d-9ac1-4fbc-89a8-17afc3995ea1",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "22. 加密信道",
+    "body": "日常信道✓与加密信道（信息与文件与电话）",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 14336,
+    "createdAt": "2026-11-07T06:15:30.943Z",
+    "updatedAt": "2026-11-07T08:38:46.588Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 22,
+    "deletedAt": "2026-11-08T19:28:54.808Z"
+  },
+  "previousHash": "ae6cab2b20786d1dd5c9a3115594f4057cf9c64c7897407c0c1e4a46fafdc752",
+  "hash": "54a73828e54b5eea8e3d3cdd8c421549e4d8e9822e279e18d557ade183d66d2b"
+}

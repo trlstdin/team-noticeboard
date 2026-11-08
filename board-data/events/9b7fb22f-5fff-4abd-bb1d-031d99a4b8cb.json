@@ -1,0 +1,29 @@
+{
+  "id": "9b7fb22f-5fff-4abd-bb1d-031d99a4b8cb",
+  "seq": 367,
+  "time": "2026-11-08T19:47:32.697Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 47,
+    "repositoryUrl": "https://github.com/alistrode/clipboard",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/clipboard",
+    "id": "e5a406bf-7040-47e2-a581-b43af2748e35",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "47. 开源开发者软件全套",
+    "body": "输入法、剪贴板和开源收藏夹，\n报错：Error invoking remote method 'copy': Error:未找到原输入\n框；内容已复制，请手动粘贴\n还有剪贴板滚轮滑动灵敏度过高没法用\n改成dk harness那种滚轮加点击的，，还有自启动时好时坏，但不是完全坏，重启可能又好了\n\n\n\n剪贴板支持搜索与停留上次位置，无上限存储关机不丢失，文字输入法已有源码，收藏夹尚未找到独立实现。\n\n\n\n用本地 SQLite 保存文本剪贴板历史，支持中文搜索、全文查看，相同原文会去重并置顶。\n窗口可记住搜索词、选中项和滚动位置，再次打开停留上次，也能切换成每次显示最新记录。\n\n\n剪贴板与自有拼音：https://github.com/trlstdin/rororororo/tree/projects/clipboard\n另一剪贴板分支：https://github.com/trlstdin/rororororo/tree/projects/clipboard-2.0\n",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": 6144,
+    "createdAt": "2026-11-07T06:17:39.018Z",
+    "updatedAt": "2026-11-08T19:47:32.697Z"
+  },
+  "previousHash": "4d9c8dcd40efc93ce2f0f85e4f8bad40e379137ded49a0db9030d19bfcd6b698",
+  "hash": "1fbd3e34bf55d49edec92ab4dbe7be486d1b66f8cf573c13885cd4295acb51e0"
+}

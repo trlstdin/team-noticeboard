@@ -1,5 +1,5 @@
 {
-  "version": 340,
+  "version": 369,
   "columns": [
     "待开发",
     "修复",
@@ -54,7 +54,7 @@
       "repositoryUrl": "https://github.com/trlstdin/team-noticeboard",
       "personalRepositoryUrl": "",
       "historyNumber": 37,
-      "columnNumber": 6
+      "columnNumber": 5
     },
     {
       "id": "ced12345-5ac5-4ad4-ad74-d4a10b3ac2b3",
@@ -72,24 +72,6 @@
       "repositoryUrl": "",
       "personalRepositoryUrl": "",
       "historyNumber": 49,
-      "columnNumber": 5
-    },
-    {
-      "id": "9fd044be-1f98-42cb-b50a-cc202cdcd8b5",
-      "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
-      "title": "50. 修好梯子-1",
-      "body": "修好梯子-1√\n\n开源clash和v2ray\nClash 部分修复服务启动、控制连接和代理开关，避免多个内核争用端口。\nv2rayN 部分保留 Windows/Linux 启动入口和内核配置，已有各平台运行包与验证记录。",
-      "proposer": "trlstdin",
-      "assignee": "",
-      "host": "",
-      "finisher": "",
-      "column": 4,
-      "rank": 4096,
-      "createdAt": "2026-11-07T06:17:54.947Z",
-      "updatedAt": "2026-11-08T06:28:59.703Z",
-      "repositoryUrl": "",
-      "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/v2ray",
-      "historyNumber": 50,
       "columnNumber": 4
     },
     {
@@ -113,7 +95,7 @@
     {
       "id": "bc7bba55-4ab5-4679-8e5d-ad946ed3ec42",
       "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
-      "title": "53. mcp隧道稳定化",
+      "title": "53. ai远程调试的ssh和mcp隧道稳定化",
       "body": "mcp隧道稳定化，✓\n\n把远程命令、文件传输和端口隧道接到 MCP，远端通过 SSH 连接并核对主机身份。\n持久任务可查询状态和输出，连接中断后先核对原任务，避免盲目重复执行；隧道默认限制在回环地址。",
       "proposer": "trlstdin",
       "assignee": "",
@@ -122,7 +104,7 @@
       "column": 4,
       "rank": 1024,
       "createdAt": "2026-11-07T06:18:09.908Z",
-      "updatedAt": "2026-11-08T15:03:18.176Z",
+      "updatedAt": "2026-11-08T19:27:03.917Z",
       "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.9",
       "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.9",
       "historyNumber": 53,
@@ -164,14 +146,14 @@
     "githubLogin": null,
     "githubId": null
   },
-  "historyCount": 340,
+  "historyCount": 369,
   "storage": {
     "shared": true,
     "github": true,
     "repository": "https://github.com/trlstdin/team-noticeboard",
-    "committedVersion": 287,
-    "commit": "ffaa483371b3de86632d86550a963f670c82d5ba",
-    "pending": 53
+    "committedVersion": 340,
+    "commit": "6661075d290b2f53b614ff597a9be6348a1f1cb9",
+    "pending": 29
   },
-  "snapshotAt": "2026-11-08T18:55:40.615Z"
+  "snapshotAt": "2026-11-08T22:34:20.591Z"
 }

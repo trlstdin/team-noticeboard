@@ -1,0 +1,29 @@
+{
+  "id": "f1327fe5-7d3e-4b2b-8ba4-8c516c7e0195",
+  "seq": 351,
+  "time": "2026-11-08T19:23:14.489Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 71,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "1cbd7c10-5f70-4e50-b20d-6e11412b5f7b",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "独立的乌班图系统iso",
+    "body": "应当集成输入法和剪贴板，信道网站，拖拽文件优化，ctrlc闪退修复，双向粘贴的解决，以及之后的难以单独使用，需要修改系统的软件，，最后提供一个iso，在oracle中即插即用",
+    "proposer": "主管链接",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1794165794489,
+    "createdAt": "2026-11-08T19:23:14.489Z",
+    "updatedAt": "2026-11-08T19:23:14.489Z"
+  },
+  "previousHash": "afc90fd60042fc117a1db2ca00c06c82b1c8783aecf3a8f7bd5766f93c21b2ee",
+  "hash": "7c58a52afff2cf5a7ee62250f42e7db7b9b9c4bb51816ebbf371d99b23ea0dc2"
+}

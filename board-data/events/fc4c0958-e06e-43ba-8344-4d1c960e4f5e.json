@@ -1,0 +1,30 @@
+{
+  "id": "fc4c0958-e06e-43ba-8344-4d1c960e4f5e",
+  "seq": 361,
+  "time": "2026-11-08T19:28:51.787Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "93f96252-4895-48c9-9e6f-6b3f9a39b5e2",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "31. github帐号池和girhub自动化",
+    "body": "github帐号池和girhub自动化。给自己刷star资历，，我们敬畏你呀，老资历",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 5120,
+    "createdAt": "2026-11-07T06:16:17.575Z",
+    "updatedAt": "2026-11-07T16:31:56.242Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 31,
+    "deletedAt": "2026-11-08T19:28:51.787Z"
+  },
+  "previousHash": "881686505885d094768af601f50a7bb4c21404ff871a1b811085b4dae6c83d3a",
+  "hash": "adfc05644bccdc6b9f88c9843ef696523eb7ec13f2e8e8359c75bba9a9afef64"
+}

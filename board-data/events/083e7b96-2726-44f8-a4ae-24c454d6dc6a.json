@@ -1,0 +1,29 @@
+{
+  "id": "083e7b96-2726-44f8-a4ae-24c454d6dc6a",
+  "seq": 359,
+  "time": "2026-11-08T19:27:03.917Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 53,
+    "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.9",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.9",
+    "id": "bc7bba55-4ab5-4679-8e5d-ad946ed3ec42",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "53. ai远程调试的ssh和mcp隧道稳定化",
+    "body": "mcp隧道稳定化，✓\n\n把远程命令、文件传输和端口隧道接到 MCP，远端通过 SSH 连接并核对主机身份。\n持久任务可查询状态和输出，连接中断后先核对原任务，避免盲目重复执行；隧道默认限制在回环地址。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 1024,
+    "createdAt": "2026-11-07T06:18:09.908Z",
+    "updatedAt": "2026-11-08T19:27:03.917Z"
+  },
+  "previousHash": "2092605396b510c76bcfec19816e464d1cbb0712d922380cfc777c3599f84a14",
+  "hash": "e141054f5f82005c31c4a1038cc8936f1162d787c6fe57f6710c32b0f87a433a"
+}

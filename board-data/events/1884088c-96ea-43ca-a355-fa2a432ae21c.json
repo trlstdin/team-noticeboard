@@ -1,0 +1,29 @@
+{
+  "id": "1884088c-96ea-43ca-a355-fa2a432ae21c",
+  "seq": 346,
+  "time": "2026-11-08T19:18:32.479Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.restore",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "9e631acf-5481-43d1-95bd-b58f6e11887e",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "16. 逆向游戏破解资源",
+    "body": "逆向游戏破解资源",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 20480,
+    "createdAt": "2026-11-07T06:14:59.748Z",
+    "updatedAt": "2026-11-08T19:18:32.479Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 16
+  },
+  "previousHash": "8bfc21060f632e3fbdaa35e37a0451620a6b8d717a08a179736933c8a2cb51c1",
+  "hash": "00cf8387b9752216a7155665ccec2e03502585e679b16372c110d7c62685984b"
+}

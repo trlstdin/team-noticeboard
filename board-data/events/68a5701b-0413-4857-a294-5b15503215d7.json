@@ -1,0 +1,30 @@
+{
+  "id": "68a5701b-0413-4857-a294-5b15503215d7",
+  "seq": 362,
+  "time": "2026-11-08T19:28:53.543Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "83625267-3460-4725-b4e4-6312b07dbaa3",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "28. 手机电话变声器",
+    "body": "手机电话变声器",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 8192,
+    "createdAt": "2026-11-07T06:16:02.715Z",
+    "updatedAt": "2026-11-07T08:39:03.878Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 28,
+    "deletedAt": "2026-11-08T19:28:53.543Z"
+  },
+  "previousHash": "adfc05644bccdc6b9f88c9843ef696523eb7ec13f2e8e8359c75bba9a9afef64",
+  "hash": "ae6cab2b20786d1dd5c9a3115594f4057cf9c64c7897407c0c1e4a46fafdc752"
+}

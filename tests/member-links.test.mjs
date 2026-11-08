@@ -21,6 +21,16 @@ async function app(worker,hash,encrypt){
  return {env,call,state,change,repoId};
 }
 for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncrypt],['interpreted',interpreted,interpretedHash,interpretedEncrypt]]){
+ test(name+': archived tasks restore their identity, content and placement with edit permission',async()=>{
+  const a=await app(worker,hash,encrypt);
+  await a.change({action:'task.save',repoId:a.repoId,title:'Restore me',body:'Original content',proposer:'owner',column:0});
+  const original=(await a.state()).tasks[0];
+  await a.change({action:'task.archive',id:original.id});assert.equal((await a.state()).tasks.length,0);
+  assert.equal((await a.change({action:'task.restore',id:original.id},'outside')).status,403);
+  assert.equal((await a.change({action:'task.restore',id:original.id})).status,200);
+  const restored=(await a.state()).tasks[0];
+  for(const field of ['id','historyNumber','title','body','column','rank','createdAt'])assert.equal(restored[field],original[field]);
+ });
  test(name+': verified members issue permanent member links without gaining supervisor rights',async()=>{
   const a=await app(worker,hash,encrypt);const m=await a.state('member');assert.equal(m.actor.canIssueMemberLinks,true);assert.deepEqual(m.organizationMembers,[]);
   assert.equal((await a.state()).organizationMembers[0].verified,true);

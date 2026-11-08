@@ -228,6 +228,8 @@ const handler={async fetch(request,env,ctx){try{
  const t={historyNumber:old?.historyNumber??s.nextTaskHistoryNumber++,repositoryUrl,personalRepositoryUrl,id:old?.id||id(),repoId,title:text(b.title,180),body:typeof b.body==='string'?b.body.slice(0,10000):'',proposer:text(b.proposer,100),assignee:typeof b.assignee==='string'?b.assignee.trim().slice(0,100):(old?.assignee||''),host:typeof b.host==='string'?b.host.trim().slice(0,200):(old?.host||''),finisher:typeof b.finisher==='string'?b.finisher.slice(0,100):'',column:b.column,rank:old?.rank??-Date.now(),createdAt:old?.createdAt||now,updatedAt:now};if(old)Object.assign(old,t);else s.tasks.push(t);visibility='public';detail=t;
  }else if(b.action==='task.move'){
  const t=get(s.tasks,b.id);repoId=t.repoId;requireEdit(a,repoId);if(!Number.isInteger(b.column)||b.column<0||b.column>=COLUMNS.length||!Number.isFinite(b.rank))fail(400,'无效的排序');t.column=b.column;t.rank=b.rank;t.updatedAt=now;visibility='public';detail={...t};
+ }else if(b.action==='task.restore'){
+ const t=s.tasks.find(t=>t.id===b.id);if(!t)fail(404,'记录不存在');repoId=t.repoId;requireEdit(a,repoId);delete t.deletedAt;t.updatedAt=now;visibility='public';detail={...t};
  }else if(b.action==='task.archive'){
  const t=get(s.tasks,b.id);repoId=t.repoId;requireEdit(a,repoId);t.deletedAt=now;visibility='public';detail={...t};
  }else if(b.action==='note.save'){

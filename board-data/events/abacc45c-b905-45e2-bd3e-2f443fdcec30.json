@@ -1,0 +1,29 @@
+{
+  "id": "abacc45c-b905-45e2-bd3e-2f443fdcec30",
+  "seq": 251,
+  "time": "2026-11-08T07:59:58.695Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 10,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "8c0cbe93-8aec-42f5-a4f4-146bdf42d2ea",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "10. 最新水平的ai语音方案，解决电音和大佐口音的问题",
+    "body": "音乐合成\n\n用户提供的参考资料：\n1、MOSS-TTS-v1.5 刚刚发布，配合RVC，音质，相似度远超 IndexTTS2，所有资料 + 云端我都做好了！\n2、云端体验：https://www.compshare.cn/images/fr9mAym7a5QG?referral_code=bZRguxQSRDBJHgp5vAE7u&ytag=GPU_YY_YX_bl_yuziyuetalk0601\n3、所有文档发送私信关键字：\"配音优化\"\n4、项目地址1：https://github.com/OpenMOSS/MOSS-TTS\n5、项目地址2：https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI\n\n音色替换 RVC 云端使用1：https://www.compshare.cn/images/FljSSTGijqvZ?referral_code=bZRguxQSRDBJHgp5vAE7u&ytag=GPU_YY_YX_bl_yuziyuetalk0719\n\n音色替换 RVC 云端使用2：\n 邀请码：QA423Q（可获取免费额度）\n 注册地址：https://www.xiangongyun.com/register/QA423Q\n 镜像详情：https://www.xiangongyun.com/image/detail/44b89d63-e198-40e9-8553-27fdfdc9d86b\n\nMOSS-TTS-v1.5，在提供语言标签时多语种合成更强，voice clone 更稳定，也改进了长参考短文本克隆、标点韵律跟随，并支持通过 [pause X.Ys] 显式控制停顿。\n不会像 IndexTTS2 那样突然加速。【IndexTTS2可以扔了？用 RVC + MOSS-TTS 1.5 提升音质、情感拉满、音色相似度暴涨，音色克隆TTS配音，文字转语音，一键体验。-哔哩哔哩】 https://b23.tv/j3vY3Rx",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 26624,
+    "createdAt": "2026-11-07T06:14:29.119Z",
+    "updatedAt": "2026-11-08T07:59:58.695Z"
+  },
+  "previousHash": "eb40cc33cdda78fa0fa716c9c8d58c26d1eb6aa9f08906a618d431ee2bf87aa6",
+  "hash": "0f530ec398fdc91db440cca869e4ccb3759aea30e4f9f19c988401d5c7b0b0b7"
+}

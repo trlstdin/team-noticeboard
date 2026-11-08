@@ -1,0 +1,17 @@
+{
+  "id": "4038d283-1f81-4315-bdd1-968ac5240193",
+  "seq": 282,
+  "time": "2026-11-08T13:43:14.323Z",
+  "actor": "trlstdin",
+  "actorId": "repository:trlstdin/team-noticeboard",
+  "action": "task.delete",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "b54009f4-5e6b-43c3-8104-011bebddfe3f",
+    "mergedInto": "e5a406bf-7040-47e2-a581-b43af2748e35"
+  },
+  "contentUpdate": "2026-11-08-software-and-development",
+  "previousHash": "570a799882dc20e7256d703844529dc7ec67b52cc00f26a4612a10aca53a2812",
+  "hash": "42cc2a9719e6645c576e0dce01ae0a8f20b45b6a9d3231683c93621191c21368"
+}

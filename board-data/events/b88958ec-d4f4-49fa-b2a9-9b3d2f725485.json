@@ -1,0 +1,30 @@
+{
+  "id": "b88958ec-d4f4-49fa-b2a9-9b3d2f725485",
+  "seq": 281,
+  "time": "2026-11-08T13:43:14.323Z",
+  "actor": "trlstdin",
+  "actorId": "repository:trlstdin/team-noticeboard",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "e5a406bf-7040-47e2-a581-b43af2748e35",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "47. 开源个人／开发者软件全套与 AI 软件安装部署",
+    "body": "把 AI 软件安装部署、输入法、剪贴板和开源收藏夹放在同一个软件清单里，按实际需要安装和配置。\n已有部署环境探测、产品目录和本地剪贴板代码；剪贴板支持中文搜索与停留上次位置，输入法已有源码，收藏夹尚未找到独立实现。\n\n开源剪贴板：：：\n剪贴板软件每次停留在上一次位置\n\n用本地 SQLite 保存文本剪贴板历史，支持中文搜索、全文查看，相同原文会去重并置顶。\n窗口可记住搜索词、选中项和滚动位置，再次打开停留上次，也能切换成每次显示最新记录。\n\n合并原 34. 语音输入法第三代方案：\n手机端和语音输入,依赖编程agent桌面端\n语音第三代方案。\n\n现有分支保留 WeType 在线识别和 Qwen3-ASR 本地识别两条路线，同一段录音可以对照结果。\n网页可录音、编辑和复制文字，桌面端处理热键与输入；这是第三代方案可参考的现有基础。\n\n项目对应：\nAI 软件部署：https://github.com/alistrode/ai-deploy-skills\n剪贴板与自有拼音：https://github.com/trlstdin/rororororo/tree/projects/clipboard\n另一剪贴板分支：https://github.com/trlstdin/rororororo/tree/projects/clipboard-2.0\n语音输入法：https://github.com/trlstdin/rororororo/tree/projects/voice-input\n输入法仍保留原待开发定位；收藏夹和整套统一入口待开发。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -1794032259018,
+    "createdAt": "2026-11-07T06:17:39.018Z",
+    "updatedAt": "2026-11-08T13:43:14.323Z",
+    "repositoryUrl": "https://github.com/alistrode/clipboard",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/clipboard",
+    "historyNumber": 47
+  },
+  "contentUpdate": "2026-11-08-software-and-development",
+  "previousHash": "1b93c3e71135fbe7ee815af080cb7960966b362c9e1fc5ef992910540aa90a12",
+  "hash": "570a799882dc20e7256d703844529dc7ec67b52cc00f26a4612a10aca53a2812"
+}

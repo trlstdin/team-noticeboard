@@ -1,0 +1,30 @@
+{
+  "id": "6479a102-02a2-4fdf-a3d3-893906897d55",
+  "seq": 283,
+  "time": "2026-11-08T13:43:14.323Z",
+  "actor": "trlstdin",
+  "actorId": "repository:trlstdin/team-noticeboard",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "b91d731a-3543-48e5-9ef6-4a9d10825623",
+    "title": "AI 视频生成",
+    "body": "生成 AI 视频，后续可与现有自动剪辑和多平台发布项目衔接。\n组织部署资料已整理 Seedance、Wan、CogVideoX 等视频路线及原任务状态查询步骤；尚未找到独立的视频生成业务项目。",
+    "repositoryUrl": "https://github.com/alistrode/ai-deploy-skills",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 36864,
+    "createdAt": "2026-11-08T13:43:14.323Z",
+    "updatedAt": "2026-11-08T13:43:14.323Z",
+    "historyNumber": 64,
+    "personalRepositoryUrl": ""
+  },
+  "contentUpdate": "2026-11-08-software-and-development",
+  "previousHash": "42cc2a9719e6645c576e0dce01ae0a8f20b45b6a9d3231683c93621191c21368",
+  "hash": "b6d577afd18785a19adcbf4cc2179a3fbf538884725caecaac2d84ce8dd43784"
+}

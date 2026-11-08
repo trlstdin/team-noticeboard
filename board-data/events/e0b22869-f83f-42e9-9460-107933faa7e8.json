@@ -1,0 +1,30 @@
+{
+  "id": "e0b22869-f83f-42e9-9460-107933faa7e8",
+  "seq": 243,
+  "time": "2026-11-08T07:55:14.086Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "9b2df4d5-38f5-4afd-b717-3221567de49e",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "43. switch",
+    "body": "加个两周没用的项目和会话不加载的功能，但可以被搜索。\n请求限制器。\n\n21. 不同软件会话统一与迁移\n不同软件会话统一与迁移",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -1794032238830,
+    "createdAt": "2026-11-07T06:17:18.830Z",
+    "updatedAt": "2026-11-08T06:29:08.039Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 43,
+    "deletedAt": "2026-11-08T07:55:14.086Z"
+  },
+  "previousHash": "408bf4718ff114ae2d03cdda9e31fd3b4a7582434aed3f66a7f65e62f5ef9757",
+  "hash": "8e42a94c62d78419ee8199071a77e88f2be957d13a151bf112e1e7de6909ae12"
+}

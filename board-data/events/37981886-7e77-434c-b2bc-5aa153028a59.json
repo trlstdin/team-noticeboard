@@ -1,0 +1,30 @@
+{
+  "id": "37981886-7e77-434c-b2bc-5aa153028a59",
+  "seq": 278,
+  "time": "2026-11-08T13:43:14.323Z",
+  "actor": "trlstdin",
+  "actorId": "repository:trlstdin/team-noticeboard",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "a239cd16-4270-4749-8fb0-276c878c6df5",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "05. 就业系统",
+    "body": "就业系统。\nai面试模拟\n用ai投简历。\n\n51. html修改\nhtml修改，✓\n\n开发中：全自动找工作软件\n实时获取各类岗位，按岗位要求整理简历和经验描述，进行 AI 面试模拟，生成面试与沟通话术并自动批量投递。\n按岗位知识库生成职业技术常识和学习材料。目标是帮助使用 AI 胜任工作的求职者完成岗位匹配、面试准备与上岗学习；具体职业能力仍需逐岗验证。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 31744,
+    "createdAt": "2026-11-07T06:14:04.728Z",
+    "updatedAt": "2026-11-08T13:43:14.323Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 5
+  },
+  "contentUpdate": "2026-11-08-software-and-development",
+  "previousHash": "7efe99a0c1911df4fd6fbdca69b69090fdc05ba7c561933de0d8d0f34f27922b",
+  "hash": "d00ac5276942cbb6cf37b956d194abff752b0ae4e6e317c4243cf710d56c96c6"
+}

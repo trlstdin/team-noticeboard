@@ -1,0 +1,29 @@
+{
+  "id": "272b8300-64d1-4d49-b2dc-783d30252bcc",
+  "seq": 265,
+  "time": "2026-11-08T10:33:09.228Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 40,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "ff8f7764-d561-4b81-8fbe-731f28956052",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "40. codex多窗口内别抢鼠标的环境",
+    "body": "codex多窗口内别抢鼠标。依赖新一代编程agent，选型每个窗口内部鼠标让ai操控，不会影响电脑的鼠标，可以多个并行鼠标点击的环境搭建",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 34816,
+    "createdAt": "2026-11-07T06:17:04.372Z",
+    "updatedAt": "2026-11-08T10:33:09.228Z"
+  },
+  "previousHash": "2f4af56d24bbd4d81a573243a1d341c82be7ea36f953e782940c9d325bb9bbd7",
+  "hash": "502549030cd2fee6e43f7b08956887b3d4b1366d296c864531f2145fb7e8d55e"
+}

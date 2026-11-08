@@ -1,5 +1,8 @@
 import { ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute } from './github-auth.js';
 const KEY='noticeboard/journal-v1.json';
+// Only the digest is published. The independently generated 256-bit bearer
+// stays with the owner; replacing this digest revokes it and all child sessions.
+const PERMANENT_SUPERVISOR_HASH='592fe9c92ec5f37422bff10b7e7f42583fe33fca98176a29f4ec579be6d845c5';
 const COLUMNS=['待开发','修复','优化','先接单后开发','已验收','待验收'];
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
 const fail=(status,message)=>{throw Object.assign(new Error(message),{status})};
@@ -79,10 +82,16 @@ async function load(env){
 }
 function cookie(request){return /(?:^|;\s*)board_session=([^;]*)/.exec(request.headers.get('cookie')||'')?.[1]||''}
 function anonymousActor(){return {root:false,id:'anonymous',name:'访客',users:[],edit:false,manage:false,signedIn:false}}
+async function permanentSupervisorActor(digest,env){
+ if(digest!==PERMANENT_SUPERVISOR_HASH)return null;
+ const record=await env.BUCKET.get('capabilities/permanent-supervisor/'+digest);
+ if(record&&(await record.json()).revokedAt)return null;
+ return {root:true,id:'permanent-supervisor',name:'主管链接',users:[],edit:true,manage:true,signedIn:false,permanentSupervisor:true};
+}
 function capabilityActor(t,s,sessionLookupKey){const user=t&&!t.revokedAt?s.users.find(u=>!u.deletedAt&&u.id===t.userId):null;if(!user)return anonymousActor();return {root:false,id:user.id,name:user.name,users:[user],token:t,edit:['editor','supervisor'].includes(user.role)&&t.scopes.includes('edit'),manage:user.role==='supervisor'&&t.scopes.includes('manage'),signedIn:false,sessionLookupKey}}
 async function identity(request,env,s){
- const raw=request.headers.get('authorization')?.replace(/^Bearer /,'')||cookie(request);if(!raw)return anonymousActor();const rawHash=await hash(raw);const sessionLookupKey='sessions/'+rawHash;const sessionObject=await env.BUCKET.get(sessionLookupKey);
- if(sessionObject){const session=await sessionObject.json();if(session.revokedAt||session.expiresAt<Date.now())return anonymousActor();if(session.parentType==='token')return capabilityActor(s.tokens.find(t=>t.id===session.parentId),s,sessionLookupKey);if(session.parentType==='github'){const gh=await githubIdentity(await decrypt(session.parentSecret,env),request,env,s);return gh?{...gh,sessionLookupKey}:anonymousActor()}return anonymousActor()}
+ const raw=request.headers.get('authorization')?.replace(/^Bearer /,'')||cookie(request);if(!raw)return anonymousActor();const rawHash=await hash(raw);const permanent=await permanentSupervisorActor(rawHash,env);if(permanent)return permanent;const sessionLookupKey='sessions/'+rawHash;const sessionObject=await env.BUCKET.get(sessionLookupKey);
+ if(sessionObject){const session=await sessionObject.json();if(session.revokedAt||session.expiresAt<Date.now())return anonymousActor();if(session.parentType==='permanent-supervisor'){const actor=await permanentSupervisorActor(session.parentHash,env);return actor?{...actor,sessionLookupKey}:anonymousActor()}if(session.parentType==='token')return capabilityActor(s.tokens.find(t=>t.id===session.parentId),s,sessionLookupKey);if(session.parentType==='github'){const gh=await githubIdentity(await decrypt(session.parentSecret,env),request,env,s);return gh?{...gh,sessionLookupKey}:anonymousActor()}return anonymousActor()}
  const gh=await githubIdentity(raw,request,env,s);if(gh)return gh;return capabilityActor(s.tokens.find(t=>t.hash===rawHash&&!t.revokedAt),s);
 }
 function repoRole(a,repoId){if(a.root)return 'supervisor';if(a.token&&!a.token.repoIds.includes(repoId))return 'viewer';return a.users?.find(u=>u.repoId===repoId)?.role||'viewer'}
@@ -156,7 +165,7 @@ const handler={async fetch(request,env,ctx){try{
  const secret=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(n=>n.toString(16).padStart(2,'0')).join('');await env.BUCKET.put('sessions/'+await hash(secret),JSON.stringify({parentType:'github',parentSecret:await encrypt(a.sessionKey,env),expiresAt}));const link=new URL(env.FRONTEND_URL||new URL(request.url).origin);link.hash='session='+secret;return json({url:link.href,expiresAt});
  }
  if(p==='/api/session'){
- const incoming=text(b.token,200),temp={method:'POST',headers:new Headers(request.headers)};temp.headers.set('authorization','Bearer '+incoming);temp.headers.delete('cookie');const actor=await identity(temp,env,s);if(!actor.token&&!actor.signedIn)fail(403,'链接无效或已撤销');const session=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(n=>n.toString(16).padStart(2,'0')).join('');let parent;if(actor.sessionLookupKey){const previous=await env.BUCKET.get(actor.sessionLookupKey);const old=await previous.json();parent={parentType:old.parentType,parentHash:old.parentHash,parentId:old.parentId,parentSecret:old.parentSecret}}else parent=actor.token?{parentType:'token',parentId:actor.token.id}:{parentType:'github',parentSecret:await encrypt(incoming,env)};await env.BUCKET.put('sessions/'+await hash(session),JSON.stringify({...parent,expiresAt:Date.now()+14*86400000}));const res=json({ok:true,session});res.headers.set('set-cookie','board_session='+session+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600');return res;
+ const incoming=text(b.token,200),temp={method:'POST',headers:new Headers(request.headers)};temp.headers.set('authorization','Bearer '+incoming);temp.headers.delete('cookie');const actor=await identity(temp,env,s);if(!actor.token&&!actor.signedIn&&!actor.permanentSupervisor)fail(403,'链接无效或已撤销');const session=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(n=>n.toString(16).padStart(2,'0')).join('');let parent;if(actor.sessionLookupKey){const previous=await env.BUCKET.get(actor.sessionLookupKey);const old=await previous.json();parent={parentType:old.parentType,parentHash:old.parentHash,parentId:old.parentId,parentSecret:old.parentSecret}}else parent=actor.permanentSupervisor?{parentType:'permanent-supervisor',parentHash:await hash(incoming)}:actor.token?{parentType:'token',parentId:actor.token.id}:{parentType:'github',parentSecret:await encrypt(incoming,env)};await env.BUCKET.put('sessions/'+await hash(session),JSON.stringify({...parent,expiresAt:Date.now()+14*86400000}));const res=json({ok:true,session});res.headers.set('set-cookie','board_session='+session+'; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600');return res;
  }
  if(p==='/api/logout'){if(a.sessionLookupKey)await env.BUCKET.put(a.sessionLookupKey,JSON.stringify({revokedAt:Date.now(),expiresAt:0}));const res=json({ok:true});res.headers.set('set-cookie','board_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0');return res;}
  if(p==='/api/copy'){const acc=get(s.accounts,b.id);if(!activeAccount(acc))fail(410,'对应环境已关闭或离线');if(!canAccount(a,acc))fail(403,'没有该账号的复制权限');return json({url:await decrypt(acc.secret,env)});}

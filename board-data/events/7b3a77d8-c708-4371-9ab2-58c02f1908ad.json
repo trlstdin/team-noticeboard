@@ -1,0 +1,29 @@
+{
+  "id": "7b3a77d8-c708-4371-9ab2-58c02f1908ad",
+  "seq": 223,
+  "time": "2026-11-08T05:38:04.272Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 4,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "797fbccd-dcac-4f15-902a-21ee257133f0",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "04. ai评测",
+    "body": "ai评测\nai评测环境，主流测试集\n\n准备搭建符合行业标准的 AI 评测环境，用统一流程进行评测。\n目前尚未选型，具体评测框架和测试集仍待确定。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 32768,
+    "createdAt": "2026-11-07T06:13:59.747Z",
+    "updatedAt": "2026-11-08T05:38:04.272Z"
+  },
+  "previousHash": "8a7b106287a3a0e5966c5c81841d7a578badd9dc25ff395feaf87da0d658df89",
+  "hash": "fdc614a34e6c054afb11c7358fc5f41a505478918db9ac33c72b76c1106149cb"
+}

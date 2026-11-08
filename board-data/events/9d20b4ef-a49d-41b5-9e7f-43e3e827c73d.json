@@ -1,0 +1,29 @@
+{
+  "id": "9d20b4ef-a49d-41b5-9e7f-43e3e827c73d",
+  "seq": 229,
+  "time": "2026-11-08T06:28:59.703Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 50,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/v2ray",
+    "id": "9fd044be-1f98-42cb-b50a-cc202cdcd8b5",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "50. 修好梯子-1",
+    "body": "修好梯子-1√\n\n开源clash和v2ray\nClash 部分修复服务启动、控制连接和代理开关，避免多个内核争用端口。\nv2rayN 部分保留 Windows/Linux 启动入口和内核配置，已有各平台运行包与验证记录。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 4096,
+    "createdAt": "2026-11-07T06:17:54.947Z",
+    "updatedAt": "2026-11-08T06:28:59.703Z"
+  },
+  "previousHash": "0da0f081b4e701ac3a3103b94fe39c1dd12ec1f5e3fbb206536f757ed4ca614a",
+  "hash": "7db6086667db8945fabfd2a86f0c23e401e283601b68e8658e2f7834133019d1"
+}

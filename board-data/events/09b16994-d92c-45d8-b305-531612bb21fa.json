@@ -1,0 +1,30 @@
+{
+  "id": "09b16994-d92c-45d8-b305-531612bb21fa",
+  "seq": 237,
+  "time": "2026-11-08T06:30:01.757Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "45698bd1-61d5-4385-b2f9-ddb55d6760c4",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "51. html修改",
+    "body": "html修改，✓",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 3072,
+    "createdAt": "2026-11-07T06:17:59.837Z",
+    "updatedAt": "2026-11-07T08:40:15.470Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 51,
+    "deletedAt": "2026-11-08T06:30:01.757Z"
+  },
+  "previousHash": "2906c31ce2142818814e408d5f6bc330a9799cab3ffa55880046ad3a54c233b4",
+  "hash": "7f228c724117f3ce5f3681889ed1d01ba5624896ced1e1c1b7f5db8183e26ca7"
+}

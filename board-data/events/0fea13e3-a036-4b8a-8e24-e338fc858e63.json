@@ -1,0 +1,29 @@
+{
+  "id": "0fea13e3-a036-4b8a-8e24-e338fc858e63",
+  "seq": 222,
+  "time": "2026-11-08T05:37:59.094Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 1,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "73321398-6205-47af-a254-ce2f2ea03d48",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "01. Ai破甲***",
+    "body": "破甲\nAi破甲***\n\n去类脑社区寻找 AI 破甲提示词，收集已有写法作为参考。\n先做提示词的寻找与整理，不把社区提示词直接当成已经验证有效的方案。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 35840,
+    "createdAt": "2026-11-07T06:13:44.804Z",
+    "updatedAt": "2026-11-08T05:37:59.094Z"
+  },
+  "previousHash": "1b8141098fdcd51c495ac097c1f525bbdab123e6923ca60a73eae5b4242480e8",
+  "hash": "8a7b106287a3a0e5966c5c81841d7a578badd9dc25ff395feaf87da0d658df89"
+}

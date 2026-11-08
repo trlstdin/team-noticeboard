@@ -1,0 +1,30 @@
+{
+  "id": "6711de11-221f-4267-9c29-e59220741cf1",
+  "seq": 221,
+  "time": "2026-11-08T05:09:15.421Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "d0307375-910b-487b-87e0-f22cf4f4afd9",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "15. 逆向软件",
+    "body": "逆向软件",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 21504,
+    "createdAt": "2026-11-07T06:14:54.678Z",
+    "updatedAt": "2026-11-07T08:38:24.716Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 15,
+    "deletedAt": "2026-11-08T05:09:15.421Z"
+  },
+  "previousHash": "2ac5df62abf1b20a91f050a37faaabfcd68f323c89fdb29259546c6e53f45ea5",
+  "hash": "1b8141098fdcd51c495ac097c1f525bbdab123e6923ca60a73eae5b4242480e8"
+}

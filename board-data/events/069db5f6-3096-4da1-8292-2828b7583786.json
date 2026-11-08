@@ -1,0 +1,30 @@
+{
+  "id": "069db5f6-3096-4da1-8292-2828b7583786",
+  "seq": 235,
+  "time": "2026-11-08T06:29:46.432Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "bd4591b7-8066-4f1c-b551-3dfdbdec12fc",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "26. codex 画布",
+    "body": "codex 画布",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 10240,
+    "createdAt": "2026-11-07T06:15:53.054Z",
+    "updatedAt": "2026-11-07T08:38:58.225Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 26,
+    "deletedAt": "2026-11-08T06:29:46.432Z"
+  },
+  "previousHash": "d39e76365559f59f83bec257b17d9b0c909959fb3ef7935811a68c61016039e1",
+  "hash": "c605cfbb4d6ede6ff24919f8f267819f337ed98223138d6498a71ea3d228b22d"
+}

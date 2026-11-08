@@ -1,0 +1,30 @@
+{
+  "id": "f7403d10-bc2c-4907-960e-4f547e364b20",
+  "seq": 233,
+  "time": "2026-11-08T06:29:31.845Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "7ebf4125-2cc9-43a0-969e-be93f5f57da1",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "24. 虚拟机switch",
+    "body": "虚拟机switch",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 1,
+    "rank": 2048,
+    "createdAt": "2026-11-07T06:15:42.656Z",
+    "updatedAt": "2026-11-08T05:07:34.779Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 24,
+    "deletedAt": "2026-11-08T06:29:31.845Z"
+  },
+  "previousHash": "09eff9dcba107861e4e465f70e2fbaef0976cf5491c4592993013a5d8ebe644a",
+  "hash": "703df27f560e2a7d46cbefde3d7eecfeede98d02f67367dfd82434d87a3b71aa"
+}

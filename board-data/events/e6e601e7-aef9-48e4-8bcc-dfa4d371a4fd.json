@@ -1,0 +1,30 @@
+{
+  "id": "e6e601e7-aef9-48e4-8bcc-dfa4d371a4fd",
+  "seq": 231,
+  "time": "2026-11-08T06:29:15.520Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "dc583d96-6f99-415b-ba45-05812a479094",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "21. 不同软件会话统一与迁移",
+    "body": "不同软件会话统一与迁移",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 15360,
+    "createdAt": "2026-11-07T06:15:25.885Z",
+    "updatedAt": "2026-11-07T08:38:43.508Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 21,
+    "deletedAt": "2026-11-08T06:29:15.520Z"
+  },
+  "previousHash": "cb5c0e5bd97e37c218050d576f4ca96f43cafbbb5517c23bcd905df0f65d5ed2",
+  "hash": "62207965b4ef7f7cd88b3ab327e6fecb6a4c6a3ed900cbcb03bbb3e4eb1374da"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "692ad616-be53-48b1-9d82-619d570e18f5",
+  "seq": 239,
+  "time": "2026-11-08T06:50:51.070Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 52,
+    "repositoryUrl": "https://github.com/alistrode/ai-deploy-skills",
+    "personalRepositoryUrl": "",
+    "id": "044fa874-d239-47f1-a241-0d766f72c314",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "52. zcodce使用",
+    "body": "zcodce使用√\n\n组织仓库的 ZCode 使用资料列出了官方入口、配置文档，以及安装、登录和模型供应商的配置步骤。\n配好后用一个临时仓库实际跑代码任务，确认任务能完成，并核对所用模型和计费渠道。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 2048,
+    "createdAt": "2026-11-07T06:18:04.796Z",
+    "updatedAt": "2026-11-08T06:50:51.070Z"
+  },
+  "previousHash": "4d63cf2e2573c4d9537548acd8ced529d4bc84467aa535db255ffb0ce0d56786",
+  "hash": "02cf4f33b6194a28fc725cc69ab4367951a4444ac8c65c478d3d79e724352ca9"
+}

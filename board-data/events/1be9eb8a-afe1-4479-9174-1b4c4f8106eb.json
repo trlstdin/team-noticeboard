@@ -1,0 +1,22 @@
+{
+  "id": "1be9eb8a-afe1-4479-9174-1b4c4f8106eb",
+  "seq": 220,
+  "time": "2026-11-08T05:08:34.557Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.place",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "b25221d2-c3b7-4899-9b26-01d8b2640058",
+    "column": 1,
+    "order": [
+      "aa2b7265-77a6-4994-a9be-d949038349f4",
+      "b25221d2-c3b7-4899-9b26-01d8b2640058",
+      "7ebf4125-2cc9-43a0-969e-be93f5f57da1",
+      "764f607f-a42e-4876-9bcd-52462f7b303f"
+    ]
+  },
+  "previousHash": "82068566892ce734cbcdc4835d7c02894641b53af5144490277eea0022260c9b",
+  "hash": "2ac5df62abf1b20a91f050a37faaabfcd68f323c89fdb29259546c6e53f45ea5"
+}

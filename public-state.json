@@ -1,5 +1,5 @@
 {
-  "version": 504,
+  "version": 519,
   "columns": [
     "待开发",
     "修复",
@@ -54,7 +54,7 @@
       "repositoryUrl": "https://github.com/trlstdin/team-noticeboard",
       "personalRepositoryUrl": "",
       "historyNumber": 37,
-      "columnNumber": 24
+      "columnNumber": 22
     },
     {
       "id": "ced12345-5ac5-4ad4-ad74-d4a10b3ac2b3",
@@ -72,7 +72,7 @@
       "repositoryUrl": "",
       "personalRepositoryUrl": "",
       "historyNumber": 49,
-      "columnNumber": 23
+      "columnNumber": 21
     },
     {
       "id": "044fa874-d239-47f1-a241-0d766f72c314",
@@ -90,7 +90,7 @@
       "repositoryUrl": "",
       "personalRepositoryUrl": "",
       "historyNumber": 52,
-      "columnNumber": 22
+      "columnNumber": 20
     },
     {
       "id": "bc7bba55-4ab5-4679-8e5d-ad946ed3ec42",
@@ -108,7 +108,7 @@
       "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.9",
       "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.9",
       "historyNumber": 53,
-      "columnNumber": 21
+      "columnNumber": 19
     },
     {
       "id": "9a457c7d-6910-4005-be20-a39ad2aa5bb5",
@@ -126,7 +126,7 @@
       "repositoryUrl": "https://github.com/alistrode/file-bridge",
       "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/file-bridge",
       "historyNumber": 54,
-      "columnNumber": 20
+      "columnNumber": 18
     },
     {
       "historyNumber": 77,
@@ -144,7 +144,7 @@
       "rank": -1794222613121,
       "createdAt": "2026-11-09T11:10:13.121Z",
       "updatedAt": "2026-11-09T13:09:28.191Z",
-      "columnNumber": 19
+      "columnNumber": 17
     },
     {
       "historyNumber": 78,
@@ -162,7 +162,7 @@
       "rank": -1794222616095,
       "createdAt": "2026-11-09T11:10:16.095Z",
       "updatedAt": "2026-11-09T13:09:24.619Z",
-      "columnNumber": 18
+      "columnNumber": 16
     },
     {
       "historyNumber": 79,
@@ -171,7 +171,7 @@
       "id": "969e4177-a2c5-44de-9ced-3ff9637404da",
       "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
       "title": "项目索引（Project Index）",
-      "body": "集中列出组织各项目的用途、主要功能和仓库入口。\n同时整理运行包、上传进度和代码来源，方便查找和对照。",
+      "body": "集中列出组织各项目的用途、主要功能和仓库入口。\n同时整理运行包、上传进度和代码来源，方便查找和对照。需要项目索引设计并优化一下",
       "proposer": "trlstdin",
       "assignee": "",
       "host": "",
@@ -179,8 +179,8 @@
       "column": 4,
       "rank": -1794222617185,
       "createdAt": "2026-11-09T11:10:17.185Z",
-      "updatedAt": "2026-11-09T13:09:25.851Z",
-      "columnNumber": 17
+      "updatedAt": "2026-11-09T13:18:34.198Z",
+      "columnNumber": 15
     },
     {
       "historyNumber": 80,
@@ -198,7 +198,7 @@
       "rank": -1794222618253,
       "createdAt": "2026-11-09T11:10:18.253Z",
       "updatedAt": "2026-11-09T13:09:30.562Z",
-      "columnNumber": 16
+      "columnNumber": 14
     },
     {
       "historyNumber": 81,
@@ -216,42 +216,6 @@
       "rank": -1794222619305,
       "createdAt": "2026-11-09T11:10:19.305Z",
       "updatedAt": "2026-11-09T13:09:33.210Z",
-      "columnNumber": 15
-    },
-    {
-      "historyNumber": 82,
-      "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.7",
-      "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.7",
-      "id": "4ead6d4c-fbc3-4630-980a-75d4327b2303",
-      "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
-      "title": "远程电脑连接器 5.7（SSH Relay Pro 5.7）",
-      "body": "记住已配对的电脑，断线后恢复连接，并保留持久任务的状态。\n支持任务查询、取消和文件传输，提供 Windows 桌面版与 Linux 云端版。",
-      "proposer": "trlstdin",
-      "assignee": "",
-      "host": "",
-      "finisher": "trlstdin",
-      "column": 4,
-      "rank": -1794222620438,
-      "createdAt": "2026-11-09T11:10:20.438Z",
-      "updatedAt": "2026-11-09T13:09:26.996Z",
-      "columnNumber": 14
-    },
-    {
-      "historyNumber": 83,
-      "repositoryUrl": "https://github.com/alistrode/ssh-relay-3.0",
-      "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/versions/3.0",
-      "id": "25b5ec5e-961e-4d04-8771-5903a1f0b5ed",
-      "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
-      "title": "远程电脑连接器 3.0（SSH Relay 3.0）",
-      "body": "通过公网中继，把远程命令、文件传输和持久会话接到 MCP。\nAI 可在已授权电脑上操作，并固定校验远端主机身份。",
-      "proposer": "trlstdin",
-      "assignee": "",
-      "host": "",
-      "finisher": "trlstdin",
-      "column": 4,
-      "rank": -1794222622505,
-      "createdAt": "2026-11-09T11:10:22.505Z",
-      "updatedAt": "2026-11-09T13:09:29.513Z",
       "columnNumber": 13
     },
     {
@@ -440,7 +404,7 @@
       "personalRepositoryUrl": "",
       "id": "cabd1fc3-2db9-4aeb-aa57-120c6a3e5bca",
       "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
-      "title": "虚拟机多桌面工作台（VM Unified GUI）",
+      "title": "虚拟机多容器界面（VM Unified GUI）",
       "body": "在一台 Ubuntu 虚拟机里管理多个容器的图形应用。\n可选三个独立桌面同屏或统一桌面，切换时保留原会话，共用宿主桌面依赖。",
       "proposer": "trlstdin",
       "assignee": "",
@@ -449,7 +413,7 @@
       "column": 4,
       "rank": -1794229666302,
       "createdAt": "2026-11-09T13:07:46.302Z",
-      "updatedAt": "2026-11-09T13:09:23.185Z",
+      "updatedAt": "2026-11-09T13:17:42.178Z",
       "columnNumber": 2
     },
     {
@@ -458,7 +422,7 @@
       "personalRepositoryUrl": "",
       "id": "da7715ba-e306-49dc-993c-2cca15677672",
       "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
-      "title": "项目总管（Project Manager）",
+      "title": "项目管理器（Project Manager）",
       "body": "统一登记不同电脑上的项目、仓库、目录和相关 Codex 会话。\n支持按主机分组、依赖树和置顶排序，也可把项目资料交给已连接的云端 AI。",
       "proposer": "trlstdin",
       "assignee": "",
@@ -467,7 +431,7 @@
       "column": 4,
       "rank": -1794229667316,
       "createdAt": "2026-11-09T13:07:47.316Z",
-      "updatedAt": "2026-11-09T13:09:39.023Z",
+      "updatedAt": "2026-11-09T13:17:22.365Z",
       "columnNumber": 1
     }
   ],
@@ -488,14 +452,14 @@
     "githubLogin": null,
     "githubId": null
   },
-  "historyCount": 504,
+  "historyCount": 519,
   "storage": {
     "shared": true,
     "github": true,
     "repository": "https://github.com/trlstdin/team-noticeboard",
-    "committedVersion": 465,
-    "commit": "453d5603bb8409bc5ce6944957f93753464f8fdd",
-    "pending": 39
+    "committedVersion": 504,
+    "commit": "5190749bf57dc1b7f3dfeb770467d2f64502df40",
+    "pending": 15
   },
-  "snapshotAt": "2026-11-09T13:10:08.605Z"
+  "snapshotAt": "2026-11-09T19:10:14.857Z"
 }

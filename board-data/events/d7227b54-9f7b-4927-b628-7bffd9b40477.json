@@ -1,0 +1,29 @@
+{
+  "id": "d7227b54-9f7b-4927-b628-7bffd9b40477",
+  "seq": 515,
+  "time": "2026-11-09T17:12:11.181Z",
+  "actor": "yyxgsgs",
+  "actorId": "github:311221020",
+  "action": "task.place",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "aa87167f-0900-4971-9044-190f756857e0",
+    "column": 5,
+    "order": [
+      "3d4a6b0a-eeb9-4538-ac67-5c54fa150bb3",
+      "e7565359-d653-4a9e-aa7d-d2ccae09f380",
+      "5ba9f9fc-f839-4ac3-8f8f-515d65786eb1",
+      "e0ab93b9-4adc-43c5-a7a4-9fd591097763",
+      "b6e13528-741c-41d9-b0f9-0574f05b4b2b",
+      "aad71b68-b460-4cd2-b1c2-7aaa6ed5b7c4",
+      "cd82580f-89b6-4b7b-9b29-0f2f53160da6",
+      "be0fb4ba-d28a-4f75-9d11-eec105093671",
+      "968ca8c2-8f96-4984-b3e9-85b2d0863971",
+      "a4804106-db97-4639-a72e-334f60b2244d",
+      "aa87167f-0900-4971-9044-190f756857e0"
+    ]
+  },
+  "previousHash": "b72b3ca68cde975c6bd7a95aa2b93e61909d338ff80c5116d0c25795e2547107",
+  "hash": "8ac29d1cb345db30864edfcd8a5112aef20a5e04167433a11d00d98986f02d45"
+}

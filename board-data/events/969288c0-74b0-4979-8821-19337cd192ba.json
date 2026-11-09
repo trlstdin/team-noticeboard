@@ -1,0 +1,30 @@
+{
+  "id": "969288c0-74b0-4979-8821-19337cd192ba",
+  "seq": 507,
+  "time": "2026-11-09T13:17:55.692Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 83,
+    "repositoryUrl": "https://github.com/alistrode/ssh-relay-3.0",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/versions/3.0",
+    "id": "25b5ec5e-961e-4d04-8771-5903a1f0b5ed",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "远程电脑连接器 3.0（SSH Relay 3.0）",
+    "body": "通过公网中继，把远程命令、文件传输和持久会话接到 MCP。\nAI 可在已授权电脑上操作，并固定校验远端主机身份。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222622505,
+    "createdAt": "2026-11-09T11:10:22.505Z",
+    "updatedAt": "2026-11-09T13:09:29.513Z",
+    "deletedAt": "2026-11-09T13:17:55.692Z"
+  },
+  "previousHash": "5f653874de1804fc8eaf348f08e604cbe8839acd45351ba41a53ba14f38792e9",
+  "hash": "8d1209df13ef9b2f5ec8ae67e8930393d997592d1312fcb947df7a867307fa72"
+}

@@ -67,6 +67,9 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #board .task-pin[aria-pressed=true]{color:#d6ad52}
 #board .task-pin[aria-pressed=true] svg{fill:currentColor}
 #board .task-pin:disabled{opacity:.6}
+#public-entry-panel{padding:16px;margin-bottom:20px;border:1px solid var(--line);border-radius:12px}
+#public-entry-panel label{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+#public-entry-url{flex:1;min-width:min(280px,100%)}
 #member-policy{line-height:1.7;margin:12px 0}
 #member-access{margin:14px 0;padding:18px;border:1px solid var(--line);border-radius:12px}
 #member-access .token-card{padding:14px;margin:10px 0;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}

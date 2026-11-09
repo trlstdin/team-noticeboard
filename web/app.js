@@ -67,6 +67,7 @@ function renderAccounts(){const available=state.accounts.filter(a=>a.canCopy!==f
 $('#account-project').onchange=renderAccounts;$('#account-search').oninput=renderAccounts;
 async function copyAccount(id){try{const data=await api('copy',{id});await copyText(data.url)}catch(e){toast(e.message)}}
 async function copyText(value){try{await navigator.clipboard.writeText(value);toast('链接已复制')}catch{openDialog('复制链接',[field('link','链接','text',value,{readonly:true})],null);$('#fields input').select()}}
+$('#copy-public-entry').onclick=()=>copyText($('#public-entry-url').value);
 function renderManage(){
  const repos=state.repos.filter(r=>r.canManage);if(!repos.some(r=>r.id===manageRepo))manageRepo=repos[0]?.id||'';
  $('#manage-repo').innerHTML=repos.map(r=>'<option value="'+r.id+'">'+esc(r.name)+'</option>').join('');$('#manage-repo').value=manageRepo;

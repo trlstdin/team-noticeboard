@@ -11,6 +11,7 @@
 <div class="account-filters"><label>所属项目<select id="account-project"><option value="">全部项目</option></select></label><label class="account-search">搜索账号<input id="account-search" type="search" placeholder="账号名称或项目名称"></label></div>
 <div id="accounts" class="account-grid"></div></section>
 <section id="manage-view" class="view workspace-view" hidden>
+<section id="public-entry-panel" class="management-panel"><div class="section-head"><div><h3>普通访问入口</h3><p>链接本身不授予权限，访问成员功能需登录并验证身份。</p></div><button id="copy-public-entry" type="button">复制普通链接</button></div><label>普通访问链接<input id="public-entry-url" type="url" value="https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/" readonly aria-label="普通访问链接"></label></section>
 <div class="section-head"><div><div class="eyebrow">权限管理 · 03</div><h2>账号与授权</h2><p>账号默认进入公共池；选择项目可管理对应用户和专属链接。</p></div><div class="section-actions"><button id="add-user">添加用户…</button><button id="add-account" class="primary">添加公有账号…</button></div></div>
 <div class="project-context"><label>当前管理项目<select id="manage-repo"></select></label><button id="edit-project">编辑项目资料…</button><span id="manage-context"></span></div>
 <div class="management-grid"><aside class="management-panel"><div class="panel-heading"><h3>默认账号池</h3><button id="select-all">全选账号</button></div><p class="panel-hint">勾选账号后拖入用户卡片，或点击该用户的“分配所选”。Shift 点击可连续选择。</p>

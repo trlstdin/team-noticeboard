@@ -67,6 +67,9 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #board .task-pin[aria-pressed=true]{color:#d6ad52}
 #board .task-pin[aria-pressed=true] svg{fill:currentColor}
 #board .task-pin:disabled{opacity:.6}
+#public-entry-panel{padding:16px;margin-bottom:20px;border:1px solid var(--line);border-radius:12px}
+#public-entry-panel label{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+#public-entry-url{flex:1;min-width:min(280px,100%)}
 #member-policy{line-height:1.7;margin:12px 0}
 #member-access{margin:14px 0;padding:18px;border:1px solid var(--line);border-radius:12px}
 #member-access .token-card{padding:14px;margin:10px 0;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}
@@ -85,6 +88,7 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 <div class="account-filters"><label>所属项目<select id="account-project"><option value="">全部项目</option></select></label><label class="account-search">搜索账号<input id="account-search" type="search" placeholder="账号名称或项目名称"></label></div>
 <div id="accounts" class="account-grid"></div></section>
 <section id="manage-view" class="view workspace-view" hidden>
+<section id="public-entry-panel" class="management-panel"><div class="section-head"><div><h3>普通访问入口</h3><p>链接本身不授予权限，访问成员功能需登录并验证身份。</p></div><button id="copy-public-entry" type="button">复制普通链接</button></div><label>普通访问链接<input id="public-entry-url" type="url" value="https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/" readonly aria-label="普通访问链接"></label></section>
 <div class="section-head"><div><div class="eyebrow">权限管理 · 03</div><h2>账号与授权</h2><p>账号默认进入公共池；选择项目可管理对应用户和专属链接。</p></div><div class="section-actions"><button id="add-user">添加用户…</button><button id="add-account" class="primary">添加公有账号…</button></div></div>
 <div class="project-context"><label>当前管理项目<select id="manage-repo"></select></label><button id="edit-project">编辑项目资料…</button><span id="manage-context"></span></div>
 <div class="management-grid"><aside class="management-panel"><div class="panel-heading"><h3>默认账号池</h3><button id="select-all">全选账号</button></div><p class="panel-hint">勾选账号后拖入用户卡片，或点击该用户的“分配所选”。Shift 点击可连续选择。</p>
@@ -182,6 +186,7 @@ function renderAccounts(){const available=state.accounts.filter(a=>a.canCopy!==f
 $('#account-project').onchange=renderAccounts;$('#account-search').oninput=renderAccounts;
 async function copyAccount(id){try{const data=await api('copy',{id});await copyText(data.url)}catch(e){toast(e.message)}}
 async function copyText(value){try{await navigator.clipboard.writeText(value);toast('链接已复制')}catch{openDialog('复制链接',[field('link','链接','text',value,{readonly:true})],null);$('#fields input').select()}}
+$('#copy-public-entry').onclick=()=>copyText($('#public-entry-url').value);
 function renderManage(){
  const repos=state.repos.filter(r=>r.canManage);if(!repos.some(r=>r.id===manageRepo))manageRepo=repos[0]?.id||'';
  $('#manage-repo').innerHTML=repos.map(r=>'<option value="'+r.id+'">'+esc(r.name)+'</option>').join('');$('#manage-repo').value=manageRepo;

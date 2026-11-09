@@ -1,0 +1,29 @@
+{
+  "id": "17335680-e258-4d91-b481-53ee643ce490",
+  "seq": 487,
+  "time": "2026-11-09T13:09:23.185Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 105,
+    "repositoryUrl": "https://github.com/alistrode/vm-unified-gui",
+    "personalRepositoryUrl": "",
+    "id": "cabd1fc3-2db9-4aeb-aa57-120c6a3e5bca",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "虚拟机多桌面工作台（VM Unified GUI）",
+    "body": "在一台 Ubuntu 虚拟机里管理多个容器的图形应用。\n可选三个独立桌面同屏或统一桌面，切换时保留原会话，共用宿主桌面依赖。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229666302,
+    "createdAt": "2026-11-09T13:07:46.302Z",
+    "updatedAt": "2026-11-09T13:09:23.185Z"
+  },
+  "previousHash": "cb55ee1ce99f76a4fc1c012b4bf506b49b94317083ac02709f20a991d8c234a9",
+  "hash": "da381754160107cd6c24714a470fbd78595c46780f6c13025448b0f758f35a86"
+}

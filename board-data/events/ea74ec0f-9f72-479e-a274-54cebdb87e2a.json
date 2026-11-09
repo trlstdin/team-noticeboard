@@ -1,0 +1,29 @@
+{
+  "id": "ea74ec0f-9f72-479e-a274-54cebdb87e2a",
+  "seq": 474,
+  "time": "2026-11-09T13:07:36.313Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.restore",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 79,
+    "repositoryUrl": "https://github.com/alistrode/project-index",
+    "personalRepositoryUrl": "",
+    "id": "969e4177-a2c5-44de-9ced-3ff9637404da",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "项目索引 · Project Index｜alistrode 项目功能、分发包、来源与特色",
+    "body": "项目索引 · Project Index｜alistrode 项目功能、分发包、来源与特色",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222617185,
+    "createdAt": "2026-11-09T11:10:17.185Z",
+    "updatedAt": "2026-11-09T13:07:36.313Z"
+  },
+  "previousHash": "b0fa25c20e1cae5bcef9a814f719a497a926520414dfcb813c7d575da934c6bc",
+  "hash": "35b30fe071dd9cb6aac880f8428835432371871c9b4e209f5d433250e3e134e4"
+}

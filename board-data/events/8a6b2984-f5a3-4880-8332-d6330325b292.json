@@ -1,0 +1,29 @@
+{
+  "id": "8a6b2984-f5a3-4880-8332-d6330325b292",
+  "seq": 479,
+  "time": "2026-11-09T13:07:42.227Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.restore",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 83,
+    "repositoryUrl": "https://github.com/alistrode/ssh-relay-3.0",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/versions/3.0",
+    "id": "25b5ec5e-961e-4d04-8771-5903a1f0b5ed",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "远程电脑连接器 3.0 · SSH Relay 3.0",
+    "body": "远程电脑连接器 3.0 · SSH Relay 3.0 | Migrated from trlstdin/rororororo branch versions/3.0",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222622505,
+    "createdAt": "2026-11-09T11:10:22.505Z",
+    "updatedAt": "2026-11-09T13:07:42.227Z"
+  },
+  "previousHash": "b0e753c387b639eebad3b394eaa9b6d583e53267d0ee795afeedbeb8f8c8f83e",
+  "hash": "025c81c9da9c757e00697b56aacc6eabd178c9a03723b51d4a2284e70475fa6e"
+}

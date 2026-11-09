@@ -1,0 +1,29 @@
+{
+  "id": "5abaf6db-9384-424a-b1ea-b52b10da5c3f",
+  "seq": 503,
+  "time": "2026-11-09T13:09:42.110Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 104,
+    "repositoryUrl": "https://github.com/alistrode/elixir-sqlite-chunker",
+    "personalRepositoryUrl": "",
+    "id": "4d3c5882-fb33-42fc-aa94-239acf55392c",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "代码图谱分块库（Elixir SQLite Chunker）",
+    "body": "把 Elixir 源文件按函数切块存入 SQLite，供代码图谱按节点读写。\n逐块校验归属并返回结果，代码块改动不会自动覆盖原始源码文件。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229664175,
+    "createdAt": "2026-11-09T13:07:44.175Z",
+    "updatedAt": "2026-11-09T13:09:42.110Z"
+  },
+  "previousHash": "2dcd705d7673684bf0f345b801e577b8ef1c6b85f754d9b6e1cf497a6172c9f0",
+  "hash": "e278ceec9bf1c6c1e6eae1f970281322dc2cd6c9829fb25ab2c6990f98fd6cbc"
+}

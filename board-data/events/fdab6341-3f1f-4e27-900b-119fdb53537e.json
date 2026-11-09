@@ -1,0 +1,29 @@
+{
+  "id": "fdab6341-3f1f-4e27-900b-119fdb53537e",
+  "seq": 497,
+  "time": "2026-11-09T13:09:35.513Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 100,
+    "repositoryUrl": "https://github.com/alistrode/promptlab",
+    "personalRepositoryUrl": "",
+    "id": "dcf6fe05-e332-4d51-9aa5-959b7964ec6b",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "提示词调优助手（PromptLab）",
+    "body": "先跑原提示词，再生成候选，用相同样例比较结果。\n调优样例和回归样例分开，效果提升且回归不退步后，由用户决定是否采纳。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229652871,
+    "createdAt": "2026-11-09T13:07:32.871Z",
+    "updatedAt": "2026-11-09T13:09:35.513Z"
+  },
+  "previousHash": "790a57fdc62bd8dec094ff65547f95eafa546720080abec81d5e328fd4aaeb1e",
+  "hash": "7a1f873a86240210236a1ea4bf8d827c433f5ab03048d6e45760bee720b5a45d"
+}

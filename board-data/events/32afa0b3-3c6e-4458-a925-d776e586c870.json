@@ -1,0 +1,29 @@
+{
+  "id": "32afa0b3-3c6e-4458-a925-d776e586c870",
+  "seq": 467,
+  "time": "2026-11-09T13:07:27.521Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 97,
+    "repositoryUrl": "https://github.com/alistrode/omnidispatch",
+    "personalRepositoryUrl": "",
+    "id": "1ab0c7c9-6620-45cd-aff7-d0d70d1d834a",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "多平台发布管家 · OmniDispatch",
+    "body": "多平台发布管家 · OmniDispatch | Migrated from trlstdin/rororororo branch projects/omnidispatch",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229647521,
+    "createdAt": "2026-11-09T13:07:27.521Z",
+    "updatedAt": "2026-11-09T13:07:27.521Z"
+  },
+  "previousHash": "8577010c11d9907dc4d8204abbf836c09491a4b04d6b317d00cec9efcfdc5df1",
+  "hash": "3fef4e7442e7b54f0a1a785d732bf8a7c707992afed9f3fa51de92182b2dbe71"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "46236def-abae-4364-8588-fd365daf9ba1",
+  "seq": 502,
+  "time": "2026-11-09T13:09:41.145Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 97,
+    "repositoryUrl": "https://github.com/alistrode/omnidispatch",
+    "personalRepositoryUrl": "",
+    "id": "1ab0c7c9-6620-45cd-aff7-d0d70d1d834a",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "多平台发布管家（OmniDispatch）",
+    "body": "统一管理多个平台的账号、素材和定时发布任务。\n支持分块续传和任务记录，提交结果不明时先核验，避免重复发布。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229647521,
+    "createdAt": "2026-11-09T13:07:27.521Z",
+    "updatedAt": "2026-11-09T13:09:41.145Z"
+  },
+  "previousHash": "41adb7818ad3fc5d63549feafab7f68b214aa3a823245af2569a8c8376f14cfc",
+  "hash": "2dcd705d7673684bf0f345b801e577b8ef1c6b85f754d9b6e1cf497a6172c9f0"
+}

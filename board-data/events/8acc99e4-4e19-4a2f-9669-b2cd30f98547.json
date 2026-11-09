@@ -1,0 +1,29 @@
+{
+  "id": "8acc99e4-4e19-4a2f-9669-b2cd30f98547",
+  "seq": 490,
+  "time": "2026-11-09T13:09:26.996Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 82,
+    "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.7",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.7",
+    "id": "4ead6d4c-fbc3-4630-980a-75d4327b2303",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "远程电脑连接器 5.7（SSH Relay Pro 5.7）",
+    "body": "记住已配对的电脑，断线后恢复连接，并保留持久任务的状态。\n支持任务查询、取消和文件传输，提供 Windows 桌面版与 Linux 云端版。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222620438,
+    "createdAt": "2026-11-09T11:10:20.438Z",
+    "updatedAt": "2026-11-09T13:09:26.996Z"
+  },
+  "previousHash": "66ddf8a68d68f3aecc8bc456811f3e2784cf11acd0d73d1cae16115f5cb59352",
+  "hash": "c5686c11c5d444e493c0d47ee07011d788c65c1393b4905f752b4000a440e999"
+}

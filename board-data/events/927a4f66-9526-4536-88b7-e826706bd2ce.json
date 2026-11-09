@@ -1,0 +1,29 @@
+{
+  "id": "927a4f66-9526-4536-88b7-e826706bd2ce",
+  "seq": 500,
+  "time": "2026-11-09T13:09:39.023Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 106,
+    "repositoryUrl": "https://github.com/alistrode/project-manager",
+    "personalRepositoryUrl": "",
+    "id": "da7715ba-e306-49dc-993c-2cca15677672",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "项目总管（Project Manager）",
+    "body": "统一登记不同电脑上的项目、仓库、目录和相关 Codex 会话。\n支持按主机分组、依赖树和置顶排序，也可把项目资料交给已连接的云端 AI。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229667316,
+    "createdAt": "2026-11-09T13:07:47.316Z",
+    "updatedAt": "2026-11-09T13:09:39.023Z"
+  },
+  "previousHash": "a2c10aa0211c37295c5da6c3af1436559947208221a9f9b0ddde3b8b3d0bd587",
+  "hash": "ff1ea5ff21d2354500eb9d86046017290b47f7638bd380f26b950a1428cd49d9"
+}

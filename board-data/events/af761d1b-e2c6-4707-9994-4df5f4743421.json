@@ -1,0 +1,29 @@
+{
+  "id": "af761d1b-e2c6-4707-9994-4df5f4743421",
+  "seq": 498,
+  "time": "2026-11-09T13:09:36.719Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 98,
+    "repositoryUrl": "https://github.com/alistrode/open-deploy",
+    "personalRepositoryUrl": "",
+    "id": "72218474-1bd6-4ff6-be30-4ad1466d7c39",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "系统装机助手（OpenDeploy）",
+    "body": "制作 PXVIRT 系统安装介质，按指定目标盘执行分阶段部署。\n保留作业状态、日志和恢复入口，已有工具包，配套资料仍在补传。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229649085,
+    "createdAt": "2026-11-09T13:07:29.085Z",
+    "updatedAt": "2026-11-09T13:09:36.719Z"
+  },
+  "previousHash": "7a1f873a86240210236a1ea4bf8d827c433f5ab03048d6e45760bee720b5a45d",
+  "hash": "f51194f64ba6cdf90ee01a59aefaadf3d688e8447f71da9f8c1b5edc03820e6b"
+}

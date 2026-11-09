@@ -1,0 +1,29 @@
+{
+  "id": "70c24b7d-f335-43ae-926d-b47114876090",
+  "seq": 493,
+  "time": "2026-11-09T13:09:30.562Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 80,
+    "repositoryUrl": "https://github.com/alistrode/.github",
+    "personalRepositoryUrl": "",
+    "id": "20946745-db46-4f35-820d-61bcc1d0d672",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "组织首页",
+    "body": "组织首页的项目导航，列出各项目名称、用途和仓库链接。\n提供完整项目索引入口，方便从组织主页找到相应工具和说明。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222618253,
+    "createdAt": "2026-11-09T11:10:18.253Z",
+    "updatedAt": "2026-11-09T13:09:30.562Z"
+  },
+  "previousHash": "c01eaa0608a8d799a2bf83d507b2bafa901ce4789d8d5709a413e3c82d2c8355",
+  "hash": "d0de2f33f0ff51ca99ab4548875bacc0cde8455f72861dd0216216f770a554fe"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "5b4cd82a-50d6-429d-80ea-6fade7e7f928",
+  "seq": 501,
+  "time": "2026-11-09T13:09:40.122Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 99,
+    "repositoryUrl": "https://github.com/alistrode/guio",
+    "personalRepositoryUrl": "",
+    "id": "eb9dfc1e-17ce-4b2c-893f-1fd54de61f6a",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "通用自动化工具（GuIO）",
+    "body": "用同一套操作接口控制 Windows 桌面和 Android 手机。\n支持截图、读取界面、点击和输入，并可录制回放操作，供 AI 调用。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229650455,
+    "createdAt": "2026-11-09T13:07:30.455Z",
+    "updatedAt": "2026-11-09T13:09:40.122Z"
+  },
+  "previousHash": "ff1ea5ff21d2354500eb9d86046017290b47f7638bd380f26b950a1428cd49d9",
+  "hash": "41adb7818ad3fc5d63549feafab7f68b214aa3a823245af2569a8c8376f14cfc"
+}

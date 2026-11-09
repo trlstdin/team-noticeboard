@@ -1,0 +1,29 @@
+{
+  "id": "6eef9050-6b57-482f-ac19-51a372d6b496",
+  "seq": 485,
+  "time": "2026-11-09T13:07:48.339Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.restore",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 84,
+    "repositoryUrl": "https://github.com/alistrode/-",
+    "personalRepositoryUrl": "",
+    "id": "6722a1f4-32d0-4967-89d0-14ab59144e57",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "待整理项目 · Pending Project",
+    "body": "待整理项目 · Pending Project | 名字之后讨论吧",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222628247,
+    "createdAt": "2026-11-09T11:10:28.247Z",
+    "updatedAt": "2026-11-09T13:07:48.339Z"
+  },
+  "previousHash": "804db90d2f9df202a1f58021023f2c07f1402ee87058d49098b18acd392ffcc5",
+  "hash": "24a5f689935d7639738518cdcdf6b1b31f846f23e6fd81b480e2435998b78814"
+}

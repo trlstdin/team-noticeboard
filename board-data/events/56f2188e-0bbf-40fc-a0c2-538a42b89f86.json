@@ -1,0 +1,29 @@
+{
+  "id": "56f2188e-0bbf-40fc-a0c2-538a42b89f86",
+  "seq": 504,
+  "time": "2026-11-09T13:09:43.287Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 96,
+    "repositoryUrl": "https://github.com/alistrode/researchdesk",
+    "personalRepositoryUrl": "",
+    "id": "d9e3d53b-fc52-4f18-a6a1-35c0752c7e47",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "资料调研助手（ResearchDesk）",
+    "body": "检索网页、论文、GitHub 等公开资料，保留来源链接和摘录。\n按时间和相关性筛选、去重，再用本机模型整理研究简报。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794229646108,
+    "createdAt": "2026-11-09T13:07:26.108Z",
+    "updatedAt": "2026-11-09T13:09:43.287Z"
+  },
+  "previousHash": "e278ceec9bf1c6c1e6eae1f970281322dc2cd6c9829fb25ab2c6990f98fd6cbc",
+  "hash": "20df58277cdb65e6d8940d1a20f068c84260e21365d0ca649fb01bd293ec0d1d"
+}

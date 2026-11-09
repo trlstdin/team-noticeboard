@@ -1,0 +1,29 @@
+{
+  "id": "745cb3a8-2880-41c4-b148-ad3aeaaeb173",
+  "seq": 473,
+  "time": "2026-11-09T13:07:35.245Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.restore",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 78,
+    "repositoryUrl": "https://github.com/alistrode/ai-deploy-skills",
+    "personalRepositoryUrl": "",
+    "id": "43530c43-1140-4ead-a38b-b44e8f6c45c3",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "AI skill: choose among ten brands, then install or operate official products until usable",
+    "body": "AI skill: choose among ten brands, then install or operate official products until usable",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222616095,
+    "createdAt": "2026-11-09T11:10:16.095Z",
+    "updatedAt": "2026-11-09T13:07:35.245Z"
+  },
+  "previousHash": "3caaeb9e6835c69f874f506791ea78e7cd22e633818aad0a3c13604d2f159bd2",
+  "hash": "b0fa25c20e1cae5bcef9a814f719a497a926520414dfcb813c7d575da934c6bc"
+}

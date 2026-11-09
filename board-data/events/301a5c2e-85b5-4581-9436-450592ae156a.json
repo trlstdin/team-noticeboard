@@ -1,0 +1,29 @@
+{
+  "id": "301a5c2e-85b5-4581-9436-450592ae156a",
+  "seq": 495,
+  "time": "2026-11-09T13:09:33.210Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 81,
+    "repositoryUrl": "https://github.com/alistrode/ssh-relay-5.8",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/5.8",
+    "id": "71d73b97-4e0e-4df3-8c7c-f7a61287fcbf",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "远程电脑连接器 5.8（SSH Relay Pro 5.8）",
+    "body": "SSH Relay 系列的后续版本，用于设备配对、远程命令和文件传输。\n索引标记本版尚未上传完整，新增功能和对应运行包仍待补齐。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222619305,
+    "createdAt": "2026-11-09T11:10:19.305Z",
+    "updatedAt": "2026-11-09T13:09:33.210Z"
+  },
+  "previousHash": "a33cc606cb01f57148bb1a9b42c642ca7a88603e66e822f84d6f80e249ac1723",
+  "hash": "ea43583da40f74213038de0a1d1fdf5f152857abeb6cdcc61182f98ad52bc72a"
+}

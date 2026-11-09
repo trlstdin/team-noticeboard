@@ -1,0 +1,30 @@
+{
+  "id": "e3d3a1c5-c438-4ca3-b8e5-e161f648438a",
+  "seq": 461,
+  "time": "2026-11-09T12:54:02.288Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 92,
+    "repositoryUrl": "https://github.com/alistrode/devspace-vm",
+    "personalRepositoryUrl": "",
+    "id": "b8e1ec41-45cc-41b2-ae39-dba7fc0fd79a",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "网页 GPT 本机工具站 · DevSpace VM",
+    "body": "网页 GPT 本机工具站 · DevSpace VM | Migrated from trlstdin/rororororo branch projects/devspace-vm-20261030",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228458697,
+    "createdAt": "2026-11-09T12:47:38.697Z",
+    "updatedAt": "2026-11-09T12:47:38.697Z",
+    "deletedAt": "2026-11-09T12:54:02.288Z"
+  },
+  "previousHash": "49c294c51f314da09112b8c57693b20d170c7f8a02cd09641a46a44e1f9f09c7",
+  "hash": "f9fef0cb852bc8cfe39919240ab8cb8e1f527a1a3653fb8d240953639ada9606"
+}

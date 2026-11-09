@@ -1,0 +1,30 @@
+{
+  "id": "fd095326-6b38-455b-9dbe-da24491d72de",
+  "seq": 456,
+  "time": "2026-11-09T12:53:57.387Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 87,
+    "repositoryUrl": "https://github.com/alistrode/open-deploy",
+    "personalRepositoryUrl": "",
+    "id": "2297794d-2a28-47c0-94bc-b40053d03770",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "系统装机助手 · OpenDeploy",
+    "body": "系统装机助手 · OpenDeploy | OpenDeploy source, first successful simulation delivery and latest complete package",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228446105,
+    "createdAt": "2026-11-09T12:47:26.105Z",
+    "updatedAt": "2026-11-09T12:47:26.105Z",
+    "deletedAt": "2026-11-09T12:53:57.387Z"
+  },
+  "previousHash": "dedaa5dd9e23d0e36834a4cff3b7c5eaa7d1ec1afe82f95225c9a57c83680b4c",
+  "hash": "0e5070e4ebd52da98ebb6dd1cbba66cdc8444005480471662175c0f936e2170e"
+}

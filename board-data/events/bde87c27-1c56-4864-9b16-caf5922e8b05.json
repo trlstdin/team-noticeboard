@@ -1,0 +1,30 @@
+{
+  "id": "bde87c27-1c56-4864-9b16-caf5922e8b05",
+  "seq": 458,
+  "time": "2026-11-09T12:53:59.476Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 89,
+    "repositoryUrl": "https://github.com/alistrode/promptlab",
+    "personalRepositoryUrl": "",
+    "id": "ffc8f4d4-9eef-43f9-819c-6701a60df05a",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "提示词调优助手 · PromptLab",
+    "body": "提示词调优助手 · PromptLab | PromptLab - 本地提示词调优工作台（源码 + 自包含免安装分发包）",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228449385,
+    "createdAt": "2026-11-09T12:47:29.385Z",
+    "updatedAt": "2026-11-09T12:47:29.385Z",
+    "deletedAt": "2026-11-09T12:53:59.476Z"
+  },
+  "previousHash": "7d006189b66061bc5daaafe5396d844608700a6d5f1821d09cf4fa964b8f598c",
+  "hash": "dd2b95b91443c4330df68ed8f2f4b398801167624150b401e21817960b27cfa7"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "25b5fc83-57a1-4deb-bb4f-14262b8d116e",
+  "seq": 460,
+  "time": "2026-11-09T12:54:01.243Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 91,
+    "repositoryUrl": "https://github.com/alistrode/clipboard",
+    "personalRepositoryUrl": "",
+    "id": "a62bda16-8585-4da4-a33f-eb5e80228e14",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "随手剪贴板 · Clipboard Local",
+    "body": "随手剪贴板 · Clipboard Local | Migrated from trlstdin/rororororo branch projects/clipboard",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228456660,
+    "createdAt": "2026-11-09T12:47:36.660Z",
+    "updatedAt": "2026-11-09T12:47:36.660Z",
+    "deletedAt": "2026-11-09T12:54:01.243Z"
+  },
+  "previousHash": "714ffb292bb63ac6ebe473117481fc3014ee0b6cc7d30176f87a4998ca791621",
+  "hash": "49c294c51f314da09112b8c57693b20d170c7f8a02cd09641a46a44e1f9f09c7"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "c4b17607-fe43-4aa9-8928-bbae73db99b0",
+  "seq": 459,
+  "time": "2026-11-09T12:54:00.357Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 90,
+    "repositoryUrl": "https://github.com/alistrode/agenthub",
+    "personalRepositoryUrl": "",
+    "id": "2950e2c8-8a47-4371-aae0-0bccb35b0e04",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "AI 分工协作台 · AgentHub",
+    "body": "AI 分工协作台 · AgentHub | AgentHub - 本地多智能体协作台（源码 + 自包含免安装分发包）",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228450362,
+    "createdAt": "2026-11-09T12:47:30.362Z",
+    "updatedAt": "2026-11-09T12:47:30.362Z",
+    "deletedAt": "2026-11-09T12:54:00.357Z"
+  },
+  "previousHash": "dd2b95b91443c4330df68ed8f2f4b398801167624150b401e21817960b27cfa7",
+  "hash": "714ffb292bb63ac6ebe473117481fc3014ee0b6cc7d30176f87a4998ca791621"
+}

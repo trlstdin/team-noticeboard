@@ -1,0 +1,30 @@
+{
+  "id": "2e9bb1aa-5b4f-448b-87f3-ebff04410ce3",
+  "seq": 449,
+  "time": "2026-11-09T12:53:48.947Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 80,
+    "repositoryUrl": "https://github.com/alistrode/.github",
+    "personalRepositoryUrl": "",
+    "id": "20946745-db46-4f35-820d-61bcc1d0d672",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "组织首页 · Organization Profile",
+    "body": "组织首页 · Organization Profile",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222618253,
+    "createdAt": "2026-11-09T11:10:18.253Z",
+    "updatedAt": "2026-11-09T12:47:33.684Z",
+    "deletedAt": "2026-11-09T12:53:48.947Z"
+  },
+  "previousHash": "1aab056c8815f87d007445f8b7a4882c255d876d201d51a186be5119c417c1eb",
+  "hash": "e762b9e4f9f1fffe48cf1d6038a41468f927f84fc6a6a12f188989f697eca148"
+}

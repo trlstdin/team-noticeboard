@@ -1,0 +1,30 @@
+{
+  "id": "ac0e26a5-1323-455f-ab94-bd1f42c5151a",
+  "seq": 463,
+  "time": "2026-11-09T12:54:04.405Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 94,
+    "repositoryUrl": "https://github.com/alistrode/vm-unified-gui",
+    "personalRepositoryUrl": "",
+    "id": "c98e487d-56b4-4a36-bcd4-86c1c594e2a0",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "虚拟机多桌面工作台 · VM Unified GUI",
+    "body": "虚拟机多桌面工作台 · VM Unified GUI | Migrated from trlstdin/rororororo branch projects/vm-unified-gui",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228461672,
+    "createdAt": "2026-11-09T12:47:41.672Z",
+    "updatedAt": "2026-11-09T12:47:41.672Z",
+    "deletedAt": "2026-11-09T12:54:04.405Z"
+  },
+  "previousHash": "f7d4c6f1d64862a2497908d0b90ac60f1643adce4ea5c50030773ba6173630d2",
+  "hash": "d191487ac68f50b04700c01dc05b239bc67f01c270871ef86812200a7753f6ad"
+}

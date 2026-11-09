@@ -72,9 +72,40 @@ async function approvedContentUpdate(s){
  return true;
 }
 
+// Four content changes explicitly approved on 2026-11-09. Other cards and
+// later user edits are preserved; the existing journal ETag commits the batch.
+async function approvedProjectEntries20261109(s){
+ const key='2026-11-09-task69-and-three-projects',repoId='7d22d89f-9eac-410c-9b29-27f52e26d63c';
+ if(s.contentUpdates?.[key]||!s.contentUpdates?.['2026-11-08-software-and-development']||s.version<369||!s.repos.some(r=>r.id===repoId&&!r.deletedAt&&r.url==='https://github.com/trlstdin/team-noticeboard'))return false;
+ const publish=s.tasks.find(t=>t.id==='34b3095c-0404-4898-a118-a54b1355e7d3'&&t.repoId===repoId&&t.historyNumber===69&&!t.deletedAt);
+ if(!publish)fail(409,'已批准的69号事项已变化，原数据未覆盖');
+ const links={repositoryUrl:'https://github.com/alistrode/omnidispatch',personalRepositoryUrl:'https://github.com/trlstdin/rororororo/tree/projects/omnidispatch'};
+ for(const field of Object.keys(links))if(publish[field]&&publish[field]!==links[field])fail(409,'69号事项仓库地址已变化，原数据未覆盖');
+ const now=new Date().toISOString(),changed=[];
+ if(Object.keys(links).some(field=>publish[field]!==links[field])){Object.assign(publish,links,{updatedAt:now});changed.push(publish);}
+ const additions=[
+  {id:'aa87167f-0900-4971-9044-190f756857e0',title:'栗灯AI主播',body:'按节目单进行AI说话、游戏和弹幕互动，结合记忆、语音与OBS做直播演练。\n已有原型及直播适配；完整外部平台直播流程待验收。',repositoryUrl:'',personalRepositoryUrl:'https://github.com/trlstdin/rororororo/tree/projects/alistrode-live'},
+  {id:'968ca8c2-8f96-4984-b3e9-85b2d0863971',title:'循价：跨平台商品比价、模拟交易与结算',body:'对比跨平台同类商品的买卖价格，计算利润，并管理订单、库存、资金和结算。\n已有Windows桌面源码及模拟业务流程；未运行验收，真实下单和Payoneer收付款未接入。',repositoryUrl:'',personalRepositoryUrl:'https://github.com/trlstdin/rororororo/tree/projects/auto-trading'},
+  {id:'be0fb4ba-d28a-4f75-9d11-eec105093671',title:'DevSpace本地开发MCP服务',body:'把本地开发工具通过MCP提供给AI调用，使用所有者密码和令牌控制访问。\n已有服务源码与候选构建；完整运行验收状态尚未核实。',repositoryUrl:'https://github.com/alistrode/devspace-vm',personalRepositoryUrl:'https://github.com/trlstdin/rororororo/tree/projects/devspace-vm-20261030'}
+ ];
+ for(let i=0;i<additions.length;i++){
+  const item=additions[i];
+  if(s.tasks.some(t=>t.id===item.id||t.repoId===repoId&&!t.deletedAt&&(t.personalRepositoryUrl===item.personalRepositoryUrl||item.repositoryUrl&&t.repositoryUrl===item.repositoryUrl||t.title.replace(/^\s*\d+[.．、]\s*/,'').replace(/\s/g,'')===item.title.replace(/\s/g,''))))continue;
+  const task={...item,repoId,proposer:'trlstdin',assignee:'',host:'',finisher:'',column:0,rank:-Date.now()-i,createdAt:now,updatedAt:now,historyNumber:s.nextTaskHistoryNumber++};
+  s.tasks.push(task);changed.push(task);
+ }
+ for(const task of changed){
+  const event={id:id(),seq:s.version+1,time:now,actor:'trlstdin',actorId:'repository:trlstdin/team-noticeboard',action:'task.save',repoId,visibility:'public',detail:{...task},contentUpdate:key,previousHash:s.events.at(-1)?.hash||null};
+  event.hash=await hash(JSON.stringify(event));s.events.push(event);s.version++;
+ }
+ s.contentUpdates={...s.contentUpdates,[key]:{at:now,version:s.version}};
+ return true;
+}
+
 async function load(env){
  if(!env.BUCKET)fail(503,'共享存储尚未配置');const o=await env.BUCKET.get(KEY),s=o?await o.json():initial();ensureTaskNumbering(s);let etag=o?.etag||null;
- if(await approvedContentUpdate(s)){const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(!saved)fail(409,'内容更新期间有其他修改，请重试，原数据未覆盖');etag=saved.etag;}
+ const previousContentChanged=await approvedContentUpdate(s),projectEntriesChanged=await approvedProjectEntries20261109(s);
+ if(previousContentChanged||projectEntriesChanged){const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(!saved)fail(409,'内容更新期间有其他修改，请重试，原数据未覆盖');etag=saved.etag;}
  const sources=[...new Set(s.accounts.filter(v=>v.castSource&&!v.deletedAt).map(v=>v.castSource))];
  const leases=await Promise.all(sources.map(async source=>{const value=await env.BUCKET.get('noticeboard/cast-presence/'+source+'.json');return {source,lease:value?await value.json():null};}));
  for(const {source,lease} of leases)for(const acc of s.accounts)if(acc.castSource===source)acc.castExpiresAt=lease?.accountIds?.includes(acc.id)?Number(lease.expiresAt)||0:0;

@@ -1,0 +1,30 @@
+{
+  "id": "c89c4963-393f-4235-ae5d-73734f3d3679",
+  "seq": 418,
+  "time": "2026-11-09T11:17:01.303Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 77,
+    "repositoryUrl": "https://github.com/alistrode/workdesk",
+    "personalRepositoryUrl": "",
+    "id": "8e0c9c0d-6f4d-473d-82e7-4bfdbd9a6c1b",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "一体工作台 · WorkDesk",
+    "body": "一体工作台 · WorkDesk | WorkDesk - 一体工作台（源码 + 自包含免安装分发包）",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794222613121,
+    "createdAt": "2026-11-09T11:10:13.121Z",
+    "updatedAt": "2026-11-09T11:11:14.466Z",
+    "deletedAt": "2026-11-09T11:17:01.303Z"
+  },
+  "previousHash": "5940684ac5ec3248b739b731a14f51486bd4d377882166a2dc1f14453dfd2967",
+  "hash": "6d0722ee9abf536e3fe70f83d77c86ac707cb6f7802a55d63922b6674856ed5c"
+}

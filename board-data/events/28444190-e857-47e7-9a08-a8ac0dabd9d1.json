@@ -1,0 +1,29 @@
+{
+  "id": "28444190-e857-47e7-9a08-a8ac0dabd9d1",
+  "seq": 417,
+  "time": "2026-11-09T11:17:00.332Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.move",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "be0fb4ba-d28a-4f75-9d11-eec105093671",
+    "title": "DevSpace本地开发MCP服务",
+    "body": "把本地开发工具通过MCP提供给AI调用，使用所有者密码和令牌控制访问。\n已有服务源码与候选构建；完整运行验收状态尚未核实。",
+    "repositoryUrl": "https://github.com/alistrode/devspace-vm",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/devspace-vm-20261030",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1794208198705,
+    "createdAt": "2026-11-09T07:09:58.703Z",
+    "updatedAt": "2026-11-09T11:17:00.332Z",
+    "historyNumber": 74
+  },
+  "previousHash": "f19576a2fa7bd5358532e49a568e2aeb1318bd538c46cde226af75d852c85535",
+  "hash": "5940684ac5ec3248b739b731a14f51486bd4d377882166a2dc1f14453dfd2967"
+}

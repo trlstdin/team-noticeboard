@@ -1,0 +1,29 @@
+{
+  "id": "65c36c77-4eda-4c9c-b5f2-024691648d4f",
+  "seq": 410,
+  "time": "2026-11-09T11:16:53.107Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.move",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "8e5baa15-a26a-488b-9e3f-f422a13785d8",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "14. 多平台信息调研",
+    "body": "多平台信息调研\n\n按平台和时间检索公开网页、GitHub 与论文，保留每条来源的链接、日期和摘录。\n会去重、筛掉低相关结果，再交给本机模型归纳；搜不到或来源失败也会明确显示。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": 5120,
+    "createdAt": "2026-11-07T06:14:49.663Z",
+    "updatedAt": "2026-11-09T11:16:53.107Z",
+    "repositoryUrl": "https://github.com/alistrode/researchdesk",
+    "personalRepositoryUrl": "",
+    "historyNumber": 14
+  },
+  "previousHash": "431d8bead0ba984dc5ae1246211061554fa6a586756c1e0bb6ae1a845e2e1752",
+  "hash": "3f6ec85839e7d9b36a230ef86f9325a5e6f812ab7607b300255884e47f581b9a"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "813b9415-502e-48cc-bf5f-62fc5c3fd0f7",
+  "seq": 377,
+  "time": "2026-11-09T11:06:41.091Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 61,
+    "repositoryUrl": "https://github.com/trlstdin/team-noticeboard",
+    "personalRepositoryUrl": "",
+    "id": "3984656a-bf2b-4441-8daf-1efd636e615d",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "告示栏优化",
+    "body": "加载太慢出现残缺ui很 丑，保存速度太慢，影响手感，而且频繁出现拖拽失败。，，，西西弗斯行为，，等于每拖 ，，，希望优化到0.2s内，体感不可察觉为止。2，告示栏问题分几个框，每一点分一个框。项里面还有未上传，位于哪台主机：联系：xxx，3，区分重要紧急四象限，每一栏分组，四栏里面不管有几组，都必须显示四组，默认折叠点击展开，告示栏数据必须存仓库避免丢失，，每个项目根据时间顺序分配当前栏的序号，，待验收改已验收，在管理后台可查看，，告示栏统计只显示百分比。加问题项和重难点项，告示板加个认领人，提出人点击下拉组织成员栏名字可选，提出者不是主管链接，是主管的账号名真神经 ，告示板加个认领人，提出人点击下拉组织成员栏名字可选，仓库地址也要输入部分之后预测下拉栏像搜索引擎那样，页面未更新仍然要允许操作，反正操作又不在乎别的内容是否最新",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": 4096,
+    "createdAt": "2026-11-07T15:52:45.565Z",
+    "updatedAt": "2026-11-09T11:06:41.091Z"
+  },
+  "previousHash": "fd8f2b00e508eee48ed22ebcc81d6ed54c54aed46e043ce685cc13e1ca210014",
+  "hash": "01583dc9dd5cd7bdf9d6c24fe4657b264a29b78c0d9d605b509f598f64ddab0b"
+}

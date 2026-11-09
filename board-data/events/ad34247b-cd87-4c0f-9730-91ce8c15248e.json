@@ -1,0 +1,29 @@
+{
+  "id": "ad34247b-cd87-4c0f-9730-91ce8c15248e",
+  "seq": 395,
+  "time": "2026-11-09T11:10:26.138Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.move",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "5ba9f9fc-f839-4ac3-8f8f-515d65786eb1",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "19. 多容器统一图形界面",
+    "body": "多容器统一图形界面\n\n在一台 Ubuntu 虚拟机中管理多个容器应用，提供三个独立桌面同屏和统一桌面两种模式。\n切换模式保留原有会话，统一桌面可集中摆放容器窗口；两个模式的编辑状态不会自动互通。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 16384,
+    "createdAt": "2026-11-07T06:15:15.328Z",
+    "updatedAt": "2026-11-09T11:10:26.138Z",
+    "repositoryUrl": "https://github.com/alistrode/vm-unified-gui",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/vm-unified-gui",
+    "historyNumber": 19
+  },
+  "previousHash": "bfda618db15d10f90af23e60e6e56aa3d89739a42841a19e77284726c2e0f8e3",
+  "hash": "e8df5f94532ffe0ca094da6659522fc293c29a6c5ae8bef0193add6391974224"
+}

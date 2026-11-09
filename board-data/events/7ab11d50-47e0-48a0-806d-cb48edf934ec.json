@@ -1,0 +1,29 @@
+{
+  "id": "7ab11d50-47e0-48a0-806d-cb48edf934ec",
+  "seq": 375,
+  "time": "2026-11-09T10:27:12.964Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 75,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "329397c5-9aa8-4610-8151-79afc21ec1d3",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "去掉ai的所有弱智测试，所有项目通用的前后端统一测试流程",
+    "body": "禁止他妈的卷校验，禁止认证解密、ZIP 校验，禁止清单核对，禁止哈希，基线，冒烟和门禁，禁止验收矩阵，禁止dry-run，，依赖另一个类似page agent的点击前端引擎，依赖新一代编程agent，内置在编程agent内部，强制禁用其他测试（通过类正则的方法拦截工具调用），强制测试流程，让ai从图标一路点击每一页的每一个按钮，使用前端的每一个功能，无任何报错才能停下，就这么简单",
+    "proposer": "主管链接",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1794220032964,
+    "createdAt": "2026-11-09T10:27:12.964Z",
+    "updatedAt": "2026-11-09T10:27:12.964Z"
+  },
+  "previousHash": "b852ecf78d0d7c807c1271c8625e5b40199e6663d33e553a61d30e4be151e27f",
+  "hash": "c34eecb7b5d80dcca4b01984834f2ec0da23f60e25b9aefcd6e64e5232d729c5"
+}

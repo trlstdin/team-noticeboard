@@ -1,0 +1,30 @@
+{
+  "id": "2a0ce26d-a57c-4bed-9978-532ecc539883",
+  "seq": 396,
+  "time": "2026-11-09T11:10:27.045Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.move",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "1508054e-fd2c-4ace-b684-26a0d2398dc8",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "41. 项目全流程统一管理",
+    "body": "项目自动迭代和合并以及管理\n项目全流程统一管理，结合cicd流水线自动合并，还有依赖新一代编程agent的提示词自动管理\n统一登记项目目录、仓库、主机和依赖关系，可按项目查找关联的 Codex 会话。\n支持把选定项目资料交给已连接的云端 AI；现有实现以索引和交接为主，自动合并与 CI/CD 仍需另行落实。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 17408,
+    "createdAt": "2026-11-07T06:17:09.190Z",
+    "updatedAt": "2026-11-09T11:10:27.045Z",
+    "repositoryUrl": "https://github.com/alistrode/project-manager",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/project-manager",
+    "historyNumber": 41,
+    "pinned": true
+  },
+  "previousHash": "e8df5f94532ffe0ca094da6659522fc293c29a6c5ae8bef0193add6391974224",
+  "hash": "49ad2365a9658de6480c2d8a65ea48c0b1cb53a3379abb474f1aa8007ce213d4"
+}

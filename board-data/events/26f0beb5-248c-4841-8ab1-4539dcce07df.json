@@ -1,0 +1,29 @@
+{
+  "id": "26f0beb5-248c-4841-8ab1-4539dcce07df",
+  "seq": 383,
+  "time": "2026-11-09T11:10:14.204Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.move",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "b6e13528-741c-41d9-b0f9-0574f05b4b2b",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "12. 提示词自动调优",
+    "body": "提示词自动调优，，待集成\n\n先运行原提示词建立基线，再生成候选，用同一批用例比较输出。\n调优用例与回归用例分开，候选必须总分提升且回归不退步，最后由人决定是否采用。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 4,
+    "rank": 11264,
+    "createdAt": "2026-11-07T06:14:39.894Z",
+    "updatedAt": "2026-11-09T11:10:14.204Z",
+    "repositoryUrl": "https://github.com/alistrode/promptlab",
+    "personalRepositoryUrl": "",
+    "historyNumber": 12
+  },
+  "previousHash": "7ca2073a291cb588c4ecc36e946ccde8e2d856a1d91d9229a96b62e70535ae49",
+  "hash": "66dd3c8b5985e305d67ca8284e4c524df4ece645a4fab046dbea1786fa46f9cc"
+}

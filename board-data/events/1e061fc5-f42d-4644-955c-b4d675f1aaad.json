@@ -1,0 +1,29 @@
+{
+  "id": "1e061fc5-f42d-4644-955c-b4d675f1aaad",
+  "seq": 429,
+  "time": "2026-11-09T12:47:27.116Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 88,
+    "repositoryUrl": "https://github.com/alistrode/guio",
+    "personalRepositoryUrl": "",
+    "id": "e9fbaba1-b0fb-4c85-82be-ad4d643465da",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "通用自动化工具 · GuIO",
+    "body": "通用自动化工具 · GuIO | 同一内核驱动 Windows 桌面与 Android 手机（源码 + 自包含免安装分发包）",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228447116,
+    "createdAt": "2026-11-09T12:47:27.116Z",
+    "updatedAt": "2026-11-09T12:47:27.116Z"
+  },
+  "previousHash": "82828c96e7934c2e7e7406956e32cd713503a7782ecc9169e3d27237fde1d9cb",
+  "hash": "5b1992f17f3be84c22ec253e4394227f162b49baa8fe60ccf175c6a56fe00744"
+}

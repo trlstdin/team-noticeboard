@@ -1,0 +1,29 @@
+{
+  "id": "559497f9-b487-43c3-bf91-32399ad1ee17",
+  "seq": 444,
+  "time": "2026-11-09T12:47:42.771Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 95,
+    "repositoryUrl": "https://github.com/alistrode/project-manager",
+    "personalRepositoryUrl": "",
+    "id": "d503c301-f54a-416f-b1b2-44d7c7b7cd19",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "项目总管 · Project Manager",
+    "body": "项目总管 · Project Manager | Migrated from trlstdin/rororororo branch projects/project-manager",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "trlstdin",
+    "column": 4,
+    "rank": -1794228462771,
+    "createdAt": "2026-11-09T12:47:42.771Z",
+    "updatedAt": "2026-11-09T12:47:42.771Z"
+  },
+  "previousHash": "4f9c7cb6691e9dd3b6e2ee66c710020149bdbe9b8bb47aa6228ec20b47ee9df9",
+  "hash": "92c4d7b29936b11758795d30e7005eeeee5967c47527f69aa84ed969aff2c9e3"
+}

@@ -1,1 +1,1 @@
-{"name":"team-noticeboard","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","test":"node --test tests/*.test.mjs"},"dependencies":{"eval5":"^1.4.8"},"devDependencies":{"esbuild":"^0.28.2","typescript":"^5.9.3"}}
+{"name":"team-noticeboard","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","test":"node --test tests/*.test.mjs"},"dependencies":{"eval5":"^1.4.8"},"devDependencies":{"@langchain/langgraph":"^1.7.3","esbuild":"^0.28.2","typescript":"^5.9.3"}}

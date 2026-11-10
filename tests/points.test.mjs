@@ -26,6 +26,7 @@ for(const [name,backend] of [['native',native],['interpreted',interpreted]])test
  await a.change({action:'task.move',id:t.id,column:4,rank:0});
  assert.equal((await a.change({action:'points.settle',id:t.id,quality:100},token)).status,403);
  assert.equal((await a.change({action:'points.settle',id:t.id,quality:121})).status,400);
+ assert.equal((await a.change({action:'points.evidence',id:t.id,testsPassed:true,acceptancePassed:true,noRegression:true,notes:'验收与测试通过'})).status,200);
  assert.equal((await a.change({action:'points.settle',id:t.id,quality:100})).status,200);
  assert.equal((await a.state(token)).points.balance,8);
  assert.equal((await a.change({action:'points.settle',id:t.id,quality:100})).status,409);

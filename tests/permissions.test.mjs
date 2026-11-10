@@ -104,11 +104,11 @@ test('accepted page isolates visitors and preserves member and supervisor naviga
  for(const column of [0,4,5])await a.change({action:'task.save',repoId,title:'column '+column,proposer:'owner',column});
  await a.change({action:'note.save',repoId,column:0,note:'internal guidance'});
  const guest=await a.state('');assert.deepEqual(guest.views,['accepted']);assert.deepEqual(guest.tasks.map(t=>t.column),[4]);assert.equal(guest.repos[0].notes[0],'');assert.equal((await a.call('history',undefined,'')).status,403);
- assert.deepEqual((await a.state()).views,['board','accounts','manage','accepted']);
+ assert.deepEqual((await a.state()).views,['board','accounts','manage','points','accepted']);
  const {hash,encrypt}=await import('../worker/index.js');const key='navigation-member';
  a.env.BUCKET.other.set('auth/'+await hash(key),JSON.stringify({githubId:42,secret:await encrypt('member-navigation',a.env),expiresAt:Date.now()+100000}));
  a.env.GH_FETCH=async url=>url.endsWith('/user')?Response.json({id:42,login:'member'}):Response.json({state:'active',role:'member'});
- const member=await a.state(key);assert.deepEqual(member.views,['board','accounts','accepted']);assert.equal(member.tasks.length,3);assert.equal(member.actor.manage,false);
+ const member=await a.state(key);assert.deepEqual(member.views,['board','accounts','points','accepted']);assert.equal(member.tasks.length,3);assert.equal(member.actor.manage,false);
 });
 
 test('pinning persists, changes priority numbering, and requires edit permission',async()=>{

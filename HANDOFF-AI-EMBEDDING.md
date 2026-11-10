@@ -16,7 +16,7 @@ https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/
               后端结构与业务校验 → 等待人工审批
 ```
 
-浏览器不持有模型凭据；电脑只主动访问现有公网 API，不增加公开端口或新 Site。网关同时提供鉴权的本机 OpenAI 兼容 API；实际回环地址查看本机 `release/state/endpoint.json`。公网任务入口为 `/api/points/gateway/`，它是受鉴权的任务协议，并非匿名聊天接口。
+浏览器不持有模型凭据；电脑只主动访问现有公网 API，不增加公开端口或新 Site。网关同时提供鉴权的本机 OpenAI 兼容 API；本次运行的本机 API 基址为 `http://127.0.0.1:63716`，聊天接口为 `/v1/chat/completions`；重启可能换端口，以本机 `release/state/endpoint.json` 为准。公网任务入口为 `/api/points/gateway/`，它是受鉴权的任务协议，并非匿名聊天接口。
 
 ## 代码与运行位置
 
@@ -56,4 +56,10 @@ https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/
 ## 验收记录
 
 - 本地完整140项测试通过，包含7项新增千问网关测试；构建成功。
-- 本机千问真实推理、公网队列往返与发布版本检查：以本文件后续验收记录为准；自动测试中的模型替身不作为真实推理证据。
+- 指定机器真实调用 qwen3-vl:4b，返回 `{"ok":true,"provider":"qwen"}`，实际用量45 tokens。
+- 桌面/手机浏览器通过千问来源选择、异步连接检查、建议队列回传及人工审批；浏览器自动化中的模型传输为替身，与上条真实模型验证分别记录。
+- 2026-11-10 07:28 UTC：公网固定文本任务 `e775bf5e-fd77-459f-89c8-f2b529c93ddc` 经网站入队、本机领取、真实千问推理、网站回传，最终 `status: completed`，结果 `{"ok":true,"model":"qwen3-vl:4b","source":"qwen-gateway"}`。
+- 本机 `/v1/chat/completions` 使用 Bearer 鉴权实际返回 OpenAI 兼容响应，模型别名 qwen-local、输出 `{"ok":true}`，该次用量25 tokens。没有把 Ollama 的存在或测试替身当作 API 成功。
+- [最终业务发布工作流](https://github.com/trlstdin/team-noticeboard/actions/runs/42775320845) 全部成功，包含 Push backend release to Sites。公网 `/api/state` 实测 `x-noticeboard-backend-source: repository`，revision=`593c6f23e37ff959a89b7f223ec99506d083e061`，与 backend-release.json 的 sourceCommit 一致。
+- 公网验收后仍为原1个项目、22条事项；仅增加固定连接检查及相应私密工作流记录，没有添加业务示例事项或修改积分余额。
+- 远端运行的 gateway.mjs SHA256 为 `aec71a1c07e7fc570a1873849040a00dd4f44c913aad489e778dc59402628f26`，与仓库源文件一致。

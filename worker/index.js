@@ -255,7 +255,7 @@ async function requestPointModel(s,env,system,user){
 }
 async function pointModelConnectionTest(request,env){
  const {s,etag}=await load(env),a=await identity(request,env,s);if(!a.root)fail(403,'仅总主管可检查模型连接');const c=pointModelConfiguration(s,env);if(!c.configured||!c.enabled)fail(503,'模型尚未启用，没有可用的模型接入配置');const now=new Date().toISOString(),e=economy(s),key=pointKey(a);
- if(e.workflows.some(w=>w.type==='connection'&&w.account===key&&(w.status==='running'&&Date.parse(w.leaseUntil)>Date.now()||w.status==='queued'&&Date.parse(w.createdAt)>Date.now()-45000)))fail(409,'连接检查正在进行，可在建议记录中恢复');
+ if(e.workflows.some(w=>w.type==='connection'&&w.account===key&&(w.status==='running'&&(Date.parse(w.leaseUntil)>Date.now()||w.gatewayRequest&&Date.parse(w.gatewayRequest.deadline)>Date.now())||w.status==='queued'&&Date.parse(w.createdAt)>Date.now()-45000)))fail(409,'连接检查正在进行，可在建议记录中恢复');
  const w={id:id(),type:'connection',taskId:null,repoId:null,account:key,prompt:'模型连接检查（只发送固定测试文本，不发送事项内容）',baseRuleVersion:pointRules(s).version,status:'queued',createdAt:now,updatedAt:now,nodes:[{node:'draft',time:now}],source:'manual'};e.workflows.push(w);await pointEventSave(s,etag,env,a,'points.model.test',{workflowId:w.id},now);return pointAiRequestHandler(request,env,{id:w.id});
 }
 async function pointAiRequestHandler(request,env,b){

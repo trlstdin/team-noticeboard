@@ -31,7 +31,7 @@ for(const [name,backend] of [['native',native],['interpreted',interpreted]]){
   const result={id,requestId:job.requestId,leaseToken:job.leaseToken,model:'qwen3-vl:4b',content:'{"blocking":2,"explanation":"本地千问建议"}'};
   assert.equal((await gw(a,'result',{...result,leaseToken:'invalid'})).status,409);assert.equal((await gw(a,'result',result)).body.status,'awaiting_approval');
   assert.equal((await gw(a,'result',result)).body.completed,true);assert.equal((await a.state()).tasks[0].pointSignal,undefined);assert.equal((await a.state()).points.ledger.length,0);
-  assert.equal((await d({action:'points.workflow.decide',id,decision:'approve',reason:'不具备主管权限'},token)).status,403);await d({action:'points.workflow.decide',id,decision:'approve',reason:'人工确认'});assert.equal((await a.state()).tasks[0].pointSignal.blocking,2);
+  assert.equal((await d({action:'points.workflow.decide',id,decision:'approve',reason:'不具备主管权限'},token)).status,403);await d({action:'points.workflow.decide',id,decision:'approve',reason:'人工确认'});assert.equal((await a.state()).tasks[0].pointSignal.blocking,2);const check=await a.call('points/model-test',{});assert.equal(check.status,200);assert.equal(check.body.pending,true);assert.equal((await a.call('points/model-test',{})).status,409);
  });
  test(name+': stale context, revoked permissions and explicit cancellation reject gateway results',async()=>{
   worker=backend;const {a,repoId,token}=await setup(),d=mutate(a);await gw(a,'heartbeat',{workerId:'test-worker',model:'qwen3-vl:4b',ready:true});await d({action:'task.save',repoId,title:'原内容',proposer:'owner',column:6});const t=(await a.state()).tasks[0];

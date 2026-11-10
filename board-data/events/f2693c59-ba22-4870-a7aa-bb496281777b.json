@@ -1,0 +1,38 @@
+{
+  "id": "f2693c59-ba22-4870-a7aa-bb496281777b",
+  "seq": 535,
+  "time": "2026-11-10T05:10:56.772Z",
+  "actor": "yyxgsgs · 成员链接",
+  "actorId": "member-link:fb97481f-665f-406b-9095-9c63af670692",
+  "action": "task.place",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "2089de69-44eb-4f2e-a408-2eec8f49a4eb",
+    "column": 0,
+    "order": [
+      "2089de69-44eb-4f2e-a408-2eec8f49a4eb",
+      "a58a9e5d-fe74-46a5-a870-ec2d46bb1ce3",
+      "97ce44e4-4633-479a-a20b-b94a8bcb3bc4",
+      "a239cd16-4270-4749-8fb0-276c878c6df5",
+      "797fbccd-dcac-4f15-902a-21ee257133f0",
+      "73321398-6205-47af-a254-ce2f2ea03d48",
+      "e55a1539-921a-4e98-b5d6-e5c6a9136201",
+      "329397c5-9aa8-4610-8151-79afc21ec1d3",
+      "de7f51a8-b5ab-49e5-bbe8-8ed1184e653e",
+      "3ab2e1ce-52ba-4c1e-a80c-ef89c3900e46",
+      "50c2b5c0-4a3e-44e7-b2f1-ce82b46ac3ab",
+      "5411b617-6c98-4f42-a9d6-701903e48367",
+      "5dd5a2e1-2004-47a2-baa1-fc6613a43385",
+      "5260fd6d-b0ab-4cb1-952d-f30f24282c20",
+      "0a5807e5-1187-41fb-acc1-8235bd6a5aa7",
+      "221beb6c-f8ba-403c-bb72-7d48cc088ba2",
+      "8c0cbe93-8aec-42f5-a4f4-146bdf42d2ea",
+      "583d95c8-c951-4ff6-abc5-bcd18409bc6c",
+      "ff8f7764-d561-4b81-8fbe-731f28956052",
+      "b11e7cd8-8041-4247-9646-c955f8e9800d"
+    ]
+  },
+  "previousHash": "c93f994f8617d0c2da08ae987f31567d7a78b464c6c81d76e773a280689827c3",
+  "hash": "80d94d0e10cbdd9a1fa2915311b05e6bec9f79db6baee4d320c7ddba2b39e24b"
+}

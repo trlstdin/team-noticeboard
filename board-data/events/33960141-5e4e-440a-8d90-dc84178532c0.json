@@ -1,0 +1,16 @@
+{
+  "id": "33960141-5e4e-440a-8d90-dc84178532c0",
+  "seq": 533,
+  "time": "2026-11-10T05:06:52.478Z",
+  "actor": "yyxgsgs · 成员链接",
+  "actorId": "member-link:fb97481f-665f-406b-9095-9c63af670692",
+  "action": "task.pin",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "f10f64fa-7303-4f94-966a-c331b5dbeee1",
+    "pinned": false
+  },
+  "previousHash": "3f1ae36e9e0a0cef8b54b03977b3cabb9ccf6ac2a5c09d1377cc48bf75b46a46",
+  "hash": "0a24aa2fc54148f65781bc1c8d0d6f90bca3815b0334a70a2578267f8f1f4bbc"
+}

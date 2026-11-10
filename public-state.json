@@ -1,12 +1,14 @@
 {
-  "version": 525,
+  "points": null,
+  "version": 551,
   "columns": [
     "待开发",
     "修复",
     "优化",
     "先接单后开发",
     "已验收",
-    "待验收"
+    "待验收",
+    "可开发池"
   ],
   "notes": [
     "",
@@ -452,14 +454,14 @@
     "githubLogin": null,
     "githubId": null
   },
-  "historyCount": 525,
+  "historyCount": 551,
   "storage": {
     "shared": true,
     "github": true,
     "repository": "https://github.com/trlstdin/team-noticeboard",
-    "committedVersion": 519,
-    "commit": "6d23fcaf1fbcbde0298d548783aa34576f268f12",
-    "pending": 6
+    "committedVersion": 525,
+    "commit": "5c3e9716400a5ce0a1b700b20cfc9688df6d3ee5",
+    "pending": 26
   },
-  "snapshotAt": "2026-11-10T02:01:44.348Z"
+  "snapshotAt": "2026-11-10T09:29:18.616Z"
 }

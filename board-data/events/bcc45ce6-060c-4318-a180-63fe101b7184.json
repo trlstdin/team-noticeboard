@@ -1,0 +1,30 @@
+{
+  "id": "bcc45ce6-060c-4318-a180-63fe101b7184",
+  "seq": 558,
+  "time": "2026-11-10T09:50:41.743Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "5411b617-6c98-4f42-a9d6-701903e48367",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "30. cpu峰值限制器",
+    "body": "我的电脑是魔改qqlt，cpu超95%就会重启，需要底层原理的cpu峰值限制器",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 11264,
+    "createdAt": "2026-11-07T06:16:12.745Z",
+    "updatedAt": "2026-11-07T16:06:06.073Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 30,
+    "deletedAt": "2026-11-10T09:50:41.743Z"
+  },
+  "previousHash": "3a8dcf68a8ac65cfc7ec35afb5a58fb8bd208e53a30d15bbbc58bfe3f46fb88c",
+  "hash": "8b5c295b4e33c0f4b5937377c69f893807cfd7498a59248179c5433a0c572679"
+}

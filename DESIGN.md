@@ -77,3 +77,5 @@
 
 规则调整、阻塞和质量建议均须人工审批。模型仅提供结构化建议；无模型配置时可以手动使用全部核心业务。AI 调用由现有后端的自写代码直接完成，不使用 Agent 框架；受限离线校准工具不会直接修改账本。完整规则、参数边界、隐私与恢复机制见：
 https://github.com/trlstdin/team-noticeboard/blob/main/POINTS.md
+
+本机千问通过自写鉴权网关接入，提供本机 OpenAI 兼容 API，并主动拉取现有站点的异步建议任务。无智能体框架，结果仍须校验和人工审批。架构、代码位置及运维见 [HANDOFF-AI-EMBEDDING.md](HANDOFF-AI-EMBEDDING.md)。

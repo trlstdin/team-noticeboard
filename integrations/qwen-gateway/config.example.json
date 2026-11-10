@@ -1,0 +1,7 @@
+{
+  "site": "https://team-noticeboard-rebuilt.loneivy1.chatgpt.site",
+  "ollama": "http://127.0.0.1:11434",
+  "model": "qwen3-vl:4b",
+  "workerId": "REPLACE_WITH_RANDOM_UUID",
+  "token": "REPLACE_WITH_PRIVATE_64_HEX_TOKEN"
+}

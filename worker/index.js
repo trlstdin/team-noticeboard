@@ -3,7 +3,7 @@ const KEY='noticeboard/journal-v1.json';
 // Only the digest is published. The independently generated 256-bit bearer
 // stays with the owner; replacing this digest revokes it and all child sessions.
 const PERMANENT_SUPERVISOR_HASH='592fe9c92ec5f37422bff10b7e7f42583fe33fca98176a29f4ec579be6d845c5';
-const COLUMNS=['待开发','修复','优化','先接单后开发','已验收','待验收'];
+const COLUMNS=['待开发','修复','优化','先接单后开发','已验收','待验收','可开发池'];
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
 const fail=(status,message)=>{throw Object.assign(new Error(message),{status})};
 const id=()=>crypto.randomUUID();
@@ -11,6 +11,21 @@ const hash=async s=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-25
 const text=(v,max=200)=>{if(typeof v!=='string'||!v.trim()||v.length>max)fail(400,'输入内容为空或超过长度限制');return v.trim()};
 const url=v=>{let u;try{u=new URL(text(v,4000))}catch{fail(400,'请输入完整的 URL')}if(!['https:','http:'].includes(u.protocol)||u.username||u.password)fail(400,'只支持 HTTP / HTTPS 链接');return u.href};
 const initial=()=>typeof PUBLIC_BOOTSTRAP!=='undefined'?JSON.parse(JSON.stringify(PUBLIC_BOOTSTRAP)):({version:0,repos:[],tasks:[],accounts:[],users:[],tokens:[],notes:['等待开发的需求与新功能','已发现的问题与缺陷','体验、性能与流程优化','先认领接单，再安排开发','已完成并通过验收'],events:[]});
+
+// Rule version 1: integer currency; all entries share the task CAS commit.
+const POINT_RULES={version:1,daily:20,freeCap:100,weights:[8,5,3,8,0,5,8],listingRate:0.25,waitingRate:0.2,pinBase:2,pinCap:8,pinWindowDays:7};
+function pointKey(a){const uid=a.githubId||a.users?.find(u=>u.id===a.id)?.githubId;return uid?'github:'+uid:a.root?'supervisor':a.id!=='anonymous'?a.id:null}
+function economy(s){return s.points||(s.points={accounts:{},ledger:[]})}
+function wallet(s,key){const e=economy(s);return e.accounts[key]||(e.accounts[key]={balance:0,lastDaily:null})}
+function pointEntry(s,key,amount,kind,taskId,now){const w=wallet(s,key);if(!Number.isSafeInteger(amount)||!Number.isSafeInteger(w.balance+amount)||w.balance+amount<0)fail(409,'积分不足，请领取每日积分或完成事项');w.balance+=amount;economy(s).ledger.push({id:id(),account:key,amount,balance:w.balance,kind,taskId:taskId||null,time:now,ruleVersion:1,weight:kind==='completion'?(s.tasks.find(t=>t.id===taskId)?.pointWeight||8):0})}
+function dailyPoints(s,key,now){const w=wallet(s,key),day=new Date(Date.parse(now)+8*3600000).toISOString().slice(0,10);if(w.lastDaily===day)return;const amount=Math.max(0,Math.min(POINT_RULES.daily,POINT_RULES.freeCap-w.balance));if(amount)pointEntry(s,key,amount,'daily',null,now);w.lastDaily=day}
+function listingPrice(t,column,now){const waited=Math.max(0,Date.parse(now)-Date.parse(t?.createdAt||now));return Math.ceil(POINT_RULES.weights[column]*POINT_RULES.listingRate*(1+POINT_RULES.waitingRate*Math.min(1,Math.floor(waited/86400000)/30)))}
+function nextPinPrice(t,now){const n=Date.parse(now)-Date.parse(t.pointPinAt||0)<7*86400000?(t.pointPinCount||0):0;return Math.min(8,Math.ceil(2*(n===0?1:n===1?1.5:n===2?2:4)))}
+function pointSnapshot(s,a){if(!a.edit)return null;const key=pointKey(a),e=economy(s),w=e.accounts[key]||{balance:0,lastDaily:null};const month=new Date(Date.now()+8*3600000).toISOString().slice(0,7),entries=e.ledger.filter(l=>new Date(Date.parse(l.time)+8*3600000).toISOString().startsWith(month));return {rules:POINT_RULES,account:key,...w,ledger:e.ledger.filter(l=>l.account===key).slice(-50).reverse(),metrics:a.manage?{month,issued:entries.filter(l=>l.amount>0).reduce((n,l)=>n+l.amount,0),spent:-entries.filter(l=>l.amount<0).reduce((n,l)=>n+l.amount,0),supply:Object.values(e.accounts).reduce((n,w)=>n+w.balance,0),weightedCompleted:entries.reduce((n,l)=>n+(l.weight||0),0),netIssued:entries.reduce((n,l)=>n+l.amount,0)}:null}}
+function applyTaskPoints(s,a,b,before,t,now){const key=pointKey(a);if(!key)return;const listed=[0,1,2,3,5];const wasListed=before?(before.pointListed??before.column!==6):false;if(!wasListed&&listed.includes(t.column)){dailyPoints(s,key,now);const price=listingPrice(before,t.column,now);pointEntry(s,key,-price,'listing',t.id,now);t.pointListed=true;t.pointWeight=POINT_RULES.weights[t.column];t.pointOwner=t.pointOwner||key}
+ if(b.action==='task.pin'&&b.pinned&& !before.pinned || before?.pinned&&(b.action==='task.place'||b.action==='task.move'||b.action==='task.save')&&(before.rank!==t.rank||before.column!==t.column)){dailyPoints(s,key,now);const price=nextPinPrice(t,now);pointEntry(s,key,-price,'pin',t.id,now);t.pointPinCount=Date.parse(now)-Date.parse(t.pointPinAt||0)<7*86400000?(t.pointPinCount||0)+1:1;t.pointPinAt=now}
+ if(!before){t.pointListed=!!t.pointListed;t.pointOwner=key;t.pointWeight=t.pointWeight||POINT_RULES.weights[t.column]||8;t.pointRewarded=t.column===4}
+}
 
 // Historical IDs never depend on the current column or position, including archived tasks.
 function ensureTaskNumbering(s){
@@ -103,7 +118,7 @@ async function approvedProjectEntries20261109(s){
 }
 
 async function load(env){
- if(!env.BUCKET)fail(503,'共享存储尚未配置');const o=await env.BUCKET.get(KEY),s=o?await o.json():initial();ensureTaskNumbering(s);let etag=o?.etag||null;
+ if(!env.BUCKET)fail(503,'共享存储尚未配置');const o=await env.BUCKET.get(KEY),s=o?await o.json():initial();ensureTaskNumbering(s);for(const t of s.tasks)if(t.column===4&&t.pointRewarded===undefined)t.pointRewarded=true;let etag=o?.etag||null;
  const previousContentChanged=await approvedContentUpdate(s),projectEntriesChanged=await approvedProjectEntries20261109(s);
  if(previousContentChanged||projectEntriesChanged){const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(!saved)fail(409,'内容更新期间有其他修改，请重试，原数据未覆盖');etag=saved.etag;}
  const sources=[...new Set(s.accounts.filter(v=>v.castSource&&!v.deletedAt).map(v=>v.castSource))];
@@ -146,7 +161,7 @@ async function decrypt(value,env){return new TextDecoder().decode(await crypto.s
 const activeAccount=v=>!v.deletedAt&&(!v.castSource||Number(v.castExpiresAt)>Date.now());
 function canBoard(a){return !!(a.root||a.organizationMember||a.edit||a.manage)}
 function canAccounts(s,a){return !!(a.root||((a.signedIn===true||!!a.memberLink)&&a.organizationMember===true&&!a.token)||a.token?.scopes.includes('copy')||s.accounts.some(v=>activeAccount(v)&&canAccount(a,v)))}
-function snapshot(s,a,env){return {version:s.version,columns:COLUMNS,notes:s.notes.map((note,col)=>canBoard(a)||col===4?note:''),views:[...(canBoard(a)?['board']:[]),...(canAccounts(s,a)?['accounts']:[]),...(a.manage?['manage']:[]),'accepted'],repos:s.repos.filter(r=>!r.deletedAt).map(r=>({...r,notes:r.notes?.map((note,col)=>canBoard(a)||col===4?note:''),role:repoRole(a,r.id),canEdit:canEdit(a,r.id),canManage:canManage(a,r.id)})),tasks:numberedTasks(s).filter(t=>canBoard(a)||t.column===4),accounts:s.accounts.filter(v=>activeAccount(v)&&(canAccount(a,v)||manageAccount(a,v))).map(({secret,...v})=>({...v,canCopy:canAccount(a,v)})),users:s.users.filter(u=>!u.deletedAt&&canManage(a,u.repoId)),tokens:s.tokens.filter(t=>t.kind!=='organization-member'&&(a.root||t.repoIds.length>0&&t.repoIds.every(r=>canManage(a,r)))).map(({hash,...t})=>t),organizationMembers:a.root?(s.organizationMembers||[]):[],memberLinks:s.tokens.filter(t=>t.kind==='organization-member'&&(a.root||String(t.memberId)===String(a.githubId))).map(({hash,...t})=>({...t,active:memberLinkActor(t,s).organizationMember===true})),actor:{id:a.id,name:a.name,root:a.root,edit:a.edit,manage:a.manage,canAccounts:canAccounts(s,a),signedIn:a.signedIn,organizationMember:a.organizationMember===true,canIssueMemberLinks:!!a.canIssueMemberLinks,githubLogin:a.githubLogin||null,githubId:a.githubId||null},historyCount:s.events.length,storage:{shared:true,github:!!env.BOARD_SYNC_KEY,repository:'https://github.com/trlstdin/team-noticeboard',committedVersion:s.repositorySync?.version||0,commit:s.repositorySync?.commit||null,pending:Math.max(0,s.version-(s.repositorySync?.version||0))}};}
+function snapshot(s,a,env){return {points:pointSnapshot(s,a),version:s.version,columns:COLUMNS,notes:s.notes.map((note,col)=>canBoard(a)||col===4?note:''),views:[...(canBoard(a)?['board']:[]),...(canAccounts(s,a)?['accounts']:[]),...(a.manage?['manage']:[]),'accepted'],repos:s.repos.filter(r=>!r.deletedAt).map(r=>({...r,notes:r.notes?.map((note,col)=>canBoard(a)||col===4?note:''),role:repoRole(a,r.id),canEdit:canEdit(a,r.id),canManage:canManage(a,r.id)})),tasks:numberedTasks(s).filter(t=>canBoard(a)||t.column===4),accounts:s.accounts.filter(v=>activeAccount(v)&&(canAccount(a,v)||manageAccount(a,v))).map(({secret,...v})=>({...v,canCopy:canAccount(a,v)})),users:s.users.filter(u=>!u.deletedAt&&canManage(a,u.repoId)),tokens:s.tokens.filter(t=>t.kind!=='organization-member'&&(a.root||t.repoIds.length>0&&t.repoIds.every(r=>canManage(a,r)))).map(({hash,...t})=>t),organizationMembers:a.root?(s.organizationMembers||[]):[],memberLinks:s.tokens.filter(t=>t.kind==='organization-member'&&(a.root||String(t.memberId)===String(a.githubId))).map(({hash,...t})=>({...t,active:memberLinkActor(t,s).organizationMember===true})),actor:{id:a.id,name:a.name,root:a.root,edit:a.edit,manage:a.manage,canAccounts:canAccounts(s,a),signedIn:a.signedIn,organizationMember:a.organizationMember===true,canIssueMemberLinks:!!a.canIssueMemberLinks,githubLogin:a.githubLogin||null,githubId:a.githubId||null},historyCount:s.events.length,storage:{shared:true,github:!!env.BOARD_SYNC_KEY,repository:'https://github.com/trlstdin/team-noticeboard',committedVersion:s.repositorySync?.version||0,commit:s.repositorySync?.commit||null,pending:Math.max(0,s.version-(s.repositorySync?.version||0))}};}
 
 // A publisher reuses its existing supervisor session. URL credentials stay
 // encrypted in private storage; presence renewals never enter public snapshots.
@@ -217,9 +232,17 @@ const handler={async fetch(request,env,ctx){try{
  if(p==='/api/cast/sync')return await syncCastAccounts(b,a,s,etag,env);
  if(p==='/api/sync'){if(!a.root)fail(403,'仅主管可同步');if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)fail(503,'尚未配置 GitHub 仓库存储凭据');let count=0;for(const e of s.events.filter(e=>e.visibility==='public')){await github(e,env);count++}return json({count});}
  if(p!=='/api/change')fail(404,'Not found');
+ if(b.requestId&&s.points?.requests?.some(r=>r.id===b.requestId&&r.account===pointKey(a)))return json({ok:true,version:s.version,replayed:true});
  if(b.version!==s.version)fail(409,'其他成员已更新内容，已为你保留输入；请刷新后重试');
  let result={},repoId=b.repoId,visibility='private',detail={},privateData;const now=new Date().toISOString();
- if(b.action==='member.update'){
+ const pointBefore=b.id&&b.action?.startsWith('task.')?s.tasks.find(t=>t.id===b.id):null;const beforeTask=pointBefore?JSON.parse(JSON.stringify(pointBefore)):null;
+ if(b.action==='points.daily'){
+ if(!a.edit)fail(403,'需要编辑权限');dailyPoints(s,pointKey(a),now);detail={kind:'daily'};
+ }else if(b.action==='task.claim'){
+ const t=get(s.tasks,b.id);repoId=t.repoId;requireEdit(a,repoId);if(t.pointClaimant&&t.pointClaimant!==pointKey(a))fail(409,'该事项已被认领');if(t.column===4)fail(409,'已验收事项不能认领');t.pointClaimant=pointKey(a);if(t.pointRewarded===undefined)t.pointRewarded=false;t.pointWeight=t.pointWeight||POINT_RULES.weights[t.column]||8;t.assignee=a.name;detail={id:t.id,kind:'claim'};
+ }else if(b.action==='points.settle'){
+ const t=get(s.tasks,b.id);repoId=t.repoId;requireManage(a,repoId);if(t.column!==4||!t.pointClaimant||t.pointRewarded)fail(409,'需已验收、已认领且未发放奖励');if(!Number.isInteger(b.quality)||b.quality<0||b.quality>120)fail(400,'质量系数需为 0–120');const amount=Math.floor((t.pointWeight||8)*b.quality/100);pointEntry(s,t.pointClaimant,amount,'completion',t.id,now);t.pointRewarded=true;t.pointQuality=b.quality;detail={id:t.id,amount,quality:b.quality};
+ }else if(b.action==='member.update'){
  if(!a.root)fail(403,'只有总主管可管理组织成员权限');
  s.organizationMembers=s.organizationMembers||[];let member=s.organizationMembers.find(m=>String(m.githubId)===String(b.memberId));
  if(!member){const profile=await ghProfile(env,text(b.login,39));member=s.organizationMembers.find(m=>String(m.githubId)===String(profile.githubId));if(!member){member={githubId:profile.githubId,githubLogin:profile.githubLogin,verified:false,accessEnabled:true,canIssueLinks:true,createdAt:now};s.organizationMembers.push(member);}}
@@ -289,6 +312,8 @@ const handler={async fetch(request,env,ctx){try{
  }else if(b.action==='token.revoke'){
  const t=get(s.tokens,b.id);if(t.kind==='organization-member')fail(400,'请使用组织成员链接管理');for(const r of t.repoIds)requireManage(a,r);if(t.scopes.includes('manage')&&!a.root)fail(403,'只有总主管可撤销管理链接');t.revokedAt=now;repoId=t.repoIds[0];detail={tokenId:t.id,label:t.label};
  }else fail(400,'不支持的操作');
+ if(['task.save','task.place','task.move','task.pin'].includes(b.action)){const t=b.id?s.tasks.find(t=>t.id===b.id):s.tasks[s.tasks.length-1];applyTaskPoints(s,a,b,beforeTask,t,now)}
+ if(b.requestId){if(typeof b.requestId!=='string'||b.requestId.length>100)fail(400,'请求编号无效');const e=economy(s);e.requests=e.requests||[];e.requests.push({id:b.requestId,account:pointKey(a)});if(e.requests.length>2000)e.requests.shift()}
  const event={id:id(),seq:s.version+1,time:now,actor:a.name,actorId:a.id,action:b.action,repoId,visibility,detail,...(privateData?{privateData}:{}),previousHash:s.events.at(-1)?.hash||null};event.hash=await hash(JSON.stringify(event));s.events.push(event);s.version++;
  const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});
  if(!saved)fail(409,'保存时有其他成员更新，请刷新后重试');
@@ -303,7 +328,7 @@ export default {async fetch(request,env,ctx){
  const out=new Response(response.body,response);out.headers.set('Access-Control-Allow-Origin',origin);out.headers.set('Vary','Origin');return out;
 }};
 
-export { fail, id, hash, encrypt, decrypt };
+export { fail, id, hash, encrypt, decrypt, listingPrice, nextPinPrice };
 
 async function repositoryRoute(request,env){if(!await repositoryAuthorized(request,env))fail(403,'仅仓库同步服务可使用此接口');const {s,etag}=await load(env);const p=new URL(request.url).pathname;if(p==='/api/repository/export'&&request.method==='GET'){const state=snapshot(s,{id:'anonymous',name:'访客',root:false,edit:false,manage:false,users:[]},env);state.snapshotAt=new Date().toISOString();return json({events:s.events.filter(e=>e.visibility==='public').map(({privateData,...e})=>e),state})}if(p==='/api/repository/ack'&&request.method==='POST'){const b=await request.json();if(!Number.isInteger(b.version)||b.version<0||b.version>s.version||!/^[a-f0-9]{40}$/.test(b.commit))fail(400,'同步确认无效');const response=await fetch('https://raw.githubusercontent.com/trlstdin/team-noticeboard/'+b.commit+'/board-data/version.json',{headers:{Accept:'application/vnd.github.raw+json','User-Agent':'TeamNoticeboard'}});if(!response.ok)fail(502,'无法核验 GitHub 提交');const value=await response.json();if(value.version!==b.version)fail(409,'仓库版本与确认不符');s.repositorySync={version:b.version,commit:b.commit,at:new Date().toISOString()};const written=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'}});if(!written)fail(409,'同步期间有更新，下一轮会继续');return json({ok:true})}fail(404,'Not found')}
 

@@ -75,3 +75,7 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #member-access .token-card{padding:14px;margin:10px 0;border:1px solid var(--line);border-radius:10px;overflow-wrap:anywhere}
 #member-access .section-actions{flex-wrap:wrap}
 #organization-members{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:12px}
+
+.points-panel{padding:14px;margin:12px 0;border:1px solid var(--line);border-radius:10px;font-size:12px;line-height:1.8}.points-summary{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.points-panel summary{cursor:pointer}.points-panel ol{max-height:220px;overflow:auto}
+#board.board:not(.accepted-board){grid-template-columns:repeat(6,minmax(240px,1fr));overflow-x:auto}
+#board.board:not(.accepted-board)>.column{grid-area:auto}

@@ -1,0 +1,32 @@
+{
+  "id": "eb776017-6ac8-4d25-8859-561af09ae972",
+  "seq": 1294,
+  "time": "2026-11-12T12:32:17.636Z",
+  "actor": "trlstdin",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 117,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "d49749b6-9de4-4458-a1ab-9d89ebf400e7",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "国际垂类电商网站-https://pointwork.cyou",
+    "body": "半成品软件售卖电商网站",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1794486737636,
+    "createdAt": "2026-11-12T12:32:17.636Z",
+    "updatedAt": "2026-11-12T12:32:17.636Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "b66ca8a55ea4d741990818c502ea8ac7327538749bd99e901291e9f2840b510d",
+  "hash": "d8d50e4c26b082e69c70bd5061e250f99d29781ae4b6b4c2a2ff21e6eae17ae8"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "11a01cfe-53d0-4adf-88e3-fcef888e7fe3",
+  "seq": 1281,
+  "time": "2026-11-12T11:55:45.744Z",
+  "actor": "trlstdin",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 116,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "9523de69-7876-47c7-b05b-f62f9f6a1704",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "oracle3.0，必须在pvxirt里面编译，",
+    "body": "oracle3.0，私有仓库里有设计文档，必须在pvxirt里面编译，",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1794484545744,
+    "createdAt": "2026-11-12T11:55:45.744Z",
+    "updatedAt": "2026-11-12T11:55:45.744Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "2e2fb5a36be10ead1f79246c37dde49ac91938605940206f10d3c68ee5b9e1ad",
+  "hash": "69af4d828ed7d98d5dafc467da2eb0bf5ae0b9c88c0312c7b9d3a4ea3107db56"
+}

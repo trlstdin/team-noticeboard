@@ -34,9 +34,9 @@ for(const [name,worker] of [['native',native],['interpreted',interpreted]]){
   const s=fixture();s.tasks.push({...s.tasks[1],id:'existing-devspace',historyNumber:72,title:'用户现有DevSpace',body:'保留用户内容',repositoryUrl:'https://github.com/alistrode/devspace-vm',personalRepositoryUrl:'https://github.com/trlstdin/rororororo/tree/projects/devspace-vm-20261030'});const old=s.tasks.at(-1),bucket=new Bucket(s);assert.equal((await read(worker,bucket)).status,200);const after=JSON.parse(bucket.value);assert.equal(after.tasks.length,s.tasks.length+2);assert.deepEqual(after.tasks.find(t=>t.id===old.id),old);
  });
  test(name+': conflicts or a changed target preserve the complete journal',async()=>{
-  for(const mode of ['etag','missing','different-link']){const s=fixture();if(mode==='missing')s.tasks.shift();if(mode==='different-link')s.tasks[0].repositoryUrl='https://github.com/user/other';const bucket=new Bucket(s);bucket.reject=mode==='etag';const before=bucket.value;assert.equal((await read(worker,bucket)).status,409);assert.equal(bucket.value,before);assert.equal(bucket.writes,0);}
+  for(const mode of ['etag','missing','different-link']){const s=fixture();if(mode==='missing')s.tasks.shift();if(mode==='different-link')s.tasks[0].repositoryUrl='https://github.com/user/other';const bucket=new Bucket(s);bucket.reject=mode==='etag';const before=bucket.value;assert.equal((await read(worker,bucket)).status,mode==='etag'?503:409);assert.equal(bucket.value,before);assert.equal(bucket.writes,0);}
  });
  test(name+': concurrent readers commit the approved batch once',async()=>{
-  const bucket=new Bucket(fixture());const results=await Promise.all([read(worker,bucket),read(worker,bucket)]);assert.deepEqual(results.map(r=>r.status).sort(),[200,409]);assert.equal(bucket.writes,1);assert.equal(JSON.parse(bucket.value).tasks.length,6);
+  const bucket=new Bucket(fixture());const results=await Promise.all([read(worker,bucket),read(worker,bucket)]);assert.deepEqual(results.map(r=>r.status).sort(),[200,200]);assert.equal(bucket.writes,1);assert.equal(JSON.parse(bucket.value).tasks.length,6);
  });
 }

@@ -3,7 +3,7 @@ import {readFile,writeFile,mkdir,cp,rm} from 'node:fs/promises';
 await rm('dist',{recursive:true,force:true});
 await mkdir('dist/server',{recursive:true});await mkdir('dist/.openai',{recursive:true});
 const html=await readFile('web/index.html','utf8');
-const js=(await readFile('web/drag.js','utf8'))+'\n'+(await readFile('web/points.js','utf8'))+'\n'+(await readFile('web/app.js','utf8'));const css=await readFile('web/style.css','utf8');
+const js=(await readFile('web/drag.js','utf8'))+'\n'+(await readFile('web/collaboration.js','utf8'))+'\n'+(await readFile('web/points.js','utf8'))+'\n'+(await readFile('web/app.js','utf8'));const css=await readFile('web/style.css','utf8');
 const config={frontendUrl:'https://team-noticeboard-rebuilt.loneivy1.chatgpt.site/'};
 const page=html.replace('/* APP_CSS */',()=>css).replace('/* APP_JS */',()=>'window.BOARD_CONFIG='+JSON.stringify(config)+';\n'+js);
 const auth=(await readFile('worker/github-auth.js','utf8')).replace(/^import .*?;\n/m,'').replace(/^export \{.*?\};?$/mg,'');const server=auth+'\n'+(await readFile('worker/index.js','utf8')).replace(/^import .*?;\n/m,'').replace(/^export \{.*?\};?$/mg,'');const design=await readFile('DESIGN.md','utf8');

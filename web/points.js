@@ -38,7 +38,7 @@ function pointProviderForm(){
  $('#fields [name=apiKey]').oninput=()=>{if($('#fields [name=apiKey]').value&&$('#fields [name=mode]').value==='auto'&&$('#fields [name=model]').value.startsWith('@cf/'))$('#fields [name=model]').value=''};
  $('#fields [name=mode]').onchange=()=>{const mode=$('#fields [name=mode]').value,input=$('#fields [name=model]');if(mode==='gateway')input.value='qwen-local';else if(mode==='workers-ai'&&!input.value.startsWith('@cf/')||mode==='openai'&&(input.value.startsWith('@cf/')||input.value==='qwen-local'))input.value=''};
 }
-async function pointAiOperation(path,data){pendingMutations++;const operation=mutationTail.then(async()=>{try{const r=await api(path,data);state.version=r.version;if(r.workflow.status==='failed')toast(r.workflow.error);return r}finally{pendingMutations--;if(!pendingMutations)await refresh()}});mutationTail=operation.catch(()=>{});return operation}
+async function pointAiOperation(path,data){return runMutation(path,data)}
 function pointRunWorkflow(id){return pointAiOperation('points/ai',{id})}
 async function pointTestModel(){try{const r=await pointAiOperation('points/model-test',{});pointNotice('模型连接检查',r.workflow.status==='completed'?'连接成功 · '+r.workflow.result.model+' · '+(r.workflow.result.source==='qwen-gateway'?'本机千问网关':r.workflow.result.source==='workers-ai'?'站点模型服务':'OpenAI'):r.workflow.error||(r.pending?'已提交千问网关，正在等待本机处理；稍后刷新建议记录查看结果':'检查尚未完成，可在建议记录中恢复'))}catch(e){toast(e.message)}}
 

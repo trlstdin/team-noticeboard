@@ -21,6 +21,48 @@ async function app(worker,hash,encrypt){
  return {env,call,state,change,repoId};
 }
 for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncrypt],['interpreted',interpreted,interpretedHash,interpretedEncrypt]]){
+
+ test(name+': stale pages merge unrelated changes and show only actual item conflicts',async()=>{
+  const a=await app(worker,hash,encrypt);
+  await a.change({action:'task.save',repoId:a.repoId,title:'Original',body:'Old body',proposer:'owner',column:6});
+  const original=(await a.state()).tasks[0],oldVersion=(await a.state()).version;
+  const save=(base,extra)=>a.call('change',{action:'task.save',...base,base,version:oldVersion,...extra});
+  assert.equal((await save(original,{title:'Server title',requestId:'first-edit'})).status,200);
+  assert.equal((await save(original,{body:'Disjoint body',requestId:'disjoint-edit'})).status,200);
+  let current=(await a.state()).tasks[0];assert.equal(current.title,'Server title');assert.equal(current.body,'Disjoint body');
+  const conflict=await save(original,{title:'My title',requestId:'conflicting-edit'});
+  assert.equal(conflict.status,409);assert.equal(conflict.body.code,'ITEM_CONFLICT');assert.equal(conflict.body.conflict.mine.title,'My title');assert.equal(conflict.body.conflict.theirs.title,'Server title');
+  assert.equal((await save(current,{title:'My title',requestId:'conflicting-edit'})).status,200);
+  const version=(await a.state()).version;
+  assert.equal((await save((await a.state()).tasks[0],{})).body.noChange,true);assert.equal((await a.state()).version,version);
+  await a.change({action:'task.save',repoId:a.repoId,title:'Unrelated',body:'',proposer:'owner',column:6});
+  current=(await a.state()).tasks.find(t=>t.id===original.id);
+  assert.equal((await a.call('change',{action:'task.pin',id:original.id,pinned:true,baseRevision:current.revision,version:oldVersion})).status,200);
+  const delta=(await a.call('state?since='+version)).body;assert.equal(delta.delta,true);assert.ok(delta.tasks.some(t=>t.title==='Unrelated'));
+ });
+ test(name+': retries identify one committed task and keep issued secrets encrypted',async()=>{
+  const a=await app(worker,hash,encrypt),payload={action:'task.save',repoId:a.repoId,title:'Exactly once',proposer:'owner',column:6,requestId:'one-create',version:0};
+  const responses=await Promise.all([a.call('change',payload),a.call('change',payload)]);assert.deepEqual(responses.map(r=>r.status),[200,200]);assert.equal(responses[0].body.taskId,responses[1].body.taskId);assert.equal((await a.state()).tasks.length,1);
+  const known=await a.call('operation?id=one-create');assert.equal(known.body.state,'completed');assert.equal(known.body.taskId,responses[0].body.taskId);
+  assert.equal((await a.call('change',{...payload,title:'Wrong reuse'})).status,409);
+  await a.state('member');const issue={action:'member.link.create',memberId:42,requestId:'one-link'};
+  const first=await a.change(issue),second=await a.change(issue);assert.equal(first.status,200);assert.equal(first.body.token,second.body.token);assert.equal((await a.call('operation?id=one-link')).body.token,first.body.token);
+  assert.equal(a.env.BUCKET.records.get('noticeboard/journal-v1.json').includes(first.body.token),false);
+  assert.equal((await a.call('operation?id=one-link',null,'outside')).status,403);
+ });
+ test(name+': member directory selections bind the actual claimant and account renewals do not churn versions',async()=>{
+  const a=await app(worker,hash,encrypt);await a.state('member');await a.state('other');
+  const d=await a.call('directory');assert.ok(d.body.members.some(m=>m.login==='member'));assert.ok(d.body.repositories.some(r=>r.url==='https://github.com/example/project'));
+  assert.equal((await a.call('directory',null,'')).status,403);
+  const created=await a.change({action:'task.save',repoId:a.repoId,title:'Assigned',proposer:'member',assignee:'other',peopleValidated:true,column:6});assert.equal(created.status,200);
+  const t=(await a.state()).tasks[0];assert.equal(t.assigneeId,43);assert.equal(t.proposerId,42);assert.equal(t.pointClaimant,'github:43');
+  const sync=entries=>a.call('cast/sync',{sourceId:'same-source',entries});
+  assert.equal((await sync([{name:'A',environmentId:'A',url:'https://example.com/account-a'}])).status,200);
+  await sync([{name:'B',environmentId:'B',url:'https://example.com/account-b'}]);const version=(await a.state()).version;
+  await sync([{name:'A',environmentId:'A',url:'https://example.com/account-a'}]);await sync([{name:'B',environmentId:'B',url:'https://example.com/account-b'}]);
+  const state=await a.state();assert.equal(state.version,version);assert.equal(state.accounts.length,2);
+  const cursor=state.cursor;assert.equal((await a.call('updates?wait=0&cursor='+encodeURIComponent(cursor))).body.changed,false);
+ });
  test(name+': archived tasks restore their identity, content and placement with edit permission',async()=>{
   const a=await app(worker,hash,encrypt);
   await a.change({action:'task.save',repoId:a.repoId,title:'Restore me',body:'Original content',proposer:'owner',column:0});
@@ -56,7 +98,7 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
   assert.equal((await a.state('member')).actor.canIssueMemberLinks,false);assert.equal((await a.state(token)).actor.canIssueMemberLinks,false);assert.equal((await a.state(token)).actor.edit,false);assert.equal((await a.state(oldSession)).actor.edit,false);assert.equal((await a.change({action:'member.link.create',memberId:42})).status,403);
   assert.equal((await a.change({action:'member.link.create'},'member')).status,403);assert.equal((await a.change({action:'member.link.create'},token)).status,403);
   await a.change({action:'member.update',memberId:42,canIssueLinks:true});assert.equal((await a.state(token)).actor.edit,false);const current=(await a.change({action:'member.link.create'},'member')).body.token;parent=(await a.state(current)).memberLinks.find(t=>t.active);const child=(await a.change({action:'member.link.create'},current)).body.token;const session=(await a.call('session',{token:child},'')).body.session;
-  assert.equal((await a.change({action:'token.update',id:parent.id,scopes:['manage']},token)).status,400);
+  assert.equal((await a.change({action:'token.update',id:parent.id,scopes:['manage']},token)).status,403);
   assert.equal((await a.change({action:'member.link.revoke',id:parent.id})).status,200);assert.equal((await a.state(child)).actor.edit,false);assert.equal((await a.state(session)).actor.edit,false);assert.equal((await a.state(token)).actor.edit,false);
   const fresh=(await a.change({action:'member.link.create'},'member')).body.token;const restored=(await a.call('session',{token:fresh},'')).body.session;
   await a.change({action:'member.update',memberId:42,accessEnabled:false});
@@ -67,7 +109,7 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
  test(name+': a policy entry does not prove organization membership, and stale mutations cannot overwrite controls',async()=>{
   const a=await app(worker,hash,encrypt);await a.change({action:'member.update',login:'outside',accessEnabled:true,canIssueLinks:true});assert.equal((await a.state('outside')).actor.canIssueMemberLinks,false);assert.equal((await a.change({action:'member.link.create',memberId:99})).status,403);
   await a.change({action:'member.update',login:'member',accessEnabled:false,canIssueLinks:false});const s=await a.state('member');assert.equal(s.actor.edit,false);assert.equal(s.actor.canIssueMemberLinks,false);const registered=(await a.state()).organizationMembers.find(m=>m.githubId===42);assert.equal(registered.verified,true);assert.equal(registered.accessEnabled,false);assert.equal(registered.canIssueLinks,false);
-  const old=(await a.state()).version;await a.change({action:'member.update',memberId:42,accessEnabled:true});assert.equal((await a.call('change',{action:'member.update',memberId:42,accessEnabled:false,version:old})).status,409);assert.equal((await a.state('member')).actor.edit,true);
+  const old=(await a.state()).version;await a.change({action:'member.update',memberId:42,accessEnabled:true});assert.equal((await a.call('change',{action:'member.update',memberId:42,accessEnabled:false,base:{accessEnabled:false},version:old})).status,409);assert.equal((await a.state('member')).actor.edit,true);
  });
 }
 test('the exact user policy is visible and member controls distinguish access from signing',async()=>{

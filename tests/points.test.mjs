@@ -42,7 +42,7 @@ test('daily cap and concurrent claims preserve one atomic ledger entry',async()=
  assert.equal((await a.state(token)).points.account,(await a.state(second)).points.account);
  const version=(await a.state()).version;
  const results=await Promise.all([a.call('change',{action:'points.daily',version,requestId:'concurrent-a'},token),a.call('change',{action:'points.daily',version,requestId:'concurrent-b'},second)]);
- assert.deepEqual(results.map(r=>r.status).sort(),[200,409]);
+ assert.deepEqual(results.map(r=>r.status).sort(),[200,200]);
  let s=await a.state(token);assert.equal(s.points.balance,20);assert.equal(s.points.ledger.length,1);
  const journal=JSON.parse(a.env.BUCKET.value);const w=journal.points.accounts[s.points.account];w.balance=95;w.lastDaily='2000-01-01';a.env.BUCKET.value=JSON.stringify(journal);
  assert.equal((await a.call('change',{action:'points.daily',version:s.version},second)).status,200);

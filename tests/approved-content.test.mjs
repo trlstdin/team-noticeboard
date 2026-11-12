@@ -54,10 +54,10 @@ for(const [name,worker] of [['native',native],['interpreted',interpreted]]){
   await state(worker,bucket);assert.equal(JSON.parse(bucket.value).tasks.find(t=>t.id===softwareId).body,'later user edit');assert.equal(bucket.writes,1);
  });
  test(name+': conflicting writes and changed merge targets leave the journal intact',async()=>{
-  for(const mode of ['etag','target']){const s=fixture();if(mode==='target')s.tasks=s.tasks.filter(t=>t.id!==inputId);const bucket=new Bucket(s);bucket.reject=mode==='etag';const before=bucket.value;assert.equal((await state(worker,bucket)).status,409);assert.equal(bucket.value,before);assert.equal(bucket.writes,0);}
+  for(const mode of ['etag','target']){const s=fixture();if(mode==='target')s.tasks=s.tasks.filter(t=>t.id!==inputId);const bucket=new Bucket(s);bucket.reject=mode==='etag';const before=bucket.value;assert.equal((await state(worker,bucket)).status,mode==='etag'?503:409);assert.equal(bucket.value,before);assert.equal(bucket.writes,0);}
  });
  test(name+': concurrent readers commit only one content update',async()=>{
   const bucket=new Bucket(fixture());const results=await Promise.all([state(worker,bucket),state(worker,bucket)]);
-  assert.deepEqual(results.map(r=>r.status).sort(),[200,409]);assert.equal(bucket.writes,1);assert.equal(JSON.parse(bucket.value).version,287);
+  assert.deepEqual(results.map(r=>r.status).sort(),[200,200]);assert.equal(bucket.writes,1);assert.equal(JSON.parse(bucket.value).version,287);
  });
 }

@@ -67,6 +67,13 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #board .task-pin[aria-pressed=true]{color:#d6ad52}
 #board .task-pin[aria-pressed=true] svg{fill:currentColor}
 #board .task-pin:disabled{opacity:.6}
+#operation-status{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;margin:8px 0;border:1px solid var(--line);border-radius:9px;font-size:12px}
+#operation-status[data-status=failed],#operation-status[data-status=unknown]{color:#efb297}
+#conflict-dialog{width:min(1000px,96vw);max-height:90dvh;overflow:auto}
+.conflict-versions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.conflict-versions section{min-width:0;border:1px solid var(--line);border-radius:10px;padding:14px}
+.conflict-versions pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:55dvh;overflow:auto;font:inherit;font-size:12px;line-height:1.7}
+.conflict-versions button{width:100%}
 #public-entry-panel{padding:16px;margin-bottom:20px;border:1px solid var(--line);border-radius:12px}
 #public-entry-panel label{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 #public-entry-url{flex:1;min-width:min(280px,100%)}

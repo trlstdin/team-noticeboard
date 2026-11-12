@@ -1,0 +1,29 @@
+{
+  "id": "a6932e28-3e05-4ce3-86da-35f463d62da5",
+  "seq": 1267,
+  "time": "2026-11-12T07:59:09.191Z",
+  "actor": "trlstdin",
+  "actorId": "permanent-supervisor",
+  "action": "task.place",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "f2db3baf-d6dc-4830-be16-477674121099",
+    "column": 0,
+    "order": [
+      "329397c5-9aa8-4610-8151-79afc21ec1d3",
+      "a58a9e5d-fe74-46a5-a870-ec2d46bb1ce3",
+      "97ce44e4-4633-479a-a20b-b94a8bcb3bc4",
+      "a239cd16-4270-4749-8fb0-276c878c6df5",
+      "797fbccd-dcac-4f15-902a-21ee257133f0",
+      "73321398-6205-47af-a254-ce2f2ea03d48",
+      "e55a1539-921a-4e98-b5d6-e5c6a9136201",
+      "3ab2e1ce-52ba-4c1e-a80c-ef89c3900e46",
+      "221beb6c-f8ba-403c-bb72-7d48cc088ba2",
+      "f2db3baf-d6dc-4830-be16-477674121099",
+      "583d95c8-c951-4ff6-abc5-bcd18409bc6c"
+    ]
+  },
+  "previousHash": "eaebc990f83681777c97b12241b1b94a2653e1832b4e00b6ceb8635315946f7e",
+  "hash": "061dbefd405df9e3e72fc494afe2443aa6cd014d660a2bf14c9bcee74423066a"
+}

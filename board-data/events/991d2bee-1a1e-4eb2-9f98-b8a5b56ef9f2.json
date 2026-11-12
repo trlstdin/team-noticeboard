@@ -1,0 +1,29 @@
+{
+  "id": "991d2bee-1a1e-4eb2-9f98-b8a5b56ef9f2",
+  "seq": 613,
+  "time": "2026-11-12T05:13:48.146Z",
+  "actor": "yyxgsgs",
+  "actorId": "github:311221020",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 109,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "f2db3baf-d6dc-4830-be16-477674121099",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "B端精准场景获客量化",
+    "body": "以结构化“纠纷、风控信息数据库”把公开信源中的“纠纷、风控”信息转化为可定位、可反查、可评分的B端获客信号，并用触达反馈持续校准信源权重。",
+    "proposer": "yyxgsgs",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1794460428146,
+    "createdAt": "2026-11-12T05:13:48.146Z",
+    "updatedAt": "2026-11-12T05:13:48.146Z"
+  },
+  "previousHash": "2794bd3e7e6841239516d86c246d2d9420d17f2636a9d318079a5b100bcd3266",
+  "hash": "ac95331f26c5b87dcb5f4a3581484a6c312320629dca8a6501ad075fed8457b9"
+}

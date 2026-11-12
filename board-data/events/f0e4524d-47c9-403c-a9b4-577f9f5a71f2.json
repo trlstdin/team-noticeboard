@@ -1,0 +1,29 @@
+{
+  "id": "f0e4524d-47c9-403c-a9b4-577f9f5a71f2",
+  "seq": 612,
+  "time": "2026-11-12T05:05:47.501Z",
+  "actor": "主管链接",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 39,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "aa2b7265-77a6-4994-a9be-d949038349f4",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "39. switxh维修",
+    "body": "以下是旧的bug，旧的是切换账号凭据的，账号凭据切换导致了大量bug，并且易造成账号池损失，现已被环境变量切换不同凭据目录代替，，最好在新的编程agent做适配，，\n\n避免switch的重启问题和codexc盘满或者硬盘满了会话一起坏的问题，会话就不应该坏。非官方登录态没有快速1.5，，启动老是失败\n启动的时候不允许启动时修改.codex\n,不允许默认上次的切换状态，不要改字段，直接换文件。\nwitch存档纯净状态，清理时一键恢复，内存里缓存开始状态，结束复杂操作时校验并确保写回初始状态。加个两周没用的项目和会话不加载的功能，但可以被搜索。\n请求限制器。\n\n21. 不同软件会话统一与迁移\n不同软件会话统一与迁移",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 1,
+    "rank": 0,
+    "createdAt": "2026-11-07T06:16:59.514Z",
+    "updatedAt": "2026-11-12T05:05:47.501Z"
+  },
+  "previousHash": "63c961b0831c722c37b0ddb5f3cb5631c8734bd13782bf4b54b6647a566d7247",
+  "hash": "2794bd3e7e6841239516d86c246d2d9420d17f2636a9d318079a5b100bcd3266"
+}

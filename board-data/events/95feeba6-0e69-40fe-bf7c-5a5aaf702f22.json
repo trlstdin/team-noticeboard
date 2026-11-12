@@ -1,0 +1,29 @@
+{
+  "id": "95feeba6-0e69-40fe-bf7c-5a5aaf702f22",
+  "seq": 615,
+  "time": "2026-11-12T05:23:59.021Z",
+  "actor": "yyxgsgs",
+  "actorId": "github:311221020",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 111,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "06ed65d1-eeef-46fa-a67c-57a3a9ecfd20",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "宏观科研与产业规划咨询状态机",
+    "body": "一个利用技术史、尖端前沿大学与开源社区归类交给机器，以产业代际鸿沟、学派归属、次第选型为可追溯论证基础的通用分析工具。",
+    "proposer": "yyxgsgs",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1794461039021,
+    "createdAt": "2026-11-12T05:23:59.021Z",
+    "updatedAt": "2026-11-12T05:23:59.021Z"
+  },
+  "previousHash": "ffb13d919045540ca0a3b5e236a22ababa7936829093382322698c9f4201d008",
+  "hash": "58bb2b93e418d97faa75b26bd56a6567ffa15c3c349179737f87c890c5b9b245"
+}

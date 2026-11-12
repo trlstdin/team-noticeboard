@@ -1,0 +1,29 @@
+{
+  "id": "91c21c6f-97c4-47e7-b855-f84a78fe7417",
+  "seq": 614,
+  "time": "2026-11-12T05:17:37.704Z",
+  "actor": "yyxgsgs",
+  "actorId": "github:311221020",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 110,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "dc2a6225-47c5-4fb2-a811-334753c97b2c",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "精准文档结构化治理",
+    "body": "以领域包和Schema为规则源，把文档解析、知识条目状态机、引用闸门、索引查询与审计安全集成起来的文档治理工具。",
+    "proposer": "yyxgsgs",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1794460657704,
+    "createdAt": "2026-11-12T05:17:37.704Z",
+    "updatedAt": "2026-11-12T05:17:37.704Z"
+  },
+  "previousHash": "ac95331f26c5b87dcb5f4a3581484a6c312320629dca8a6501ad075fed8457b9",
+  "hash": "ffb13d919045540ca0a3b5e236a22ababa7936829093382322698c9f4201d008"
+}

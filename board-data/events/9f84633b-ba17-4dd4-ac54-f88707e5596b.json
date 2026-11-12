@@ -1,0 +1,32 @@
+{
+  "id": "9f84633b-ba17-4dd4-ac54-f88707e5596b",
+  "seq": 1265,
+  "time": "2026-11-12T07:53:23.385Z",
+  "actor": "trlstdin",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 114,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "c45fdbc3-f677-4eb8-b664-57a0a69609d0",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "综合项目优绩调度动员系统",
+    "body": "使用因子算法去动态调动项目优先级",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1794470003385,
+    "createdAt": "2026-11-12T07:53:23.385Z",
+    "updatedAt": "2026-11-12T07:53:23.385Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "bac68c1ffd3f2a319e3c173221a3c5a581dfb60e99018faf91f85c4a8b985959",
+  "hash": "5474e6fe8ff089b61e50094037b0bbde16dc359be98247c6b16069d750f7aab6"
+}

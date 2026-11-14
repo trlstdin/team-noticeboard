@@ -1,6 +1,6 @@
 {
   "points": null,
-  "version": 1339,
+  "version": 1347,
   "columns": [
     "待开发",
     "修复",
@@ -454,14 +454,14 @@
     "githubLogin": null,
     "githubId": null
   },
-  "historyCount": 1339,
+  "historyCount": 1347,
   "storage": {
     "shared": true,
     "github": true,
     "repository": "https://github.com/trlstdin/team-noticeboard",
-    "committedVersion": 1338,
-    "commit": "c974f53a12206744a028e84547b731b75301587b",
-    "pending": 1
+    "committedVersion": 1339,
+    "commit": "e36d66e0d50cd48bd162f83ddb3a16ed1953d97a",
+    "pending": 8
   },
-  "snapshotAt": "2026-11-14T01:23:50.479Z"
+  "snapshotAt": "2026-11-14T14:30:27.246Z"
 }

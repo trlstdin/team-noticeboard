@@ -1,0 +1,31 @@
+{
+  "id": "7b570bcd-6895-4178-a866-2f6f93110651",
+  "seq": 1371,
+  "time": "2026-11-15T07:32:16.792Z",
+  "actor": "trlstdin",
+  "actorId": "permanent-supervisor",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 112,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "633af0dc-93b5-457e-9185-e4ca298e0228",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "李的电脑部署统一独立盘单文件",
+    "body": "需达到开箱即用的水平，前提是linux先下连接器",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 5,
+    "rank": -1794461412673,
+    "createdAt": "2026-11-12T05:30:12.673Z",
+    "updatedAt": "2026-11-15T07:32:16.792Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "e7a5e4d56f0cd5a584d3be184e86817e4d9adb632d94211a5986bdd58e86610a",
+  "hash": "e10ec2aaf057c8475ba96a15b4fc9a048aa22214a24987626f9d7c5788125498"
+}

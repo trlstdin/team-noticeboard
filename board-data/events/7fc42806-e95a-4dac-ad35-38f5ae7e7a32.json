@@ -1,0 +1,21 @@
+{
+  "id": "7fc42806-e95a-4dac-ad35-38f5ae7e7a32",
+  "seq": 1406,
+  "time": "2026-11-17T15:39:57.718Z",
+  "actor": "trlstdin",
+  "actorId": "permanent-supervisor",
+  "action": "task.place",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "2273a3cf-a368-4ff9-af00-1a318818b3a3",
+    "column": 1,
+    "order": [
+      "aa2b7265-77a6-4994-a9be-d949038349f4",
+      "2273a3cf-a368-4ff9-af00-1a318818b3a3",
+      "0356af83-754b-48d5-b100-19c307d7de2e"
+    ]
+  },
+  "previousHash": "5e22d71a5a80b8402df1cb4f6ee805898e18cae7e824436c8e331a357e7ce99c",
+  "hash": "9698c16055ac7dee5157fc1aeb0bc1fb96c23a1339bff525da781dec18855b59"
+}

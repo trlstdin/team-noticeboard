@@ -1,0 +1,16 @@
+{
+  "id": "eff11806-0b76-4e99-9ead-3cd40b72542b",
+  "seq": 1409,
+  "time": "2026-11-17T15:40:40.307Z",
+  "actor": "trlstdin",
+  "actorId": "permanent-supervisor",
+  "action": "task.pin",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "a239cd16-4270-4749-8fb0-276c878c6df5",
+    "pinned": false
+  },
+  "previousHash": "ffffe7442e99df9584d52a593d68d9602d86dada0fdc7b00725b7a26b6f4e899",
+  "hash": "01057ac8958afa8f1d2f21f393dd388afaa9a9e35f5981417ca3b9347b356cb2"
+}

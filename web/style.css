@@ -97,3 +97,7 @@ header{height:auto;min-height:54px}.nav-tail{position:static;height:auto;z-index
 #board-view>.toolbar{position:static;width:100%;height:auto;min-height:34px;margin:8px 0;flex-wrap:wrap}
 main>nav{overflow-x:auto;scrollbar-width:thin;gap:14px}
 main>nav>.tab{flex-shrink:0}
+
+/* Pending writes remain visible until acknowledged; never imply server success. */
+.task.pending-save{outline:1px dashed #b9a575;outline-offset:2px}.task.pending-save .task-buttons:after{content:"待保存";font-size:11px;color:#b9a575}
+button:active{filter:brightness(1.25)}

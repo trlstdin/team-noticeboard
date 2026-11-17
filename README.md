@@ -1,3 +1,9 @@
+> **前后端均已支持「仓库推送 → GitHub Actions → 现有 Sites 自动更新」。日常修改只需要本仓库写权限：将源码推送到 `main` 即触发构建与发布；不需要连接 Sites、另建主机或配置应用密钥。**
+>
+> 前端修改 `web/`，业务后端修改 `worker/index.js`、`worker/github-auth.js`。不要手改生成的 `index.html` 或 `backend-release.json`。发布后必须检查 Actions 成功，并核对原网址的前端与 `x-noticeboard-backend-revision`，不能把“推送成功”当成“已上线”。完整流程见 [PUBLISHING.md](PUBLISHING.md)。
+>
+> 上述说明针对日常前后端业务更新；固定加载器、域名、存储绑定和访问策略等基础设施变更另按发布文档处理。
+
 [内容规则（用户原文）](CONTENT_RULES.md)
 
 ## 仓库直接推送 Sites（2026-11-07 已验证）

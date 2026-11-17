@@ -26,8 +26,8 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
   const a=await app(worker,hash,encrypt);
   await a.change({action:'task.save',repoId:a.repoId,title:'Original',body:'Old body',proposer:'owner',column:6});
   const original=(await a.state()).tasks[0],oldVersion=(await a.state()).version;
-  const save=(base,extra)=>a.call('change',{action:'task.save',...base,base,version:oldVersion,...extra});
-  assert.equal((await save(original,{title:'Server title',requestId:'first-edit'})).status,200);
+  const save=(base,extra,token='root')=>a.call('change',{action:'task.save',...base,base,baseRevision:base.revision,version:oldVersion,...extra},token);
+  assert.equal((await save(original,{title:'Server title',requestId:'first-edit'},'other')).status,200);
   assert.equal((await save(original,{body:'Disjoint body',requestId:'disjoint-edit'})).status,200);
   let current=(await a.state()).tasks[0];assert.equal(current.title,'Server title');assert.equal(current.body,'Disjoint body');
   const conflict=await save(original,{title:'My title',requestId:'conflicting-edit'});
@@ -39,6 +39,24 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
   current=(await a.state()).tasks.find(t=>t.id===original.id);
   assert.equal((await a.call('change',{action:'task.pin',id:original.id,pinned:true,baseRevision:current.revision,version:oldVersion})).status,200);
   const delta=(await a.call('state?since='+version)).body;assert.equal(delta.delta,true);assert.ok(delta.tasks.some(t=>t.title==='Unrelated'));
+ });
+ test(name+': same author stale edits and unpin never conflict; other-field edits merge',async()=>{
+ const a=await app(worker,hash,encrypt);await a.change({action:'task.save',repoId:a.repoId,title:'Original',body:'Old',proposer:'owner',column:6});
+ const initial=await a.state(),t=initial.tasks[0];const save=(extra,token='root')=>a.call('change',{action:'task.save',...t,base:t,baseRevision:t.revision,baseVersion:initial.version,...extra},token);
+ assert.equal((await save({title:'First'})).status,200);assert.equal((await save({title:'Second'})).status,200);
+ assert.equal((await a.change({action:'task.pin',id:t.id,pinned:true,baseRevision:t.revision})).status,200);
+ assert.equal((await a.change({action:'task.pin',id:t.id,pinned:false,baseRevision:t.revision})).status,200);
+ const updated=await a.state();assert.equal(updated.tasks[0].title,'Second');assert.equal(updated.tasks[0].pinned,false);
+ assert.equal((await a.change({action:'task.place',id:t.id,column:5,order:[t.id],baseRevision:t.revision})).status,200);
+ const competing=await save({title:'Other'},'other');assert.equal(competing.status,409);assert.deepEqual(competing.body.conflict.fields,['title']);
+ });
+ test(name+': verification credentials require repository authority and can be revoked',async()=>{
+ const a=await app(worker,hash,encrypt);a.env.BOARD_SYNC_KEY='fixture-repository-authority';
+ assert.equal((await a.call('repository/verification-session',{},'')).status,403);
+ assert.equal((await a.call('repository/verification-session',{},'root')).status,403);
+ const issued=await a.call('repository/verification-session',{},'fixture-repository-authority');assert.equal(issued.status,200);
+ assert.equal((await a.state(issued.body.token)).actor.root,true);
+ await a.call('logout',{},issued.body.token);assert.equal((await a.state(issued.body.token)).actor.root,false);
  });
  test(name+': retries identify one committed task and keep issued secrets encrypted',async()=>{
   const a=await app(worker,hash,encrypt),payload={action:'task.save',repoId:a.repoId,title:'Exactly once',proposer:'owner',column:6,requestId:'one-create',version:0};

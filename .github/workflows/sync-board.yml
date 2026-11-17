@@ -27,6 +27,8 @@ jobs:
         with:
           node-version: '24'
       - run: npm ci
+      - name: Owner-authorized short-lived verification session
+        run: node scripts/verification-session.mjs
       - name: Append immutable events and save public board
         id: sync
         env:

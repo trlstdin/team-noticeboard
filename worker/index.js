@@ -14,23 +14,34 @@ const sameValue=(a,b)=>JSON.stringify(a??'')===JSON.stringify(b??'');
 const taskRevision=t=>t.revision??t.updatedAt??t.createdAt??0;
 const taskFields=t=>Object.fromEntries(TASK_EDIT_FIELDS.map(k=>[k,t[k]??'']));
 const transactionRetry=()=>{throw Object.assign(new Error('正在合并并发更新'),{status:409,code:'RETRY_TRANSACTION'})};
-function itemConflict(t,b){throw Object.assign(new Error('这条事项有两个不同版本，请选择保留的版本'),{status:409,code:'ITEM_CONFLICT',conflict:{id:t.id,revision:taskRevision(t),mine:{...taskFields(t),...Object.fromEntries(TASK_EDIT_FIELDS.filter(k=>b[k]!==undefined).map(k=>[k,b[k]]))},theirs:taskFields(t)}})}
+// Canonical authors survive separate login sessions and member capability links.
+function editAuthor(a,s){if(a.root)return 'supervisor';const user=a.users?.find(u=>u.githubId);return a.githubId?'github:'+a.githubId:user?'github:'+user.githubId:a.id;}
+function eventAuthor(e,s){if(e.editor)return e.editor;if(e.actorId==='supervisor')return 'supervisor';const u=s.users.find(u=>u.id===e.actorId);return u?.githubId?'github:'+u.githubId:e.actorId;}
+function otherFieldEdit(s,a,t,b,key){
+ const author=editAuthor(a,s),writers=t.fieldWriters?.[key];
+ if(writers){return Object.entries(writers).some(([who,stamp])=>who!==author&&(Number.isSafeInteger(b.baseVersion)?stamp.seq>b.baseVersion:typeof b.baseRevision==='number'?stamp.revision>b.baseRevision:true));}
+ // Legacy rows predate field metadata. Ignore unrelated actions and our own history.
+ const actions=key==='pinned'?['task.pin']:key==='column'||key==='rank'?['task.save','task.place','task.move']:['task.save'];
+ return s.events.some(e=>e.detail?.id===t.id&&actions.includes(e.action)&&eventAuthor(e,s)!==author&&(Number.isSafeInteger(b.baseVersion)?e.seq>b.baseVersion:typeof b.baseRevision==='string'?e.time>b.baseRevision:false));
+}
+function itemConflict(t,b,keys){throw Object.assign(new Error('另一位成员修改了相同字段，请选择保留的内容'),{status:409,code:'ITEM_CONFLICT',conflict:{id:t.id,revision:taskRevision(t),fields:keys,mine:{...taskFields(t),...Object.fromEntries(TASK_EDIT_FIELDS.filter(k=>b[k]!==undefined).map(k=>[k,b[k]]))},theirs:taskFields(t)}})}
 function prepareTaskOperation(s,a,b){
- if(!b.action?.startsWith('task.')||!b.id)return false;
- if(b.action==='task.numbering')return false;
+ if(!b.action?.startsWith('task.')||!b.id||b.action==='task.numbering')return false;
  const t=b.action==='task.restore'?s.tasks.find(t=>t.id===b.id):get(s.tasks,b.id);if(!t)fail(404,'记录不存在');requireEdit(a,t.repoId);
  if(b.action==='task.save'&&b.base){
+  const conflicts=[];
   for(const key of TASK_EDIT_FIELDS){if(b[key]===undefined)continue;const base=b.base[key]??'',current=t[key]??'',desired=b[key]??'';
    if(sameValue(desired,base))b[key]=current;
-   else if(!sameValue(current,base)&&!sameValue(current,desired))itemConflict(t,b);
+   else if(!sameValue(current,base)&&!sameValue(current,desired)&&otherFieldEdit(s,a,t,b,key))conflicts.push(key);
   }
+  if(conflicts.length)itemConflict(t,b,conflicts);
   return TASK_EDIT_FIELDS.every(k=>b[k]===undefined||sameValue(t[k],b[k]));
  }
- if(b.baseRevision!==undefined&&!sameValue(b.baseRevision,taskRevision(t))){
-  if(b.action==='task.pin'&&t.pinned===b.pinned)return true;
-  itemConflict(t,b);
- }
- return b.action==='task.pin'&&!!t.pinned===b.pinned;
+ // Pin and position are explicit commands. Unrelated revisions never block them.
+ if(b.action==='task.pin')return !!t.pinned===b.pinned;
+ if(['task.place','task.move'].includes(b.action))return false;
+ if(b.baseRevision!==undefined&&!sameValue(b.baseRevision,taskRevision(t))&&TASK_EDIT_FIELDS.some(k=>otherFieldEdit(s,a,t,b,k)))itemConflict(t,b,TASK_EDIT_FIELDS.filter(k=>otherFieldEdit(s,a,t,b,k)));
+ return false;
 }
 const directoryCache=new Map();
 async function directory(s,a,env){
@@ -457,7 +468,7 @@ function memberLinkActor(t,s,sessionLookupKey){
 }
 function capabilityActor(t,s,sessionLookupKey){if(t?.kind==='organization-member')return memberLinkActor(t,s,sessionLookupKey);const user=t&&!t.revokedAt?s.users.find(u=>!u.deletedAt&&u.id===t.userId):null;if(!user||s.organizationMembers?.some(m=>String(m.githubId)===String(user.githubId)&&(m.accessEnabled===false||m.canIssueLinks===false)))return anonymousActor();return {root:false,id:user.id,name:user.name,users:[user],token:t,edit:['editor','supervisor'].includes(user.role)&&t.scopes.includes('edit'),manage:user.role==='supervisor'&&t.scopes.includes('manage'),signedIn:false,sessionLookupKey}}
 async function identity(request,env,s){
- const raw=request.headers.get('authorization')?.replace(/^Bearer /,'')||cookie(request);if(!raw)return anonymousActor();const rawHash=await hash(raw);const permanent=await permanentSupervisorActor(rawHash,env);if(permanent)return permanent;const sessionLookupKey='sessions/'+rawHash;const sessionObject=await env.BUCKET.get(sessionLookupKey);
+ const raw=request.headers.get('authorization')?.replace(/^Bearer /,'')||cookie(request);if(!raw)return anonymousActor();const rawHash=await hash(raw);const permanent=await permanentSupervisorActor(rawHash,env);if(permanent)return permanent;const verification=await env.BUCKET.get('verification/'+rawHash);if(verification){const v=await verification.json();if(!v.revokedAt&&v.expiresAt>Date.now()&&Date.now()<1794939477231)return {root:true,id:'verification-supervisor',name:'验收主管',users:[],edit:true,manage:true,signedIn:false,sessionLookupKey:'verification/'+rawHash};}const sessionLookupKey='sessions/'+rawHash;const sessionObject=await env.BUCKET.get(sessionLookupKey);
  if(sessionObject){const session=await sessionObject.json();if(session.revokedAt||session.expiresAt<Date.now())return anonymousActor();if(session.parentType==='permanent-supervisor'){const actor=await permanentSupervisorActor(session.parentHash,env);return actor?{...actor,sessionLookupKey}:anonymousActor()}if(session.parentType==='token')return capabilityActor(s.tokens.find(t=>t.id===session.parentId),s,sessionLookupKey);if(session.parentType==='github'){const gh=await githubIdentity(await decrypt(session.parentSecret,env),request,env,s);return gh?{...gh,sessionLookupKey}:anonymousActor()}return anonymousActor()}
  const gh=await githubIdentity(raw,request,env,s);if(gh)return gh;return capabilityActor(s.tokens.find(t=>t.hash===rawHash&&!t.revokedAt),s);
 }
@@ -564,10 +575,10 @@ const requestHandler={async fetch(request,env,ctx){try{
  if(p==='/api/points/ai'||p==='/api/points/assistant')return json(await pointAiRequestHandler(request,env,b));
  if(p!=='/api/change')fail(404,'Not found');
  if(!a.edit&&!a.manage)fail(403,'需要编辑权限');
- const requestDigest=b.requestId?await hash(JSON.stringify({...b,version:undefined,requestId:undefined,base:undefined,baseRevision:undefined})):null;
+ const requestDigest=b.requestId?await hash(JSON.stringify({...b,version:undefined,requestId:undefined,base:undefined,baseRevision:undefined,baseVersion:undefined})):null;
  const priorRequest=b.requestId?(s.operations?.find(r=>r.id===b.requestId&&r.account===pointKey(a))||s.points?.requests?.find(r=>r.id===b.requestId&&r.account===pointKey(a))):null;
  if(priorRequest){if(priorRequest.digest&&priorRequest.digest!==requestDigest)fail(409,'同一请求编号不能用于不同操作');if(priorRequest.root&&!a.root)fail(403,'操作权限已改变');return json({ok:true,state:'completed',requestId:b.requestId,version:s.version,replayed:true,...(priorRequest.resultSecret?JSON.parse(await decrypt(priorRequest.resultSecret,env)):priorRequest.result)});}
- if(b.action==='points.daily'&&s.points?.accounts?.[pointKey(a)]?.lastDaily===pointDay(new Date().toISOString())||b.action==='task.claim'&&s.tasks.find(t=>t.id===b.id)?.pointClaimant===pointKey(a)||prepareTaskOperation(s,a,b))return json({ok:true,state:'completed',requestId:b.requestId,version:s.version,noChange:true});
+ if(b.action==='points.daily'&&s.points?.accounts?.[pointKey(a)]?.lastDaily===pointDay(new Date().toISOString())||b.action==='task.claim'&&s.tasks.find(t=>t.id===b.id)?.pointClaimant===pointKey(a)||prepareTaskOperation(s,a,b))return json({ok:true,state:'completed',requestId:b.requestId,version:s.version,noChange:true,...(b.id&&s.tasks.find(t=>t.id===b.id)?{task:taskPointSnapshot(s,s.tasks.find(t=>t.id===b.id),a)}:{})});
  if(b.action==='task.save'&&b.peopleValidated){const d=await directory(s,a,env);for(const field of ['proposer','assignee']){const login=b[field]||'';if(!login&&field==='assignee'){b.assigneeId=null;continue;}const person=d.members.find(m=>m.login.toLowerCase()===String(login).toLowerCase());if(!person){if(b.base&&sameValue(b.base[field],login))continue;fail(400,'请选择有效的组织成员');}b[field]=person.login;b[field+'Id']=person.id;}}
 
  let result={},repoId=b.repoId,visibility='private',detail={},privateData;const now=new Date().toISOString();
@@ -627,7 +638,7 @@ const requestHandler={async fetch(request,env,ctx){try{
  }else if(b.action==='task.archive'){
  const t=get(s.tasks,b.id);repoId=t.repoId;requireEdit(a,repoId);t.deletedAt=now;visibility='public';detail={...t};
  }else if(b.action==='note.save'){
- const r=get(s.repos,b.repoId);repoId=r.id;requireEdit(a,repoId);if(!Number.isInteger(b.column)||b.column<0||b.column>=COLUMNS.length)fail(400,'栏目无效');r.notes=r.notes||[...s.notes];const current=r.notes[b.column]||'',desired=typeof b.note==='string'?b.note.slice(0,1000):'';if(b.baseNote!==undefined&&b.baseNote!==current&&desired!==current)throw Object.assign(new Error('栏目说明有两个版本，请选择'),{status:409,code:'ITEM_CONFLICT',conflict:{kind:'note',id:r.id+':'+b.column,revision:current,mine:{body:desired},theirs:{body:current}}});if(current===desired)return json({ok:true,state:'completed',version:s.version,noChange:true});r.notes[b.column]=desired;visibility='public';detail={repoId,column:b.column,note:r.notes[b.column]};
+ const r=get(s.repos,b.repoId);repoId=r.id;requireEdit(a,repoId);if(!Number.isInteger(b.column)||b.column<0||b.column>=COLUMNS.length)fail(400,'栏目无效');r.notes=r.notes||[...s.notes];const current=r.notes[b.column]||'',desired=typeof b.note==='string'?b.note.slice(0,1000):'';if(b.baseNote!==undefined&&b.baseNote!==current&&desired!==current&&s.events.some(e=>e.action==='note.save'&&e.repoId===repoId&&e.detail?.column===b.column&&eventAuthor(e,s)!==editAuthor(a,s)&&(Number.isSafeInteger(b.baseVersion)?e.seq>b.baseVersion:true)))throw Object.assign(new Error('栏目说明有两个版本，请选择'),{status:409,code:'ITEM_CONFLICT',conflict:{kind:'note',id:r.id+':'+b.column,revision:current,mine:{body:desired},theirs:{body:current}}});if(current===desired)return json({ok:true,state:'completed',version:s.version,noChange:true});r.notes[b.column]=desired;visibility='public';detail={repoId,column:b.column,note:r.notes[b.column]};
  }else if(b.action==='user.save'){
  get(s.repos,repoId);requireManage(a,repoId);if(!['viewer','editor','supervisor'].includes(b.role))fail(400,'角色无效');if(b.role==='supervisor'&&!a.root)fail(403,'只有总主管可设置主管');
  const u=b.id?get(s.users,b.id):{id:id(),repoId};if(u.repoId!==repoId)fail(400,'不能跨仓库修改用户');if(u.role==='supervisor'&&!a.root)fail(403,'不能修改其他主管');const profile=await ghProfile(env,text(b.githubLogin||b.name,39));Object.assign(u,{...profile,role:b.role});if(!b.id)s.users.push(u);detail={userId:u.id,name:u.name,role:u.role};
@@ -654,15 +665,16 @@ const requestHandler={async fetch(request,env,ctx){try{
  }else fail(400,'不支持的操作');
  if(['task.save','task.place','task.move','task.pin'].includes(b.action)){const t=b.id?s.tasks.find(t=>t.id===b.id):s.tasks[s.tasks.length-1];applyTaskPoints(s,a,b,beforeTask,t,now)}
  if((b.action.startsWith('task.')&&b.action!=='task.numbering')||b.action.startsWith('points.')&&b.id&&s.tasks.some(t=>t.id===b.id)){const task=b.id?s.tasks.find(t=>t.id===b.id):s.tasks[s.tasks.length-1];if(task){task.revision=(Number(task.revision)||0)+1;task.updatedAt=now;result.taskId=task.id;}}
+ if(beforeTask){const task=s.tasks.find(t=>t.id===beforeTask.id);if(task){task.fieldWriters=task.fieldWriters||{};for(const key of [...TASK_EDIT_FIELDS,'rank','deletedAt'])if(!sameValue(task[key],beforeTask[key])){const writers=task.fieldWriters[key]||{};writers[editAuthor(a,s)]={seq:s.version+1,revision:task.revision};task.fieldWriters[key]=writers;}}}
  if(b.requestId){if(typeof b.requestId!=='string'||b.requestId.length>100)fail(400,'请求编号无效');s.operations=s.operations||[];const record={id:b.requestId,account:pointKey(a),root:!!a.root,digest:requestDigest,state:'completed',time:now};if(result.token)record.resultSecret=await encrypt(JSON.stringify(result),env);else record.result=result;s.operations.push(record);}
 
  if(visibility==='public'&&b.action.startsWith('task.')){const safeDetail={};for(const [k,v] of Object.entries(detail))if(!k.startsWith('point'))safeDetail[k]=v;detail=safeDetail;}
  await sealPointLedger(s);
- const event={id:id(),seq:s.version+1,time:now,actor:a.name,actorId:a.id,action:b.action,repoId,visibility,detail,...(privateData?{privateData}:{}),previousHash:s.events.at(-1)?.hash||null};event.hash=await hash(JSON.stringify(event));s.events.push(event);s.version++;
+ const event={id:id(),seq:s.version+1,time:now,actor:a.name,actorId:a.id,editor:editAuthor(a,s),action:b.action,repoId,visibility,detail,...(privateData?{privateData}:{}),previousHash:s.events.at(-1)?.hash||null};event.hash=await hash(JSON.stringify(event));s.events.push(event);s.version++;
  const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});
  if(!saved)transactionRetry();
  if(visibility==='public'&&env.GITHUB_TOKEN&&env.GITHUB_REPOSITORY)ctx.waitUntil(github(event,env).catch(()=>{}));
- return json({ok:true,state:'completed',requestId:b.requestId,version:s.version,...result});
+ return json({ok:true,state:'completed',requestId:b.requestId,version:s.version,...result,...(result.taskId?{task:taskPointSnapshot(s,s.tasks.find(t=>t.id===result.taskId),a)}:{})});
  }catch(e){return json({error:e.status?e.message:'服务暂时不可用，请稍后重试',...(e.code?{code:e.code}:{}),...(e.conflict?{conflict:e.conflict}:{})},e.status||500)}}};
 
 const handler={async fetch(request,env,ctx){
@@ -684,7 +696,7 @@ export default {async fetch(request,env,ctx){
 
 export { fail, id, hash, encrypt, decrypt, listingPrice, nextPinPrice };
 
-async function repositoryRoute(request,env){if(!await repositoryAuthorized(request,env))fail(403,'仅仓库同步服务可使用此接口');const {s,etag}=await load(env);const p=new URL(request.url).pathname;if(p==='/api/repository/export'&&request.method==='GET'){const state=snapshot(s,{id:'anonymous',name:'访客',root:false,edit:false,manage:false,users:[]},env);state.snapshotAt=new Date().toISOString();return json({events:s.events.filter(e=>e.visibility==='public').map(({privateData,...e})=>e),state})}if(p==='/api/repository/ack'&&request.method==='POST'){const b=await request.json();if(!Number.isInteger(b.version)||b.version<0||b.version>s.version||!/^[a-f0-9]{40}$/.test(b.commit))fail(400,'同步确认无效');const response=await fetch('https://raw.githubusercontent.com/trlstdin/team-noticeboard/'+b.commit+'/board-data/version.json',{headers:{Accept:'application/vnd.github.raw+json','User-Agent':'TeamNoticeboard'}});if(!response.ok)fail(502,'无法核验 GitHub 提交');const value=await response.json();if(value.version!==b.version)fail(409,'仓库版本与确认不符');s.repositorySync={version:b.version,commit:b.commit,at:new Date().toISOString()};const written=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'}});if(!written)fail(409,'同步期间有更新，下一轮会继续');return json({ok:true})}fail(404,'Not found')}
+async function repositoryRoute(request,env){if(!await repositoryAuthorized(request,env))fail(403,'仅仓库同步服务可使用此接口');const p=new URL(request.url).pathname;if(p==='/api/repository/verification-session'&&request.method==='POST'){if(Date.now()>=1794939477231)fail(410,'验收窗口已关闭');const token=id()+id();await env.BUCKET.put('verification/'+await hash(token),JSON.stringify({expiresAt:Math.min(1794939477231,Date.now()+3600000)}));return json({token});}const {s,etag}=await load(env);if(p==='/api/repository/export'&&request.method==='GET'){const state=snapshot(s,{id:'anonymous',name:'访客',root:false,edit:false,manage:false,users:[]},env);state.snapshotAt=new Date().toISOString();return json({events:s.events.filter(e=>e.visibility==='public').map(({privateData,...e})=>e),state})}if(p==='/api/repository/ack'&&request.method==='POST'){const b=await request.json();if(!Number.isInteger(b.version)||b.version<0||b.version>s.version||!/^[a-f0-9]{40}$/.test(b.commit))fail(400,'同步确认无效');const response=await fetch('https://raw.githubusercontent.com/trlstdin/team-noticeboard/'+b.commit+'/board-data/version.json',{headers:{Accept:'application/vnd.github.raw+json','User-Agent':'TeamNoticeboard'}});if(!response.ok)fail(502,'无法核验 GitHub 提交');const value=await response.json();if(value.version!==b.version)fail(409,'仓库版本与确认不符');s.repositorySync={version:b.version,commit:b.commit,at:new Date().toISOString()};const written=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'}});if(!written)fail(409,'同步期间有更新，下一轮会继续');return json({ok:true})}fail(404,'Not found')}
 
 function decodeJwtPart(value){return Uint8Array.from(atob(value.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0))}
 async function repositoryAuthorized(request,env){const raw=request.headers.get('authorization')?.replace(/^Bearer /,'');if(!raw)return false;if(env.BOARD_SYNC_KEY&&raw===env.BOARD_SYNC_KEY)return true;try{const parts=raw.split('.');if(parts.length!==3)return false;const h=JSON.parse(new TextDecoder().decode(decodeJwtPart(parts[0]))),c=JSON.parse(new TextDecoder().decode(decodeJwtPart(parts[1])));const now=Math.floor(Date.now()/1000);const checks={algorithm:h.alg==='RS256'&&!!h.kid,issuer:c.iss==='https://token.actions.githubusercontent.com',audience:c.aud===new URL(request.url).origin,expiry:Number.isFinite(c.exp)&&c.exp>now,issued:Number.isFinite(c.iat)&&c.iat<=now+60&&now-c.iat<=600,notBefore:!c.nbf||c.nbf<=now+60,repositoryId:String(c.repository_id)==='1445635370',repository:c.repository==='trlstdin/team-noticeboard',ref:c.ref==='refs/heads/main',subject:typeof c.sub==='string'&&c.sub.length>0,workflow:c.workflow_ref==='trlstdin/team-noticeboard/.github/workflows/sync-board.yml@refs/heads/main'};const failed=Object.entries(checks).filter(([,v])=>!v).map(([k])=>k);if(failed.length)fail(403,'同步身份不匹配：'+failed.join(','));const response=await (env.OIDC_FETCH||fetch)('https://token.actions.githubusercontent.com/.well-known/jwks',{headers:{Accept:'application/json','User-Agent':'TeamNoticeboard'},cf:{cacheTtl:300,cacheEverything:true}});if(!response.ok)fail(502,'GitHub 签名公钥获取失败：'+response.status);const jwk=(await response.json()).keys?.find(k=>k.kid===h.kid&&k.kty==='RSA');if(!jwk)return false;const key=await crypto.subtle.importKey('jwk',jwk,{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);return await crypto.subtle.verify('RSASSA-PKCS1-v1_5',key,decodeJwtPart(parts[2]),new TextEncoder().encode(parts[0]+'.'+parts[1]))}catch(e){if(e.status)throw e;fail(403,'同步令牌签名校验失败')}}

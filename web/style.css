@@ -101,3 +101,6 @@ main>nav>.tab{flex-shrink:0}
 /* Pending writes remain visible until acknowledged; never imply server success. */
 .task.pending-save .task-buttons:after{content:"待保存";font-size:11px;color:#b9a575}
 button:active{filter:brightness(1.25)}
+
+.dialog-top #task-prompts-link{margin-inline-start:auto;flex:none;border:1px solid #409cff80;border-radius:7px;background:#0a84ff24;color:#a6d0ff;padding:5px 8px;font-size:12px;font-weight:600;white-space:nowrap}
+.dialog-top #task-prompts-link:hover{background:#0a84ff42}

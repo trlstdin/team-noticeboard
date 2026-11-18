@@ -46,8 +46,8 @@ function renderPromptPicker(){
 }
 $('#prompt-column').onchange=()=>{$('#prompt-task').value='';renderPromptPicker()};
 $('#prompt-task').onchange=()=>{$('#open-prompts').disabled=!$('#prompt-task').value};
-$('#open-prompts').onclick=async()=>{
- const task=state.tasks.find(t=>t.id===$('#prompt-task').value);
+$('#open-prompts').onclick=()=>openTaskPrompts(state.tasks.find(t=>t.id===$('#prompt-task').value));
+async function openTaskPrompts(task){
  if(!task)return;
  const title=state.columns[task.column]+' '+task.columnNumber+'. '+task.title;
  openDialog(title,[],null);
@@ -77,7 +77,7 @@ $('#open-prompts').onclick=async()=>{
   for(const value of saved.prompts.length?saved.prompts:[''])append(value);
   add.onclick=()=>append().focus();
  }catch(error){if(currentFormScope===scope&&$('#dialog').open)$('#form-error').textContent=error.message}
-};
+}
 function renderMemberAccess(){
  const supervisor=state.actor.supervisor,links=state.memberLinks||[],members=state.organizationMembers||[];
  $('#member-access').hidden=supervisor?view!=='manage':!state.actor.organizationMember&&!links.length;
@@ -151,7 +151,7 @@ function renderManage(){
 async function grant(extra){if(!selection.size)return toast('请先选择公有账号');try{await change({action:'grant.set',repoId:manageRepo,accountIds:[...selection],userIds:[],...extra});toast('授权已更新')}catch(e){toast(e.message)}}
 function editToken(t){openDialog('修改链接权限',[field('label','链接名称','text',t.label,{required:true,max:100}),...['copy','edit','manage'].filter(k=>k!=='manage'||state.actor.supervisor).map(k=>({type:'html',value:'<label class="check"><input type="checkbox" name="'+k+'" '+(t.scopes.includes(k)?'checked':'')+'>'+({copy:'允许复制已分配账号',edit:'允许编辑（需用户为编辑者）',manage:'允许管理（需用户为主管）'}[k])+'</label>'}))],f=>change({action:'token.update',id:t.id,label:f.get('label'),scopes:['copy','edit','manage'].filter(k=>f.get(k))}))}
 function field(name,label,type='text',value='',opts={}){return {name,label,type,value,...opts}}
-function openDialog(title,fields,save){currentFormScope=crypto.randomUUID();dialogSave=save;$('#dialog-title').textContent=title;$('#form-error').textContent='';$('#fields').innerHTML=fields.map(f=>{if(f.type==='html')return f.value;const attrs=(f.type==='number'?' step="any"':'')+(f.readonly?' readonly':'')+(f.required?' required':'')+(f.max?' maxlength="'+f.max+'"':'');return '<label class="field">'+esc(f.label)+(f.type==='textarea'?'<textarea name="'+f.name+'" rows="5"'+attrs+'>'+esc(f.value)+'</textarea>':f.type==='select'?'<select name="'+f.name+'">'+f.options.map(o=>'<option value="'+esc(o.value)+'" '+(String(o.value)===String(f.value)?'selected':'')+'>'+esc(o.label)+'</option>').join('')+'</select>':'<input name="'+f.name+'" type="'+f.type+'" value="'+esc(f.value)+'"'+attrs+'>')+(f.help?'<small>'+esc(f.help)+'</small>':'')+'</label>'}).join('');$('#save').hidden=!save;$('#cancel').textContent=save?'取消':'关闭';$('#dialog').showModal()}
+function openDialog(title,fields,save){const promptLink=$('#task-prompts-link');promptLink.hidden=true;promptLink.onclick=null;currentFormScope=crypto.randomUUID();dialogSave=save;$('#dialog-title').textContent=title;$('#form-error').textContent='';$('#fields').innerHTML=fields.map(f=>{if(f.type==='html')return f.value;const attrs=(f.type==='number'?' step="any"':'')+(f.readonly?' readonly':'')+(f.required?' required':'')+(f.max?' maxlength="'+f.max+'"':'');return '<label class="field">'+esc(f.label)+(f.type==='textarea'?'<textarea name="'+f.name+'" rows="5"'+attrs+'>'+esc(f.value)+'</textarea>':f.type==='select'?'<select name="'+f.name+'">'+f.options.map(o=>'<option value="'+esc(o.value)+'" '+(String(o.value)===String(f.value)?'selected':'')+'>'+esc(o.label)+'</option>').join('')+'</select>':'<input name="'+f.name+'" type="'+f.type+'" value="'+esc(f.value)+'"'+attrs+'>')+(f.help?'<small>'+esc(f.help)+'</small>':'')+'</label>'}).join('');$('#save').hidden=!save;$('#cancel').textContent=save?'取消':'关闭';$('#dialog').showModal()}
 async function editTask(t,readonly=false){
  const repos=state.repos.filter(r=>readonly||r.canEdit);if(!repos.length)return toast('先添加项目，再添加事项');
  const d=directoryValue||{members:[]};
@@ -160,6 +160,22 @@ async function editTask(t,readonly=false){
  const fields=[field('repoId','所属项目','select',t?.repoId||$('#project-filter').value||repos[0].id,{options:repos.map(r=>({value:r.id,label:r.name}))}),field('title','事项标题','text',t?.title||'',{required:true,max:180}),field('body','详细说明','textarea',t?.body||'',{max:10000}),field('repositoryUrl','仓库地址','url',t?.repositoryUrl||''),field('personalRepositoryUrl','个人仓库地址','url',t?.personalRepositoryUrl||''),field('column','栏目','select',t?.column??6,{options:state.columns.map((label,value)=>({label,value}))}),field('proposer','提出人','select',personLabel(t?.proposer||state.actor.githubLogin||state.actor.name),{required:true,options:options('proposer')}),field('assignee','认领人','select',personLabel(t?.assignee),{options:options('assignee')}),field('host','BUG 所在主机','text',t?.host||'',{max:200}),field('finisher','完成者','text',t?.finisher||'',{max:100})];
  fields.push({type:'html',value:'<p>可开发池免费；首次上架按当前权重 × '+Math.round((state.points?.rules.listingRate||0.25)*100)+'% 收费，等待与已批准阻塞等级另计加价。'+(t?.pointQuote?'当前各栏报价：'+state.columns.map((c,i)=>esc(c)+' '+t.pointQuote.listing[i]+' 分').join('；')+'。':'')+'扣费前自动结算当日赠送；重复编辑不收上架费。置顶事项变更位置或栏目另收调位费。</p>'});
  openDialog(readonly?'事项详情':t?'编辑事项':'添加事项',fields,readonly?null:f=>change({action:'task.save',id:t?.id,base,baseVersion,baseRevision:t?.revision??t?.updatedAt,peopleValidated:!!directoryValue,repoId:f.get('repoId'),title:f.get('title'),body:f.get('body'),repositoryUrl:f.get('repositoryUrl'),personalRepositoryUrl:f.get('personalRepositoryUrl'),column:+f.get('column'),proposer:f.get('proposer'),assignee:f.get('assignee'),host:f.get('host'),finisher:f.get('finisher')}));
+ if(t&&state.views?.includes('prompts')&&state.repos.some(r=>r.id===t.repoId&&r.canEdit&&isBoardProject(r))){
+  const button=$('#task-prompts-link');
+  button.hidden=false;
+  button.onclick=()=>{
+   const task=state.tasks.find(item=>item.id===t.id);
+   if(!task)return toast('事项已不存在');
+   if(!state.views?.includes('prompts')||!state.repos.some(r=>r.id===task.repoId&&r.canEdit))return toast('需要该项目的编辑权限');
+   view='prompts';
+   render();
+   $('#prompt-column').value=String(task.column);
+   renderPromptPicker();
+   $('#prompt-task').value=task.id;
+   $('#open-prompts').disabled=false;
+   openTaskPrompts(task);
+  };
+ }
  if(readonly)for(const e of $$('#fields input, #fields textarea, #fields select'))e.disabled=true;else{bindRepositorySuggestions();const scope=currentFormScope;loadPeopleDirectory().then(d=>updatePeopleOptions(d,scope)).catch(()=>{});}
 }
 function editProject(r){openDialog(r?'编辑项目':'新建项目',[field('name','项目名称','text',r?.name||'',{required:true,max:100}),field('url','组织 / 仓库地址','url',r?.url||'',{required:true,help:'例如 https://github.com/组织名/仓库名'})],f=>change({action:'repo.save',id:r?.id,name:f.get('name'),url:f.get('url')}));bindRepositorySuggestions();}

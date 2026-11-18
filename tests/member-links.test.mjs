@@ -50,7 +50,8 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
  assert.equal((await a.change({action:'task.place',id:t.id,column:5,order:[t.id],baseRevision:t.revision})).status,200);
  const competing=await save({title:'Other'},'other');assert.equal(competing.status,409);assert.deepEqual(competing.body.conflict.fields,['title']);
  });
- test(name+': verification credentials require repository authority and can be revoked',async()=>{
+ test(name+': verification credentials require repository authority and can be revoked',async t=>{
+ t.mock.method(Date,'now',()=>Date.parse('2026-11-17T20:00:00Z'));
  const a=await app(worker,hash,encrypt);a.env.BOARD_SYNC_KEY='fixture-repository-authority';
  assert.equal((await a.call('repository/verification-session',{},'')).status,403);
  assert.equal((await a.call('repository/verification-session',{},'root')).status,403);

@@ -107,6 +107,10 @@ button:active{filter:brightness(1.25)}
 
 #add-prompt{margin-top:12px;min-width:32px;padding:3px 8px;border-color:#409cff80;background:#0a84ff24;color:#a6d0ff;font-size:16px;font-weight:600}
 #add-prompt:hover{background:#0a84ff42}
+
+#saved-prompt-items{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-width:760px}
+#saved-prompt-items button{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left;gap:12px}
+#saved-prompt-items button span{flex:none;color:var(--muted);font-size:12px}
 </style></head><body>
 <header><button id="mode" class="mode" disabled>◉ 只读模式</button><div class="brand"><span class="mark" aria-hidden="true">▦</span><div>告示板<span class="subtitle">TEAM WORKSPACE</span></div></div><div class="header-actions"><div class="identity-summary" aria-live="polite"><span id="actor">正在确认身份</span><span id="permission-summary">正在核对权限…</span></div><button id="authorize">GitHub 登录</button><button id="logout" hidden>退出授权</button></div></header>
 <main><section class="intro" hidden><div><div class="eyebrow">ONE TEAM. ONE PLACE.</div><h1>让每一件事，都有着落。</h1><p>从一个想法，到一次交付。团队的进展，在这里一起发生。</p></div><div id="stats" class="stats"></div></section>
@@ -118,6 +122,7 @@ button:active{filter:brightness(1.25)}
 <section id="board-view" class="view"><div class="toolbar"><div class="filters"><label class="sr-only" for="project-filter">项目</label><select id="project-filter"><option value="">全部项目</option></select><label class="search">⌕ <input id="search" placeholder="搜索事项、提出者、完成者" aria-label="搜索事项"></label></div><div><button id="history">变更记录</button> <button id="add-project" hidden>＋ 新建项目</button> <button id="add-task" class="primary" hidden>＋ 添加事项</button></div></div><section id="points-panel" class="points-panel" hidden aria-label="积分账户"></section><div id="board" class="board"></div><div class="board-foot"><span>按项目折叠 · 新事项默认进入可开发池</span><span id="mode-hint">当前为只读，可展开项目查看详情</span></div></section>
 <section id="prompts-view" class="view" hidden>
 <div class="section-head"><div class="filters"><label>栏目 <select id="prompt-column"></select></label> <label>顺序编号 <select id="prompt-task"></select></label> <button type="button" id="open-prompts" disabled>编辑提示词</button></div></div>
+<ul id="saved-prompt-items" aria-label="已保存提示词的事项"></ul>
 </section>
 <section id="points-view" class="view" hidden><div id="point-center"></div></section>
 <section id="accounts-view" class="view workspace-view" hidden>
@@ -378,13 +383,22 @@ function renderPromptPicker(){
  const selectedColumn=column.value,selectedTask=tasks.value;
  column.innerHTML='<option value="">选择栏目</option>'+state.columns.map((name,index)=>'<option value="'+index+'">'+esc(name)+'</option>').join('');
  column.value=selectedColumn;
- const items=selectedColumn===''?[]:state.tasks.filter(t=>t.column===Number(selectedColumn)&&state.repos.some(r=>r.id===t.repoId&&r.canEdit&&isBoardProject(r)));
+ const editableRepos=new Set(state.repos.filter(r=>r.canEdit&&isBoardProject(r)).map(r=>r.id));
+ const editableTasks=state.tasks.filter(t=>editableRepos.has(t.repoId));
+ const items=selectedColumn===''?[]:editableTasks.filter(t=>t.column===Number(selectedColumn));
  items.sort((a,b)=>a.columnNumber-b.columnNumber);
  tasks.innerHTML='<option value="">选择编号</option>'+items.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.columnNumber)+'. '+esc(t.title)+'</option>').join('');
  tasks.value=items.some(t=>t.id===selectedTask)?selectedTask:'';
  tasks.disabled=selectedColumn==='';
  $('#open-prompts').disabled=!tasks.value;
+ const saved=editableTasks.filter(t=>state.savedPromptCounts?.[t.id])
+  .sort((a,b)=>a.column-b.column||a.columnNumber-b.columnNumber);
+ patchHTML($('#saved-prompt-items'),saved.map(t=>'<li><button type="button" data-saved-prompt-task="'+esc(t.id)+'"><strong>'+esc(state.columns[t.column])+' '+esc(t.columnNumber)+'. '+esc(t.title)+'</strong><span>'+state.savedPromptCounts[t.id]+' 段</span></button></li>').join(''));
 }
+$('#saved-prompt-items').onclick=event=>{
+ const item=event.target.closest('[data-saved-prompt-task]');
+ if(item)jumpToTaskPrompts(item.dataset.savedPromptTask);
+};
 $('#prompt-column').onchange=()=>{$('#prompt-task').value='';renderPromptPicker()};
 $('#prompt-task').onchange=()=>{$('#open-prompts').disabled=!$('#prompt-task').value};
 $('#open-prompts').onclick=()=>openTaskPrompts(state.tasks.find(t=>t.id===$('#prompt-task').value));
@@ -406,26 +420,37 @@ async function openTaskPrompts(task){
  let revision=null;
  openDialog(title,[{type:'html',value:'<div id="prompt-fields"></div><button type="button" id="add-prompt" aria-label="添加一段提示词">＋</button>'}],form=>{
   if(revision===null)throw new Error('尚未取得此事项的已保存提示词');
-  const prompts=form.getAll('prompt').filter(value=>value.trim());
-  return change({action:'prompt.save',id:task.id,prompts,promptRevision:revision});
+  const titles=form.getAll('promptTitle');
+  const entries=form.getAll('prompt').map((body,index)=>({body,title:titles[index].trim()}))
+   .filter(entry=>entry.body.trim()||entry.title);
+  return change({action:'prompt.save',id:task.id,prompts:entries.map(entry=>entry.body),promptTitles:entries.map(entry=>entry.title),promptRevision:revision});
  });
  const scope=currentFormScope;
  const fields=$('#prompt-fields'),add=$('#add-prompt'),save=$('#save');
  save.disabled=true;
  const renumber=()=>{
-  [...fields.children].forEach((row,index)=>{row.firstChild.textContent='提示词 '+(index+1)});
+  [...fields.children].forEach((row,index)=>{
+   const heading=row.querySelector('[name="promptTitle"]'),number=index+1;
+   heading.placeholder='提示词 '+number;
+   heading.setAttribute('aria-label','第 '+number+' 段提示词的标题');
+   row.querySelector('textarea').setAttribute('aria-label','第 '+number+' 段提示词的正文');
+  });
   add.disabled=fields.children.length>=30;
  };
- const insert=(value='',before=null)=>{
-  const row=document.createElement('label');
+ const insert=(value='',heading='',before=null)=>{
+  const row=document.createElement('div');
   row.className='field';
-  const label=document.createElement('span');
+  const titleInput=document.createElement('input');
+  titleInput.type='text';
+  titleInput.name='promptTitle';
+  titleInput.maxLength=180;
+  titleInput.value=heading;
   const input=document.createElement('textarea');
   input.name='prompt';
   input.rows=5;
   input.maxLength=20000;
   input.value=value;
-  row.append(label,input);
+  row.append(titleInput,input);
   fields.insertBefore(row,before);
   return input;
  };
@@ -438,10 +463,16 @@ async function openTaskPrompts(task){
   if(currentFormScope!==scope||!$('#dialog').open)return;
   if(saved.prompts.length){
    const initial=first.parentElement;
-   const empty=!first.value&&fields.children.length===1;
-   if(empty)first.value=saved.prompts[0];
+   const firstTitle=initial.querySelector('[name="promptTitle"]');
+   const empty=!first.value&&!firstTitle.value&&fields.children.length===1;
+   if(empty){
+    first.value=saved.prompts[0];
+    firstTitle.value=saved.titles?.[0]||'';
+   }
    const before=empty?initial.nextSibling:initial;
-   for(const value of saved.prompts.slice(empty?1:0))insert(value,before);
+   for(let index=empty?1:0;index<saved.prompts.length;index++){
+    insert(saved.prompts[index],saved.titles?.[index]||'',before);
+   }
    renumber();
   }
   revision=saved.revision;

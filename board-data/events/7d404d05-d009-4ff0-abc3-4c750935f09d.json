@@ -1,0 +1,31 @@
+{
+  "id": "7d404d05-d009-4ff0-abc3-4c750935f09d",
+  "seq": 1467,
+  "time": "2026-11-18T05:36:45.169Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "5260fd6d-b0ab-4cb1-952d-f30f24282c20",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "25. codex试用资格管理器",
+    "body": "codex试用资格管理器\n\n待上传，介绍，批量管理gpt free账号实现自动免费试用一月的plus的生产",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": 8192,
+    "createdAt": "2026-11-07T06:15:48.191Z",
+    "updatedAt": "2026-11-10T09:56:35.562Z",
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "historyNumber": 25,
+    "deletedAt": "2026-11-18T05:36:45.169Z"
+  },
+  "previousHash": "12df3f9f44871718e37ef894cf9b62082cc0b7ec03e1af5b262eb7f56f351a8f",
+  "hash": "09bd49607b848cd74c373c171594a8483564e3aebfa5f21183a8160efb5f0e30"
+}

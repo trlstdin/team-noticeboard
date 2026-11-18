@@ -1,0 +1,17 @@
+{
+  "id": "cdaeb5a0-b148-49f3-8f4d-f0ba906e7191",
+  "seq": 1444,
+  "time": "2026-11-18T04:12:29.963Z",
+  "actor": "trlstdin（验收会话）",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.pin",
+  "repoId": "f835f9c0-8370-466c-ac9c-d399bd441032",
+  "visibility": "public",
+  "detail": {
+    "id": "93e9c125-d903-4672-82ed-611e4905a37b",
+    "pinned": true
+  },
+  "previousHash": "f4cfd948069cb10c76a9f1834b08814bd27e22c294c5df9170133d9108215cd2",
+  "hash": "8a328772d037dc219d361013111064e19cbb28ebd1d2d03960b5a0d7db7f29ba"
+}

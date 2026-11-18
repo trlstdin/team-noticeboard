@@ -46,8 +46,20 @@ function renderPromptPicker(){
 }
 $('#prompt-column').onchange=()=>{$('#prompt-task').value='';renderPromptPicker()};
 $('#prompt-task').onchange=()=>{$('#open-prompts').disabled=!$('#prompt-task').value};
-$('#open-prompts').onclick=async()=>{
- const task=state.tasks.find(t=>t.id===$('#prompt-task').value);
+$('#open-prompts').onclick=()=>openTaskPrompts(state.tasks.find(t=>t.id===$('#prompt-task').value));
+function jumpToTaskPrompts(id){
+ const task=state.tasks.find(t=>t.id===id);
+ if(!task)return toast('事项已不存在');
+ if(!state.views?.includes('prompts')||!state.repos.some(r=>r.id===task.repoId&&r.canEdit))return toast('需要该项目的编辑权限');
+ view='prompts';
+ render();
+ $('#prompt-column').value=String(task.column);
+ renderPromptPicker();
+ $('#prompt-task').value=task.id;
+ $('#open-prompts').disabled=!$('#prompt-task').value;
+ openTaskPrompts(task);
+}
+async function openTaskPrompts(task){
  if(!task)return;
  const title=state.columns[task.column]+' '+task.columnNumber+'. '+task.title;
  openDialog(title,[],null);
@@ -77,7 +89,7 @@ $('#open-prompts').onclick=async()=>{
   for(const value of saved.prompts.length?saved.prompts:[''])append(value);
   add.onclick=()=>append().focus();
  }catch(error){if(currentFormScope===scope&&$('#dialog').open)$('#form-error').textContent=error.message}
-};
+}
 function renderMemberAccess(){
  const supervisor=state.actor.supervisor,links=state.memberLinks||[],members=state.organizationMembers||[];
  $('#member-access').hidden=supervisor?view!=='manage':!state.actor.organizationMember&&!links.length;
@@ -105,6 +117,7 @@ function renderBoard(){
  for(const b of $$('[data-claim-task]'))b.onclick=async()=>{try{await change({action:'task.claim',id:b.dataset.claimTask})}catch(e){toast(e.message)}};
  for(const b of $$('[data-settle-task]'))b.onclick=()=>pointSettleForm(state.tasks.find(t=>t.id===b.dataset.settleTask));
  for(const d of $$('[data-task-details]'))d.ontoggle=()=>{if(d.open)expandedTasks.add(d.dataset.taskDetails);else expandedTasks.delete(d.dataset.taskDetails)};
+ for(const b of $$('#board [data-task-prompts]'))b.onclick=()=>jumpToTaskPrompts(b.dataset.taskPrompts);
  for(const b of $$('[data-edit-task]'))b.onclick=()=>editTask(state.tasks.find(t=>t.id===b.dataset.editTask));for(const b of $$('[data-view-task]'))b.onclick=()=>editTask(state.tasks.find(t=>t.id===b.dataset.viewTask),true);
  for(const b of $$('[data-archive-task]'))b.onclick=async()=>{if(confirm('删除这条事项？历史记录保留。'))try{await change({action:'task.archive',id:b.dataset.archiveTask});toast('已归档并保留历史')}catch(e){toast(e.message)}};
  for(const b of $$('[data-save-note]'))b.onclick=async()=>{const [repoId,col]=b.dataset.saveNote.split(':');const input=$('[data-note-repo="'+repoId+'"][data-note-column="'+col+'"]');try{await change({action:'note.save',repoId,column:+col,note:input.value});toast('栏目说明已保存')}catch(e){toast(e.message)}};
@@ -116,7 +129,7 @@ function taskCard(t,r){
  const numbering=(t.columnNumber?'<span class="task-column-number" title="当前栏编号，越小越重要">'+esc(t.columnNumber)+'. </span>':'')+'<span class="task-name">'+esc(name)+'</span>'+(t.historyNumber?'<span class="task-history-number" title="历史编号，固定保留">历史 '+esc(t.historyNumber)+'</span>':'');
  const links=(t.personalRepositoryUrl?'<a class="repo-link" href="'+esc(t.personalRepositoryUrl)+'" target="_blank" rel="noopener noreferrer">个人仓库：'+esc(t.personalRepositoryUrl)+'</a>':'')+(t.repositoryUrl?'<a class="repo-link" href="'+esc(t.repositoryUrl)+'" target="_blank" rel="noopener noreferrer">仓库：'+esc(t.repositoryUrl)+'</a>':'');
  const meta=(t.pointQuote?'<span>置顶/调位 '+esc(t.pointQuote.pin)+' 积分</span>':'')+(t.pointRewarded?'<span>积分奖励已结算</span>':'')+(t.pointClaimant?'<span>已绑定积分认领</span>':'')+(t.proposer?'<span>提出：'+esc(personLabel(t.proposer))+'</span>':'')+(t.assignee?'<span>认领：'+esc(personLabel(t.assignee))+'</span>':'')+(t.host?'<span>BUG 所在主机：'+esc(t.host)+'</span>':'')+(t.finisher?'<span>完成：'+esc(t.finisher)+'</span>':'');
- return '<article class="task'+(t.pendingSave?' pending-save':'')+(t.pinned?' pinned':'')+'" data-id="'+t.id+'" data-repo-id="'+r.id+'" data-drag-source><details class="task-details" data-task-details="'+t.id+'"'+(expandedTasks.has(t.id)?' open':'')+'><summary><h3 title="'+esc(t.title)+'">'+numbering+'<button type="button" class="task-pin" data-pin-task="'+t.id+'" aria-label="'+(t.pinned?'取消置顶':'置顶')+'" aria-pressed="'+!!t.pinned+'" '+(can?'':'disabled')+' title="'+(t.pinned?'取消置顶':'置顶')+'"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h4l-1 4 3 3v1H9v4L8 15l-1-5H4V9l3-3z"/></svg></button></h3><p class="task-overview">'+esc(t.body||'')+'</p></summary><div class="task-expanded"><p class="task-body">'+esc(t.body||'')+'</p>'+links+(meta?'<div class="task-meta">'+meta+'</div>':'')+'<div class="task-buttons">'+(can&&!t.pointClaimant&&t.column!==4?'<button data-claim-task="'+t.id+'">认领并绑定奖励</button>':'')+(editing&&r.canManage&&t.column===4&&t.pointClaimant&&!t.pointRewarded?'<button data-settle-task="'+t.id+'">验收奖励</button>':'')+(can?'<button class="drag-handle" data-drag-kind="task" data-id="'+t.id+'" aria-label="拖动事项 '+esc(t.title)+'">⠿ 拖动</button><button data-edit-task="'+t.id+'">编辑</button><button data-archive-task="'+t.id+'">删除</button>':'<button data-view-task="'+t.id+'">查看详情</button>')+'</div></div></details></article>';
+ return '<article class="task'+(t.pendingSave?' pending-save':'')+(t.pinned?' pinned':'')+'" data-id="'+t.id+'" data-repo-id="'+r.id+'" data-drag-source><details class="task-details" data-task-details="'+t.id+'"'+(expandedTasks.has(t.id)?' open':'')+'><summary><h3 title="'+esc(t.title)+'">'+numbering+'<button type="button" class="task-pin" data-pin-task="'+t.id+'" aria-label="'+(t.pinned?'取消置顶':'置顶')+'" aria-pressed="'+!!t.pinned+'" '+(can?'':'disabled')+' title="'+(t.pinned?'取消置顶':'置顶')+'"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2h4l-1 4 3 3v1H9v4L8 15l-1-5H4V9l3-3z"/></svg></button></h3><p class="task-overview">'+esc(t.body||'')+'</p></summary><div class="task-expanded"><p class="task-body">'+esc(t.body||'')+'</p>'+links+(meta?'<div class="task-meta">'+meta+'</div>':'')+'<div class="task-buttons">'+(can&&!t.pointClaimant&&t.column!==4?'<button data-claim-task="'+t.id+'">认领并绑定奖励</button>':'')+(editing&&r.canManage&&t.column===4&&t.pointClaimant&&!t.pointRewarded?'<button data-settle-task="'+t.id+'">验收奖励</button>':'')+(can?'<button class="drag-handle" data-drag-kind="task" data-id="'+t.id+'" aria-label="拖动事项 '+esc(t.title)+'">⠿ 拖动</button><button data-edit-task="'+t.id+'">编辑</button><button data-archive-task="'+t.id+'">删除</button>':'<button data-view-task="'+t.id+'">查看详情</button>')+(r.canEdit?'<button type="button" class="task-prompts-link" data-task-prompts="'+esc(t.id)+'">提示词 ↗</button>':'')+'</div></div></details></article>';
 }
 function renderAccounts(){const available=state.accounts.filter(a=>a.canCopy!==false),project=$('#account-project'),previous=project.value,projects=state.repos.filter(r=>available.some(a=>a.repoId===r.id));project.innerHTML='<option value="">全部账号（含默认池）</option>'+projects.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(projects.some(r=>r.id===previous))project.value=previous;const q=$('#account-search').value.trim().toLowerCase(),list=available.filter(a=>(!project.value||a.repoId===project.value)&&[a.name,state.repos.find(r=>r.id===a.repoId)?.name].join(' ').toLowerCase().includes(q));$('#accounts-count').textContent='显示 '+list.length+' / '+available.length+' 个账号';$('#accounts').innerHTML=list.length?list.map(a=>'<article class="account-card"><div class="eyebrow">'+esc(state.repos.find(r=>r.id===a.repoId)?.name||'默认账号池')+'</div><h3>'+esc(a.name)+'</h3><p>已授权使用 · 账号链接仅在复制时获取</p><button class="copy-account" data-id="'+a.id+'">复制账号链接</button></article>').join(''):'<div class="empty-state"><h3>'+ (available.length?'没有匹配的账号':(state.actor.organizationMember?'默认账号池暂无账号':'暂无已分配账号'))+'</h3><p>'+(available.length?'调整项目或搜索条件。':(state.actor.organizationMember?'默认账号池中的可用账号会显示在这里。':'主管分配账号后会显示在这里。'))+'</p></div>';for(const b of $$('.copy-account'))b.onclick=()=>copyAccount(b.dataset.id);}
 $('#account-project').onchange=renderAccounts;$('#account-search').oninput=renderAccounts;
@@ -151,7 +164,7 @@ function renderManage(){
 async function grant(extra){if(!selection.size)return toast('请先选择公有账号');try{await change({action:'grant.set',repoId:manageRepo,accountIds:[...selection],userIds:[],...extra});toast('授权已更新')}catch(e){toast(e.message)}}
 function editToken(t){openDialog('修改链接权限',[field('label','链接名称','text',t.label,{required:true,max:100}),...['copy','edit','manage'].filter(k=>k!=='manage'||state.actor.supervisor).map(k=>({type:'html',value:'<label class="check"><input type="checkbox" name="'+k+'" '+(t.scopes.includes(k)?'checked':'')+'>'+({copy:'允许复制已分配账号',edit:'允许编辑（需用户为编辑者）',manage:'允许管理（需用户为主管）'}[k])+'</label>'}))],f=>change({action:'token.update',id:t.id,label:f.get('label'),scopes:['copy','edit','manage'].filter(k=>f.get(k))}))}
 function field(name,label,type='text',value='',opts={}){return {name,label,type,value,...opts}}
-function openDialog(title,fields,save){currentFormScope=crypto.randomUUID();dialogSave=save;$('#dialog-title').textContent=title;$('#form-error').textContent='';$('#fields').innerHTML=fields.map(f=>{if(f.type==='html')return f.value;const attrs=(f.type==='number'?' step="any"':'')+(f.readonly?' readonly':'')+(f.required?' required':'')+(f.max?' maxlength="'+f.max+'"':'');return '<label class="field">'+esc(f.label)+(f.type==='textarea'?'<textarea name="'+f.name+'" rows="5"'+attrs+'>'+esc(f.value)+'</textarea>':f.type==='select'?'<select name="'+f.name+'">'+f.options.map(o=>'<option value="'+esc(o.value)+'" '+(String(o.value)===String(f.value)?'selected':'')+'>'+esc(o.label)+'</option>').join('')+'</select>':'<input name="'+f.name+'" type="'+f.type+'" value="'+esc(f.value)+'"'+attrs+'>')+(f.help?'<small>'+esc(f.help)+'</small>':'')+'</label>'}).join('');$('#save').hidden=!save;$('#cancel').textContent=save?'取消':'关闭';$('#dialog').showModal()}
+function openDialog(title,fields,save){const promptLink=$('#dialog-task-prompts');promptLink.hidden=true;promptLink.onclick=null;currentFormScope=crypto.randomUUID();dialogSave=save;$('#dialog-title').textContent=title;$('#form-error').textContent='';$('#fields').innerHTML=fields.map(f=>{if(f.type==='html')return f.value;const attrs=(f.type==='number'?' step="any"':'')+(f.readonly?' readonly':'')+(f.required?' required':'')+(f.max?' maxlength="'+f.max+'"':'');return '<label class="field">'+esc(f.label)+(f.type==='textarea'?'<textarea name="'+f.name+'" rows="5"'+attrs+'>'+esc(f.value)+'</textarea>':f.type==='select'?'<select name="'+f.name+'">'+f.options.map(o=>'<option value="'+esc(o.value)+'" '+(String(o.value)===String(f.value)?'selected':'')+'>'+esc(o.label)+'</option>').join('')+'</select>':'<input name="'+f.name+'" type="'+f.type+'" value="'+esc(f.value)+'"'+attrs+'>')+(f.help?'<small>'+esc(f.help)+'</small>':'')+'</label>'}).join('');$('#save').hidden=!save;$('#cancel').textContent=save?'取消':'关闭';$('#dialog').showModal()}
 async function editTask(t,readonly=false){
  const repos=state.repos.filter(r=>readonly||r.canEdit);if(!repos.length)return toast('先添加项目，再添加事项');
  const d=directoryValue||{members:[]};
@@ -160,6 +173,11 @@ async function editTask(t,readonly=false){
  const fields=[field('repoId','所属项目','select',t?.repoId||$('#project-filter').value||repos[0].id,{options:repos.map(r=>({value:r.id,label:r.name}))}),field('title','事项标题','text',t?.title||'',{required:true,max:180}),field('body','详细说明','textarea',t?.body||'',{max:10000}),field('repositoryUrl','仓库地址','url',t?.repositoryUrl||''),field('personalRepositoryUrl','个人仓库地址','url',t?.personalRepositoryUrl||''),field('column','栏目','select',t?.column??6,{options:state.columns.map((label,value)=>({label,value}))}),field('proposer','提出人','select',personLabel(t?.proposer||state.actor.githubLogin||state.actor.name),{required:true,options:options('proposer')}),field('assignee','认领人','select',personLabel(t?.assignee),{options:options('assignee')}),field('host','BUG 所在主机','text',t?.host||'',{max:200}),field('finisher','完成者','text',t?.finisher||'',{max:100})];
  fields.push({type:'html',value:'<p>可开发池免费；首次上架按当前权重 × '+Math.round((state.points?.rules.listingRate||0.25)*100)+'% 收费，等待与已批准阻塞等级另计加价。'+(t?.pointQuote?'当前各栏报价：'+state.columns.map((c,i)=>esc(c)+' '+t.pointQuote.listing[i]+' 分').join('；')+'。':'')+'扣费前自动结算当日赠送；重复编辑不收上架费。置顶事项变更位置或栏目另收调位费。</p>'});
  openDialog(readonly?'事项详情':t?'编辑事项':'添加事项',fields,readonly?null:f=>change({action:'task.save',id:t?.id,base,baseVersion,baseRevision:t?.revision??t?.updatedAt,peopleValidated:!!directoryValue,repoId:f.get('repoId'),title:f.get('title'),body:f.get('body'),repositoryUrl:f.get('repositoryUrl'),personalRepositoryUrl:f.get('personalRepositoryUrl'),column:+f.get('column'),proposer:f.get('proposer'),assignee:f.get('assignee'),host:f.get('host'),finisher:f.get('finisher')}));
+ if(t&&state.repos.some(r=>r.id===t.repoId&&r.canEdit)){
+  const button=$('#dialog-task-prompts');
+  button.hidden=false;
+  button.onclick=()=>jumpToTaskPrompts(t.id);
+ }
  if(readonly)for(const e of $$('#fields input, #fields textarea, #fields select'))e.disabled=true;else{bindRepositorySuggestions();const scope=currentFormScope;loadPeopleDirectory().then(d=>updatePeopleOptions(d,scope)).catch(()=>{});}
 }
 function editProject(r){openDialog(r?'编辑项目':'新建项目',[field('name','项目名称','text',r?.name||'',{required:true,max:100}),field('url','组织 / 仓库地址','url',r?.url||'',{required:true,help:'例如 https://github.com/组织名/仓库名'})],f=>change({action:'repo.save',id:r?.id,name:f.get('name'),url:f.get('url')}));bindRepositorySuggestions();}

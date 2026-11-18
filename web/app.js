@@ -65,26 +65,37 @@ async function openTaskPrompts(task){
  let revision=null;
  openDialog(title,[{type:'html',value:'<div id="prompt-fields"></div><button type="button" id="add-prompt" aria-label="添加一段提示词">＋</button>'}],form=>{
   if(revision===null)throw new Error('尚未取得此事项的已保存提示词');
-  const prompts=form.getAll('prompt').filter(value=>value.trim());
-  return change({action:'prompt.save',id:task.id,prompts,promptRevision:revision});
+  const titles=form.getAll('promptTitle');
+  const entries=form.getAll('prompt').map((body,index)=>({body,title:titles[index].trim()}))
+   .filter(entry=>entry.body.trim()||entry.title);
+  return change({action:'prompt.save',id:task.id,prompts:entries.map(entry=>entry.body),promptTitles:entries.map(entry=>entry.title),promptRevision:revision});
  });
  const scope=currentFormScope;
  const fields=$('#prompt-fields'),add=$('#add-prompt'),save=$('#save');
  save.disabled=true;
  const renumber=()=>{
-  [...fields.children].forEach((row,index)=>{row.firstChild.textContent='提示词 '+(index+1)});
+  [...fields.children].forEach((row,index)=>{
+   const heading=row.querySelector('[name="promptTitle"]'),number=index+1;
+   heading.placeholder='提示词 '+number;
+   heading.setAttribute('aria-label','第 '+number+' 段提示词的标题');
+   row.querySelector('textarea').setAttribute('aria-label','第 '+number+' 段提示词的正文');
+  });
   add.disabled=fields.children.length>=30;
  };
- const insert=(value='',before=null)=>{
-  const row=document.createElement('label');
+ const insert=(value='',heading='',before=null)=>{
+  const row=document.createElement('div');
   row.className='field';
-  const label=document.createElement('span');
+  const titleInput=document.createElement('input');
+  titleInput.type='text';
+  titleInput.name='promptTitle';
+  titleInput.maxLength=180;
+  titleInput.value=heading;
   const input=document.createElement('textarea');
   input.name='prompt';
   input.rows=5;
   input.maxLength=20000;
   input.value=value;
-  row.append(label,input);
+  row.append(titleInput,input);
   fields.insertBefore(row,before);
   return input;
  };
@@ -97,10 +108,16 @@ async function openTaskPrompts(task){
   if(currentFormScope!==scope||!$('#dialog').open)return;
   if(saved.prompts.length){
    const initial=first.parentElement;
-   const empty=!first.value&&fields.children.length===1;
-   if(empty)first.value=saved.prompts[0];
+   const firstTitle=initial.querySelector('[name="promptTitle"]');
+   const empty=!first.value&&!firstTitle.value&&fields.children.length===1;
+   if(empty){
+    first.value=saved.prompts[0];
+    firstTitle.value=saved.titles?.[0]||'';
+   }
    const before=empty?initial.nextSibling:initial;
-   for(const value of saved.prompts.slice(empty?1:0))insert(value,before);
+   for(let index=empty?1:0;index<saved.prompts.length;index++){
+    insert(saved.prompts[index],saved.titles?.[index]||'',before);
+   }
    renumber();
   }
   revision=saved.revision;

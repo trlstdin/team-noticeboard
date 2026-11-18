@@ -587,11 +587,17 @@ const requestHandler={async fetch(request,env,ctx){try{
   repoId=task.repoId;
   requireEdit(a,repoId);
   if(!Array.isArray(b.prompts)||b.prompts.length>30||b.prompts.some(prompt=>typeof prompt!=='string'||prompt.length>20000))fail(400,'最多保存 30 段提示词，每段不超过 20000 字符');
-  const revision=s.taskPrompts?.[task.id]?.revision||0;
+  if(b.promptTitles!==undefined&&(!Array.isArray(b.promptTitles)||b.promptTitles.length!==b.prompts.length||b.promptTitles.some(title=>typeof title!=='string'||title.length>180)))fail(400,'每段提示词的标题不得超过 180 字符');
+  const previous=s.taskPrompts?.[task.id];
+  const revision=previous?.revision||0;
   if(b.promptRevision!==revision)fail(409,'提示词已被修改，请保留你的输入并重新打开后再编辑');
-  const prompts=b.prompts.filter(prompt=>prompt.trim());
+  const entries=b.prompts.map((body,index)=>({
+   body,title:b.promptTitles?.[index]?.trim()??(previous?.prompts[index]===body?previous.titles?.[index]:'')??''
+  })).filter(entry=>entry.body.trim()||entry.title);
+  const prompts=entries.map(entry=>entry.body);
+  const titles=entries.map(entry=>entry.title);
   s.taskPrompts=s.taskPrompts||{};
-  s.taskPrompts[task.id]={revision:revision+1,prompts};
+  s.taskPrompts[task.id]={revision:revision+1,prompts,...(titles.some(Boolean)?{titles}:{})};
   detail={id:task.id,count:prompts.length};
  }else if(b.action==='member.update'){
  if(!a.supervisor)fail(403,'只有主管可管理组织成员权限');

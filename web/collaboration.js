@@ -74,7 +74,7 @@ function reconcileNode(current,next){
  for(const node of byKey.values())node.remove();
 }
 function patchHTML(element,html){const next=document.createElement(element.tagName);for(const a of element.attributes)next.setAttribute(a.name,a.value);next.innerHTML=html;reconcileNode(element,next);}
-function patchBoard(html){const template=document.createElement('div');template.innerHTML=html;for(const column of template.querySelectorAll(':scope > .column'))column.insertBefore(column.querySelector('.column-notes'),column.querySelector('.column-projects'));reconcileNode($('#board'),Object.assign(template,{className:$('#board').className,id:'board'}));}
+function patchBoard(html){const template=document.createElement('div');template.innerHTML=html;reconcileNode($('#board'),Object.assign(template,{className:$('#board').className,id:'board'}));}
 function captureView(){const active=document.activeElement;return {active,focusId:active?.id,focusName:active?.name,selection:typeof active?.selectionStart==='number'?[active.selectionStart,active.selectionEnd]:null,x:scrollX,y:scrollY,scrolls:$$('#board .column-projects,#point-center [class*=list]').map(e=>[e,e.scrollTop,e.scrollLeft])};}
 function restoreView(saved){for(const [e,y,x] of saved.scrolls)if(e.isConnected){e.scrollTop=y;e.scrollLeft=x;}const active=saved.active?.isConnected?saved.active:saved.focusId?document.getElementById(saved.focusId):saved.focusName?$('#fields [name="'+saved.focusName+'"]'):null;if(active&&document.activeElement!==active){active.focus({preventScroll:true});if(saved.selection&&active.setSelectionRange)try{active.setSelectionRange(...saved.selection)}catch{}}window.scrollTo(saved.x,saved.y);}
 function applyStateUpdate(updated){

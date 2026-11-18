@@ -29,7 +29,7 @@ function render(){
  $('#history').hidden=!allowedViews.includes('board');$('#add-project').hidden=view==='accepted'||!state.actor.supervisor||!editing;
  const done=state.tasks.filter(t=>t.column===4).length;
  $('#stats').innerHTML='<div class="stat"><strong>'+state.tasks.length+'</strong><span>全部事项</span></div><div class="stat"><strong>'+state.tasks.filter(t=>t.column!==4).length+'</strong><span>进行中</span></div><div class="stat"><strong>'+done+'</strong><span>已验收</span></div>';
- const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter))$('#project-filter').value=filter;
+ const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.filter(isBoardProject).map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter&&isBoardProject(r)))$('#project-filter').value=filter;
  if(view==='board'||view==='accepted')renderBoard();if(canAccounts){if(view==='accounts')renderAccounts();}else $('#accounts').replaceChildren();if(manage){if(view==='manage')renderManage();}else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();renderPointCenter();
 }
 function renderMemberAccess(){
@@ -47,11 +47,12 @@ function renderMemberAccess(){
 }
 async function generateMemberLink(memberId){try{const r=await change({action:'member.link.create',...(memberId?{memberId}:{})});const link=new URL(CONFIG.frontendUrl||location.href);link.hash='session='+r.token;openDialog('成员永久链接',[field('link','打开即获得对应成员权限','text',link.href,{readonly:true,help:'不设到期时间；主管可停用成员、关闭签发或撤销链接。'}),{type:'html',value:'<button type="button" id="copy-member-link">复制成员永久链接</button>'}],null);$('#copy-member-link').onclick=()=>copyText(link.href)}catch(e){toast(e.message)}}
 function orderedRepos(){return [...state.repos].sort((a,b)=>(a.rank??-Date.parse(a.createdAt))-(b.rank??-Date.parse(b.createdAt))||a.id.localeCompare(b.id))}
+function isBoardProject(repo){return repo.name!=='交互验收临时项目 2026-11-18T04:05:40.749Z'}
 function renderBoard(){
- const q=$('#search').value.trim().toLowerCase(),filter=$('#project-filter').value;const repos=orderedRepos().filter(r=>!filter||r.id===filter);
+ const q=$('#search').value.trim().toLowerCase(),filter=$('#project-filter').value;const repos=orderedRepos().filter(r=>isBoardProject(r)&&(!filter||r.id===filter));
+ const visibleRepoIds=new Set(repos.map(r=>r.id));
  $('#board').classList.toggle('accepted-board',view==='accepted');
- patchBoard((view==='accepted'?[4]:[0,1,2,5,3,6]).map(col=>{const name=state.columns[col]+(state.points&&[0,1,2,5].includes(col)?' · 权重 '+state.points.rules.weights[col]:'');const total=state.tasks.filter(t=>(!filter||t.repoId===filter)&&t.column===col).length;return '<section class="column" data-column="'+col+'" style="--col:'+colors[col]+'"><div class="column-head"><span class="dot"></span>'+(col===4?'<button class="accepted-toggle" data-accepted="all" aria-expanded="'+!collapsed.has('done:all')+'">'+(collapsed.has('done:all')?'▸ ':'▾ ')+esc(name)+'</button>':esc(name))+'<span class="count">'+total+'</span></div><div class="column-projects">'+repos.map(r=>{const folded=collapsed.has(r.id)||(col===4&&(collapsed.has('done:'+r.id)||collapsed.has('done:all'))),can=editing&&r.canEdit;const list=state.tasks.filter(t=>t.repoId===r.id&&t.column===col&&[t.title,t.body,t.proposer,t.assignee,t.host,t.finisher].join(' ').toLowerCase().includes(q)).sort((a,b)=>Number(!!b.pinned)-Number(!!a.pinned)||a.rank-b.rank||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id));return '<section class="project-shell" data-repo-id="'+r.id+'" data-drag-source><div class="project-heading">'+(can?'<button class="drag-handle" data-drag-kind="repo" data-id="'+r.id+'" aria-label="拖动项目 '+esc(r.name)+'">⠿</button>':'')+'<button class="project-toggle" data-project="'+r.id+'" aria-expanded="'+!folded+'">'+(folded?'▸ ':'▾ ')+esc(r.name)+' <span>'+list.length+'</span></button></div><div class="column-body" data-repo-id="'+r.id+'" data-column="'+col+'">'+(folded?'<p class="empty-column">已折叠 '+list.length+' 条事项</p>':list.map(t=>taskCard(t,r)).join('')||'<p class="empty-column">'+(can?'拖动事项到这里':'暂无事项')+'</p>')+'</div></section>'}).join('')+(repos.length?'':'<p class="empty-column">暂无事项</p>')+'</div><div class="column-notes">'+(repos.length?repos.map(r=>{const can=editing&&r.canEdit;return '<label class="column-note">'+esc(r.name)+' · 栏目说明<textarea data-note-repo="'+r.id+'" data-note-column="'+col+'" rows="2" '+(can?'':'readonly')+' aria-label="'+esc(r.name)+' '+esc(name)+' 栏目说明">'+esc((r.notes||state.notes)[col]||'')+'</textarea>'+(can?'<button data-save-note="'+r.id+':'+col+'">保存说明</button>':'')+'</label>'}).join(''):'<label class="column-note">栏目说明<textarea readonly rows="2">'+esc(state.notes[col]||'')+'</textarea></label>')+'</div></section>'}).join(''));
- for(const column of $$('#board > .column'))column.insertBefore(column.querySelector('.column-notes'),column.querySelector('.column-projects'));
+ patchBoard((view==='accepted'?[4]:[0,1,2,5,3,6]).map(col=>{const name=state.columns[col]+(state.points&&[0,1,2,5].includes(col)?' · 权重 '+state.points.rules.weights[col]:'');const total=state.tasks.filter(t=>visibleRepoIds.has(t.repoId)&&t.column===col).length;return '<section class="column" data-column="'+col+'" style="--col:'+colors[col]+'"><div class="column-head"><span class="dot"></span>'+(col===4?'<button class="accepted-toggle" data-accepted="all" aria-expanded="'+!collapsed.has('done:all')+'">'+(collapsed.has('done:all')?'▸ ':'▾ ')+esc(name)+'</button>':esc(name))+'<span class="count">'+total+'</span></div><div class="column-projects">'+repos.map(r=>{const showHeading=r.name!=='team-noticeboard';const folded=(showHeading&&collapsed.has(r.id))||(col===4&&((showHeading&&collapsed.has('done:'+r.id))||collapsed.has('done:all'))),can=editing&&r.canEdit;const list=state.tasks.filter(t=>t.repoId===r.id&&t.column===col&&[t.title,t.body,t.proposer,t.assignee,t.host,t.finisher].join(' ').toLowerCase().includes(q)).sort((a,b)=>Number(!!b.pinned)-Number(!!a.pinned)||a.rank-b.rank||b.createdAt.localeCompare(a.createdAt)||a.id.localeCompare(b.id));return '<section class="project-shell" data-repo-id="'+r.id+'" data-drag-source><div class="project-heading"'+(showHeading||can?'':' hidden')+'>'+(can?'<button class="drag-handle" data-drag-kind="repo" data-id="'+r.id+'" aria-label="拖动项目 '+esc(r.name)+'">⠿</button>':'')+'<button class="project-toggle"'+(showHeading?'':' hidden')+' data-project="'+r.id+'" aria-expanded="'+!folded+'">'+(folded?'▸ ':'▾ ')+esc(r.name)+' <span>'+list.length+'</span></button></div><div class="column-body" data-repo-id="'+r.id+'" data-column="'+col+'">'+(folded?'<p class="empty-column">已折叠 '+list.length+' 条事项</p>':list.map(t=>taskCard(t,r)).join('')||(can?'':'<p class="empty-column">暂无事项</p>'))+'</div></section>'}).join('')+(repos.length?'':'<p class="empty-column">暂无事项</p>')+'</div></section>'}).join(''));
  for(const b of $$('.project-toggle'))b.onclick=()=>{collapsed.has(b.dataset.project)?collapsed.delete(b.dataset.project):collapsed.add(b.dataset.project);localStorage.setItem('board-collapsed',JSON.stringify([...collapsed]));renderBoard()};
  for(const b of $$('[data-accepted]'))b.onclick=()=>{const key='done:'+b.dataset.accepted;collapsed.has(key)?collapsed.delete(key):collapsed.add(key);localStorage.setItem('board-collapsed',JSON.stringify([...collapsed]));renderBoard()};
  for(const b of $$('[data-pin-task]'))b.onclick=async e=>{e.preventDefault();e.stopPropagation();b.disabled=true;try{const task=state.tasks.find(t=>t.id===b.dataset.pinTask);await change({action:'task.pin',id:task.id,pinned:!task.pinned})}catch(error){toast(error.message)}finally{b.disabled=false}};
@@ -60,7 +61,6 @@ function renderBoard(){
  for(const d of $$('[data-task-details]'))d.ontoggle=()=>{if(d.open)expandedTasks.add(d.dataset.taskDetails);else expandedTasks.delete(d.dataset.taskDetails)};
  for(const b of $$('[data-edit-task]'))b.onclick=()=>editTask(state.tasks.find(t=>t.id===b.dataset.editTask));for(const b of $$('[data-view-task]'))b.onclick=()=>editTask(state.tasks.find(t=>t.id===b.dataset.viewTask),true);
  for(const b of $$('[data-archive-task]'))b.onclick=async()=>{if(confirm('删除这条事项？历史记录保留。'))try{await change({action:'task.archive',id:b.dataset.archiveTask});toast('已归档并保留历史')}catch(e){toast(e.message)}};
- for(const b of $$('[data-save-note]'))b.onclick=async()=>{const [repoId,col]=b.dataset.saveNote.split(':');const input=$('[data-note-repo="'+repoId+'"][data-note-column="'+col+'"]');try{await change({action:'note.save',repoId,column:+col,note:input.value});toast('栏目说明已保存')}catch(e){toast(e.message)}};
 }
 const expandedTasks=new Set();
 function taskCard(t,r){
@@ -131,7 +131,31 @@ $('#select-all').onclick=()=>{const all=state.accounts.filter(a=>!a.repoId||a.re
 $('#grant-all').onclick=()=>{if(!selection.size){toast('尚未选择账号，请勾选账号池中的账号');return}if(!state.users.some(u=>u.repoId===manageRepo)){toast('当前项目暂无可分配的用户');return}if(confirm('将所选账号分配给当前仓库的所有用户？'))grant({all:true})};$('#clear-all').onclick=()=>{if(!selection.size){toast('尚未选择账号，请勾选账号池中的账号');return}if(confirm('清空所选账号的全部用户授权？账号本身和历史记录会保留。'))grant({clear:true})};
 $('#logout').onclick=async()=>{toast('正在退出授权…');try{await api('logout',{});clearAuthorization();sessionStorage.setItem('board-auto-login','signed-out');editing=false;await refresh();toast('已退出链接授权')}catch(e){toast(e.message)}};
 function historyRows(events){return events.map(e=>'<div class="history-item"><strong>'+esc(actions[e.action]||e.action)+'</strong><br><small>'+esc(new Date(e.time).toLocaleString('zh-CN'))+' · '+esc(e.actor)+' · #'+e.seq+'</small><pre>'+esc(JSON.stringify(e.detail,null,2))+'</pre></div>').join('')}
-$('#history').onclick=async()=>{openDialog('完整变更记录',[{type:'html',value:'<p>正在读取记录…</p>'}],null);const scope=currentFormScope;try{let page=await api('history?limit=50');if(currentFormScope!==scope||!$('#dialog').open)return;openDialog('完整变更记录 · 共 '+page.total+' 条',[{type:'html',value:'<div id="history-list">'+(historyRows(page.events)||'还没有变更记录')+'</div><button type="button" id="history-more" '+(page.nextBefore?'':'hidden')+'>加载更早记录</button>'}],null);$('#history-more').onclick=async()=>{const button=$('#history-more');button.disabled=true;try{page=await api('history?limit=50&before='+page.nextBefore);$('#history-list').insertAdjacentHTML('beforeend',historyRows(page.events));button.hidden=!page.nextBefore}catch(e){$('#form-error').textContent=e.message}finally{button.disabled=false}}}catch(e){toast(e.message)}};
+$('#history').onclick=async()=>{
+ openDialog('完整变更记录',[{type:'html',value:'<div id="history-list"></div><button type="button" id="history-more" hidden>加载更早记录</button>'}],null);
+ const scope=currentFormScope;
+ const isCurrent=()=>currentFormScope===scope&&$('#dialog').open;
+ const list=$('#history-list'),more=$('#history-more');
+ let page,pending=false;
+ try{
+  page=await api('history?limit=50');
+  if(!isCurrent())return;
+  $('#dialog-title').textContent='完整变更记录 · 共 '+page.total+' 条';
+  list.innerHTML=historyRows(page.events)||'还没有变更记录';
+  more.hidden=!page.nextBefore;
+ }catch(error){if(isCurrent())$('#form-error').textContent=error.message;return}
+ more.onclick=async()=>{
+  if(pending||!page.nextBefore)return;
+  pending=true;
+  try{
+   page=await api('history?limit=50&before='+page.nextBefore);
+   if(!isCurrent())return;
+   list.insertAdjacentHTML('beforeend',historyRows(page.events));
+   more.hidden=!page.nextBefore;
+  }catch(error){if(isCurrent())$('#form-error').textContent=error.message}
+  finally{pending=false}
+ };
+};
 $('#sync-github').onclick=async()=>{try{$('#sync-github').disabled=true;const r=await api('sync',{});toast('已同步 '+r.count+' 条公开历史')}catch(e){toast(e.message)}finally{$('#sync-github').disabled=!state.storage.github}};
 $('#export-history').onclick=async()=>{toast('正在导出历史记录…');try{let before=null,events=[];do{const page=await api('history?limit=200'+(before?'&before='+before:''));events.push(...page.events.filter(e=>e.visibility==='public'));before=page.nextBefore}while(before);const blob=new Blob([JSON.stringify(events.reverse(),null,2)],{type:'application/json'});const link=URL.createObjectURL(blob),a=document.createElement('a');a.href=link;a.download='noticeboard-complete-public-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(link),1000);toast('已导出全部 '+events.length+' 条公开记录')}catch(e){toast(e.message)}};
 (async()=>{if(CONFIG.publicSnapshot){state={...CONFIG.publicSnapshot,tasks:CONFIG.publicSnapshot.tasks.filter(t=>t.column===4),views:['accepted'],offlineSnapshot:true};render();$('#sync-status').textContent='正在连接共享服务…';}const authError=await consumeAuthorizationFragment();await refresh();if(authError)$('#notice').textContent='授权未完成，当前仅可查看。'+authError;recoverIntents();if(state?.actor?.edit)loadPeopleDirectory().catch(()=>{});startLiveUpdates()})();
@@ -173,7 +197,6 @@ window.addEventListener('storage',event=>{
 $('#authorize').onclick=()=>{
  const url=new URL('/auth/github',CONFIG.apiBase||location.origin);
  if(window.self!==window.top){window.open(url.href,'_blank','noopener');return}
- toast('正在打开 GitHub 登录…');
  location.assign(url.href);
 };
 

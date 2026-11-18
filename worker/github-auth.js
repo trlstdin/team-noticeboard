@@ -40,21 +40,18 @@ async function githubAuthRoute(request,env){
 <p>在新标签页中确认以下代码并授权，再切回这个标签页完成登录。</p>
 <code>${token.user_code}</code>
 <a class="action" href="${verification.href.replace(/&/g,'&amp;')}" target="_blank" rel="noopener noreferrer">前往 GitHub</a>
-<button id="continue" type="button">我已授权，继续登录</button>
-<p id="status" role="status">等待 GitHub 授权…</p>
+<p id="status" role="status"></p>
 <a id="return" hidden>返回告示板</a>
 <a href="/auth/github">重新登录</a>
 <script>
 const flow=${JSON.stringify(flow)};
 const message=document.getElementById('status');
-const check=document.getElementById('continue');
 const returnLink=document.getElementById('return');
 let delay=${interval*1000},timer,inFlight=false,finished=false;
 async function poll(){
  if(finished||inFlight)return;
  clearTimeout(timer);
  inFlight=true;
- check.disabled=true;
  const controller=new AbortController();
  const timeout=setTimeout(()=>controller.abort(),15000);
  try{
@@ -71,7 +68,6 @@ async function poll(){
   }
   if(result.session){
    finished=true;
-   message.textContent='GitHub 已授权，正在返回告示板…';
    const destination=new URL(result.frontend);
    destination.hash='github-session='+result.session;
    returnLink.href=destination.href;
@@ -79,7 +75,7 @@ async function poll(){
    location.replace(destination.href);
    return;
   }
-  message.textContent='等待 GitHub 确认授权…';
+  message.textContent='';
   delay=Math.max(5000,(result.interval||5)*1000);
  }catch(error){
   message.textContent='连接暂时中断，正在重试…';
@@ -87,11 +83,9 @@ async function poll(){
  }finally{
   clearTimeout(timeout);
   inFlight=false;
-  check.disabled=finished;
   if(!finished)timer=setTimeout(poll,delay);
  }
 }
-check.onclick=()=>{if(!finished&&!inFlight){message.textContent='正在核对 GitHub 授权…';poll()}};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});
 timer=setTimeout(poll,delay);
 </script></html>`;

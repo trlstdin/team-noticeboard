@@ -141,14 +141,20 @@ async function consumeAuthorizationFragment(){
  const fragment=new URLSearchParams(hash.slice(1));
  const token=fragment.get('session')||fragment.get('admin')||fragment.get('token')||fragment.get('edit');
  if(!token)return '';
+ const cleanUrl=location.pathname+location.search;
+ history.replaceState(null,'',cleanUrl);
  try{
   await activateToken(token);
-  if(location.hash===hash)history.replaceState(null,'',location.pathname+location.search);
   editing=true;
   return '';
  }catch(error){
-  if(error.status===403&&location.hash===hash)history.replaceState(null,'',location.pathname+location.search);
-  return error.message+(error.status===403?'':'。可刷新本页重试。');
+  sessionToken='';
+  const retryable=error.status>=500||error.name==='TypeError'||error.message.startsWith('连接超时');
+  if(retryable&&!location.hash){
+   history.replaceState(null,'',cleanUrl+hash);
+   return error.message+' 可刷新本页重试。';
+  }
+  return error.message;
  }
 }
 window.addEventListener('hashchange',async()=>{if(!location.hash)return;const error=await consumeAuthorizationFragment();await refresh();if(error)$('#notice').textContent='授权未完成。'+error});

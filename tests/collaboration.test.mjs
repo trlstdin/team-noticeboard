@@ -11,3 +11,11 @@ test('adopting the server version never sends a second mutation',async()=>{
 test('choosing a note draft retries against the displayed server note with the same identifier',async()=>{
  const payloads=[];const c=client(async(_path,data)=>{payloads.push(data);if(payloads.length===1)throw Object.assign(Error('conflict'),{status:409,code:'ITEM_CONFLICT',conflict:{kind:'note',mine:{body:'draft'},theirs:{body:'updated'},revision:'updated'}});return {state:'completed'};});vm.runInContext("chooseItemVersion=async()=> 'mine'",c);await c.runMutation('change',{action:'note.save',repoId:'r',column:0,note:'draft',baseNote:'old'});assert.equal(payloads[1].note,'draft');assert.equal(payloads[1].baseNote,'updated');assert.equal(payloads[0].requestId,payloads[1].requestId);
 });
+test('pending moves survive incoming snapshots and acknowledgement preserves the newer local intent',async()=>{
+ let release;const gate=new Promise(r=>release=r);let revision=1;const c=client(async(_path,data)=>{await gate;return {version:++revision,task:{id:'t',column:data.column,rank:0,revision}}});c.state={version:1,tasks:[{id:'t',column:0,rank:0,revision:1}]};
+ const first=c.runMutation('change',{action:'task.place',id:'t',column:1,order:['t']});
+ c.state.tasks=[{id:'t',column:0,rank:0,revision:1}];c.overlayTaskIntents();assert.equal(c.state.tasks[0].column,1);
+ const second=c.runMutation('change',{action:'task.place',id:'t',column:2,order:['t']});assert.equal(c.state.tasks[0].column,2);
+ c.state.tasks=[];c.overlayTaskIntents();assert.equal(c.state.tasks[0].column,2);
+ release();await Promise.all([first,second]);assert.equal(c.state.tasks[0].column,2);assert.equal(c.pendingMutations,0);
+});

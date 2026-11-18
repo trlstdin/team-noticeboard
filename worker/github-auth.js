@@ -33,7 +33,68 @@ async function githubAuthRoute(request,env){
   githubFrontend(request,env);const flow=randomSession(),binding=randomSession(),interval=Math.max(5,Math.min(60,Number(token.interval)||5));
   await env.BUCKET.put('device-login/'+await hash(flow),JSON.stringify({bindingHash:await hash(binding),secret:await encrypt(token.device_code,env),userCode:token.user_code,expiresAt:Date.now()+Math.min(900,Number(token.expires_in)||900)*1000,interval,nextPollAt:Date.now()+interval*1000}));
   verification.searchParams.set('user_code',token.user_code);
-  const html='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GitHub 登录</title><style>body{background:#0c1725;color:#d4e5f4;font:16px system-ui;max-width:34rem;margin:12vh auto;padding:24px;line-height:1.7}a{color:#65d6bc}code{display:block;font-size:32px;margin:20px 0;letter-spacing:3px}button,a.action{background:#65d6bc;color:#0c1725;border:0;padding:12px 18px;border-radius:8px;text-decoration:none}</style><h1>GitHub 登录</h1><p>打开 GitHub，确认下方代码并授权。完成后请回到此页，告示板会自动打开。</p><code>'+token.user_code+'</code><a class="action" href="'+verification.href.replace(/&/g,'&amp;')+'" target="_blank" rel="noopener noreferrer">前往 GitHub</a><p id="status" role="status">等待 GitHub 授权…</p><a href="/auth/github">重新登录</a><script>const flow='+JSON.stringify(flow)+';let delay='+interval*1000+';const status=document.getElementById("status");async function poll(){try{const r=await fetch("/auth/github/device/poll",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({flow}),credentials:"same-origin",cache:"no-store"});if(r.status===429||r.status>=500)throw Error("temporary");const v=await r.json();if(!r.ok){status.textContent=v.error||"登录未完成，请重新登录";return}if(v.session){location.replace(v.frontend+"#session="+v.session);return}status.textContent="等待 GitHub 授权…";delay=Math.max(5000,(v.interval||5)*1000)}catch(e){status.textContent="连接暂时中断，正在重试…";delay=Math.min(30000,delay*2)}setTimeout(poll,delay)}setTimeout(poll,delay);</script></html>';
+  const html=`<!doctype html><html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GitHub 登录</title>
+<style>body{background:#0c1725;color:#d4e5f4;font:16px system-ui;max-width:34rem;margin:12vh auto;padding:24px;line-height:1.7}a{color:#65d6bc}code{display:block;font-size:32px;margin:20px 0;letter-spacing:3px}button,a.action{background:#65d6bc;color:#0c1725;border:0;padding:12px 18px;border-radius:8px;text-decoration:none}button:disabled{opacity:.55}</style>
+<h1>GitHub 登录</h1>
+<p>在新标签页中确认以下代码并授权，再切回这个标签页完成登录。</p>
+<code>${token.user_code}</code>
+<a class="action" href="${verification.href.replace(/&/g,'&amp;')}" target="_blank" rel="noopener noreferrer">前往 GitHub</a>
+<button id="continue" type="button">我已授权，继续登录</button>
+<p id="status" role="status">等待 GitHub 授权…</p>
+<a id="return" hidden>返回告示板</a>
+<a href="/auth/github">重新登录</a>
+<script>
+const flow=${JSON.stringify(flow)};
+const message=document.getElementById('status');
+const check=document.getElementById('continue');
+const returnLink=document.getElementById('return');
+let delay=${interval*1000},timer,inFlight=false,finished=false;
+async function poll(){
+ if(finished||inFlight)return;
+ clearTimeout(timer);
+ inFlight=true;
+ check.disabled=true;
+ const controller=new AbortController();
+ const timeout=setTimeout(()=>controller.abort(),15000);
+ try{
+  const response=await fetch('/auth/github/device/poll',{
+   method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({flow}),
+   credentials:'same-origin',cache:'no-store',signal:controller.signal
+  });
+  if(response.status===429||response.status>=500)throw new Error('temporary');
+  const result=await response.json();
+  if(!response.ok){
+   finished=true;
+   message.textContent=result.error||'登录未完成，请重新登录。';
+   return;
+  }
+  if(result.session){
+   finished=true;
+   message.textContent='GitHub 已授权，正在返回告示板…';
+   const destination=new URL(result.frontend);
+   destination.hash='session='+result.session;
+   returnLink.href=destination.href;
+   returnLink.hidden=false;
+   location.replace(destination.href);
+   return;
+  }
+  message.textContent='等待 GitHub 确认授权…';
+  delay=Math.max(5000,(result.interval||5)*1000);
+ }catch(error){
+  message.textContent='连接暂时中断，正在重试…';
+  delay=Math.min(30000,delay*2);
+ }finally{
+  clearTimeout(timeout);
+  inFlight=false;
+  check.disabled=finished;
+  if(!finished)timer=setTimeout(poll,delay);
+ }
+}
+check.onclick=()=>{if(!finished&&!inFlight){message.textContent='正在核对 GitHub 授权…';poll()}};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});
+timer=setTimeout(poll,delay);
+</script></html>`;
   return new Response(html,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':'board_github_device_'+flow+'='+binding+'; Path=/auth/github; HttpOnly; Secure; SameSite=Strict; Max-Age=900','Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
  }
  if(requestUrl.pathname!=='/auth/github/device/poll')fail(404,'Not found');

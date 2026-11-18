@@ -136,8 +136,31 @@ $('#sync-github').onclick=async()=>{try{$('#sync-github').disabled=true;const r=
 $('#export-history').onclick=async()=>{toast('正在导出历史记录…');try{let before=null,events=[];do{const page=await api('history?limit=200'+(before?'&before='+before:''));events.push(...page.events.filter(e=>e.visibility==='public'));before=page.nextBefore}while(before);const blob=new Blob([JSON.stringify(events.reverse(),null,2)],{type:'application/json'});const link=URL.createObjectURL(blob),a=document.createElement('a');a.href=link;a.download='noticeboard-complete-public-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(link),1000);toast('已导出全部 '+events.length+' 条公开记录')}catch(e){toast(e.message)}};
 (async()=>{if(CONFIG.publicSnapshot){state={...CONFIG.publicSnapshot,tasks:CONFIG.publicSnapshot.tasks.filter(t=>t.column===4),views:['accepted'],offlineSnapshot:true};render();$('#sync-status').textContent='正在连接共享服务…';}const authError=await consumeAuthorizationFragment();await refresh();if(authError)$('#notice').textContent='授权未完成，当前仅可查看。'+authError;recoverIntents();if(state?.actor?.edit)loadPeopleDirectory().catch(()=>{});startLiveUpdates()})();
 
-async function consumeAuthorizationFragment(){const fragment=new URLSearchParams(location.hash.slice(1));const token=fragment.get('session')||fragment.get('admin')||fragment.get('token')||fragment.get('edit');if(!token)return '';history.replaceState(null,'',location.pathname+location.search);try{await activateToken(token);editing=true;return ''}catch(e){sessionToken='';return e.message}}
-window.addEventListener('hashchange',async()=>{if(!location.hash)return;const error=await consumeAuthorizationFragment();await refresh();if(error)$('#notice').textContent='授权未完成，当前仅可查看。'+error});
+async function consumeAuthorizationFragment(){
+ const hash=location.hash;
+ const fragment=new URLSearchParams(hash.slice(1));
+ const token=fragment.get('session')||fragment.get('admin')||fragment.get('token')||fragment.get('edit');
+ if(!token)return '';
+ try{
+  await activateToken(token);
+  if(location.hash===hash)history.replaceState(null,'',location.pathname+location.search);
+  editing=true;
+  return '';
+ }catch(error){
+  if(error.status===403&&location.hash===hash)history.replaceState(null,'',location.pathname+location.search);
+  return error.message+(error.status===403?'':'。可刷新本页重试。');
+ }
+}
+window.addEventListener('hashchange',async()=>{if(!location.hash)return;const error=await consumeAuthorizationFragment();await refresh();if(error)$('#notice').textContent='授权未完成。'+error});
+window.addEventListener('storage',event=>{
+ if(event.key!=='board-auth-changed')return;
+ const next=readAuthorizationCookie();
+ if(!next||next===sessionToken)return;
+ sessionToken=next;
+ sessionStorage.setItem('board-session',next);
+ sessionStorage.setItem('board-mode','edit');
+ refresh();
+});
 
 $('#authorize').onclick=()=>{
  const url=new URL('/auth/github',CONFIG.apiBase||location.origin);
@@ -156,7 +179,7 @@ installPointerDrag({acceptedTarget:id=>({column:4,order:[id,...state.tasks.filte
 
 function authorizationPath(){return location.pathname.startsWith('/team-noticeboard')?'/team-noticeboard/':'/'}
 function readAuthorizationCookie(){const match=/(?:^|;\s*)board_auth=([^;]+)/.exec(document.cookie);return match?decodeURIComponent(match[1]):''}
-function persistAuthorization(key){sessionToken=key;sessionStorage.setItem('board-session',key);sessionStorage.setItem('board-mode','edit');document.cookie='board_mode=edit; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=1209600';document.cookie='board_auth='+encodeURIComponent(key)+'; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=1209600'}
+function persistAuthorization(key){sessionToken=key;sessionStorage.setItem('board-session',key);sessionStorage.setItem('board-mode','edit');document.cookie='board_mode=edit; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=1209600';document.cookie='board_auth='+encodeURIComponent(key)+'; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=1209600';localStorage.setItem('board-auth-changed',crypto.randomUUID())}
 function readModeCookie(){return /(?:^|;\s*)board_mode=(edit|read)/.exec(document.cookie)?.[1]||''}
 function clearAuthorization(){sessionToken='';sessionStorage.removeItem('board-session');sessionStorage.removeItem('board-mode');document.cookie='board_auth=; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=0';document.cookie='board_mode=; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=0'}
 async function activateToken(key){const previous=sessionToken;sessionToken=key;try{const response=await api('session',{token:key});persistAuthorization(response.session||key)}catch(error){sessionToken=previous;throw error}}

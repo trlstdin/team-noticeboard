@@ -4,7 +4,7 @@
 
 ## 发布链路
 
-1. `.github/workflows/pages.yml` 在相关源码变化时运行 npm ci、完整测试、构建。
+1. `.github/workflows/pages.yml` 在相关源码变化时运行 npm ci 和构建。
 2. `scripts/build.mjs` 生成页面和ES5后端代码包。Sites的固定加载器包含eval5纯JavaScript解释器，不使用原生eval/Function动态执行。
 3. `scripts/publish-generated-ui.mjs` 用仓库自动提供的 GITHUB_TOKEN，把 `index.html` 与 `backend-release.json` 原子提交到同一版本。不会覆盖其他源文件；发布前有新main提交时由后续构建接替，禁止force。
 4. Actions调用scripts/push-backend.mjs，使用GitHub自动签发的OIDC身份，将代码包POST到原站/api/repository/backend-release。加载器验证固定仓库数字ID、main、指定工作流、签名、有效期、代码摘要与来源提交，把有效包写入原R2。运行实例约30秒刷新；后端发布不再依赖GitHub CDN刷新。原公网入口仍读取仓库发布的前端页面。

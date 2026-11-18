@@ -9,6 +9,7 @@
 <section id="board-view" class="view"><div class="toolbar"><div class="filters"><label class="sr-only" for="project-filter">项目</label><select id="project-filter"><option value="">全部项目</option></select><label class="search">⌕ <input id="search" placeholder="搜索事项、提出者、完成者" aria-label="搜索事项"></label></div><div><button id="history">变更记录</button> <button id="add-project" hidden>＋ 新建项目</button> <button id="add-task" class="primary" hidden>＋ 添加事项</button></div></div><section id="points-panel" class="points-panel" hidden aria-label="积分账户"></section><div id="board" class="board"></div><div class="board-foot"><span>按项目折叠 · 新事项默认进入可开发池</span><span id="mode-hint">当前为只读，可展开项目查看详情</span></div></section>
 <section id="prompts-view" class="view" hidden>
 <div class="section-head"><div class="filters"><label>栏目 <select id="prompt-column"></select></label> <label>顺序编号 <select id="prompt-task"></select></label> <button type="button" id="open-prompts" disabled>编辑提示词</button></div></div>
+<ul id="saved-prompt-items" aria-label="已保存提示词的事项"></ul>
 </section>
 <section id="points-view" class="view" hidden><div id="point-center"></div></section>
 <section id="accounts-view" class="view workspace-view" hidden>

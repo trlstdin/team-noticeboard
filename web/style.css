@@ -107,3 +107,7 @@ button:active{filter:brightness(1.25)}
 
 #add-prompt{margin-top:12px;min-width:32px;padding:3px 8px;border-color:#409cff80;background:#0a84ff24;color:#a6d0ff;font-size:16px;font-weight:600}
 #add-prompt:hover{background:#0a84ff42}
+
+#saved-prompt-items{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-width:760px}
+#saved-prompt-items button{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left;gap:12px}
+#saved-prompt-items button span{flex:none;color:var(--muted);font-size:12px}

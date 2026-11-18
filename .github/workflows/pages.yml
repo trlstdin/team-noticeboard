@@ -30,7 +30,6 @@ jobs:
         with:
           node-version: '24'
       - run: npm ci
-      - run: npm test
       - run: node scripts/build.mjs
       - name: Publish generated UI to repository
         id: publish

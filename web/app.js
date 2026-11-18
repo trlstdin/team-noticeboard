@@ -37,13 +37,22 @@ function renderPromptPicker(){
  const selectedColumn=column.value,selectedTask=tasks.value;
  column.innerHTML='<option value="">选择栏目</option>'+state.columns.map((name,index)=>'<option value="'+index+'">'+esc(name)+'</option>').join('');
  column.value=selectedColumn;
- const items=selectedColumn===''?[]:state.tasks.filter(t=>t.column===Number(selectedColumn)&&state.repos.some(r=>r.id===t.repoId&&r.canEdit&&isBoardProject(r)));
+ const editableRepos=new Set(state.repos.filter(r=>r.canEdit&&isBoardProject(r)).map(r=>r.id));
+ const editableTasks=state.tasks.filter(t=>editableRepos.has(t.repoId));
+ const items=selectedColumn===''?[]:editableTasks.filter(t=>t.column===Number(selectedColumn));
  items.sort((a,b)=>a.columnNumber-b.columnNumber);
  tasks.innerHTML='<option value="">选择编号</option>'+items.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.columnNumber)+'. '+esc(t.title)+'</option>').join('');
  tasks.value=items.some(t=>t.id===selectedTask)?selectedTask:'';
  tasks.disabled=selectedColumn==='';
  $('#open-prompts').disabled=!tasks.value;
+ const saved=editableTasks.filter(t=>state.savedPromptCounts?.[t.id])
+  .sort((a,b)=>a.column-b.column||a.columnNumber-b.columnNumber);
+ patchHTML($('#saved-prompt-items'),saved.map(t=>'<li><button type="button" data-saved-prompt-task="'+esc(t.id)+'"><strong>'+esc(state.columns[t.column])+' '+esc(t.columnNumber)+'. '+esc(t.title)+'</strong><span>'+state.savedPromptCounts[t.id]+' 段</span></button></li>').join(''));
 }
+$('#saved-prompt-items').onclick=event=>{
+ const item=event.target.closest('[data-saved-prompt-task]');
+ if(item)jumpToTaskPrompts(item.dataset.savedPromptTask);
+};
 $('#prompt-column').onchange=()=>{$('#prompt-task').value='';renderPromptPicker()};
 $('#prompt-task').onchange=()=>{$('#open-prompts').disabled=!$('#prompt-task').value};
 $('#open-prompts').onclick=()=>openTaskPrompts(state.tasks.find(t=>t.id===$('#prompt-task').value));

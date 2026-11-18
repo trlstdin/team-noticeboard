@@ -1,0 +1,32 @@
+{
+  "id": "63252324-a7fa-4ea0-8488-3ea7afdcdce8",
+  "seq": 1468,
+  "time": "2026-11-18T06:36:30.573Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 60,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/browser-public-cast",
+    "id": "0356af83-754b-48d5-b100-19c307d7de2e",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "公有账号投屏模块断开问题",
+    "body": "目前滚轮无效,而且现在的11就无法点击任何东西，这个bug修复过了怎么又触发了，关掉网站重连又好了，但是过一会严重卡顿然后就卡死了，而且能不能降到1mps或者0.5，投屏只有粘贴能用焦点，或许也不用，点击别用焦点，焦点一瞬间之后最小化相关页面",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 1,
+    "rank": 1024,
+    "createdAt": "2026-11-07T12:15:44.015Z",
+    "updatedAt": "2026-11-18T06:36:30.573Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "09bd49607b848cd74c373c171594a8483564e3aebfa5f21183a8160efb5f0e30",
+  "hash": "ced1521e3de3a4c0418348a8641eb209a2ca20e6fbce502aaa50106db22e0467"
+}

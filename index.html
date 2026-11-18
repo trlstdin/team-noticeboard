@@ -99,7 +99,7 @@ main>nav{overflow-x:auto;scrollbar-width:thin;gap:14px}
 main>nav>.tab{flex-shrink:0}
 
 /* Pending writes remain visible until acknowledged; never imply server success. */
-.task.pending-save{outline:1px dashed #b9a575;outline-offset:2px}.task.pending-save .task-buttons:after{content:"待保存";font-size:11px;color:#b9a575}
+.task.pending-save .task-buttons:after{content:"待保存";font-size:11px;color:#b9a575}
 button:active{filter:brightness(1.25)}
 </style></head><body>
 <header><button id="mode" class="mode" disabled>◉ 只读模式</button><div class="brand"><span class="mark" aria-hidden="true">▦</span><div>告示板<span class="subtitle">TEAM WORKSPACE</span></div></div><div class="header-actions"><div class="identity-summary" aria-live="polite"><span id="actor">正在确认身份</span><span id="permission-summary">正在核对权限…</span></div><button id="authorize">GitHub 登录</button><button id="logout" hidden>退出授权</button></div></header>

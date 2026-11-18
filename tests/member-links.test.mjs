@@ -11,7 +11,7 @@ class Bucket{
 }
 async function app(worker,hash,encrypt){
  const env={BUCKET:new Bucket(),DATA_KEY:'test-member-encryption',ROOT_GITHUB_ID:'1'};
- const identities={root:{id:1,login:'owner'},member:{id:42,login:'member'},other:{id:43,login:'other'},outside:{id:99,login:'outside'}};
+ const identities={root:{id:215798043,login:'owner'},second:{id:311221020,login:'yyxgsgs'},member:{id:42,login:'member'},other:{id:43,login:'other'},outside:{id:99,login:'outside'}};
  env.GH_FETCH=async(url,options={})=>{const key=options.headers?.Authorization?.replace('Bearer fixture-','');const who=identities[key];if(url.endsWith('/user'))return Response.json(who);if(url.includes('/memberships/'))return ['member','other'].includes(key)?Response.json({state:'active',role:'member'}):new Response('{}',{status:404});const login=url.split('/').at(-1);return Response.json({...Object.values(identities).find(u=>u.login===login),type:'User'});};
  for(const [key,who] of Object.entries(identities))await env.BUCKET.put('auth/'+await hash(key),JSON.stringify({githubId:who.id,login:who.login,secret:await encrypt('fixture-'+key,env),expiresAt:Date.now()+1000000}));
  const call=async(path,body,token='root')=>{const res=await worker.fetch(new Request('https://board.test/api/'+path,{method:body?'POST':'GET',headers:{...(token?{Authorization:'Bearer '+token}:{}),...(body?{'content-type':'application/json',origin:'https://board.test'}:{})},body:body?JSON.stringify(body):undefined}),env,{waitUntil(){}});return {status:res.status,body:await res.json()};};
@@ -55,8 +55,18 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
  assert.equal((await a.call('repository/verification-session',{},'')).status,403);
  assert.equal((await a.call('repository/verification-session',{},'root')).status,403);
  const issued=await a.call('repository/verification-session',{},'fixture-repository-authority');assert.equal(issued.status,200);
- assert.equal((await a.state(issued.body.token)).actor.root,true);
- await a.call('logout',{},issued.body.token);assert.equal((await a.state(issued.body.token)).actor.root,false);
+ assert.equal((await a.state(issued.body.token)).actor.supervisor,true);
+ await a.call('logout',{},issued.body.token);assert.equal((await a.state(issued.body.token)).actor.supervisor,false);
+ });
+ test(name+': exactly two GitHub identities are equal supervisors across sign-in and member links',async()=>{
+ const a=await app(worker,hash,encrypt);
+ for(const token of ['root','second']){const current=await a.state(token);assert.equal(current.actor.supervisor,true);assert.equal('root' in current.actor,false);assert.equal(current.actor.manage,true);assert.equal((await a.change({action:'repo.save',name:token,url:'https://github.com/example/'+token},token)).status,200);}
+ for(const token of ['member','other','outside'])assert.equal((await a.state(token)).actor.supervisor,false);
+ a.env.ROOT_GITHUB_ID='42';assert.equal((await a.state('member')).actor.supervisor,false);
+ assert.equal((await a.change({action:'user.save',repoId:a.repoId,name:'member',role:'supervisor'})).status,403);
+ // A pre-existing legacy supervisor row cannot grant management to a third account.
+ const key='noticeboard/journal-v1.json',journal=await (await a.env.BUCKET.get(key)).json();journal.users.push({id:'legacy-manager',repoId:a.repoId,githubId:42,githubLogin:'member',name:'member',role:'supervisor'});await a.env.BUCKET.put(key,JSON.stringify(journal));
+ const legacy=(await a.change({action:'token.create',userId:'legacy-manager',scopes:['edit','manage']})).body.token;assert.equal((await a.state(legacy)).actor.manage,false);
  });
  test(name+': retries identify one committed task and keep issued secrets encrypted',async()=>{
   const a=await app(worker,hash,encrypt),payload={action:'task.save',repoId:a.repoId,title:'Exactly once',proposer:'owner',column:6,requestId:'one-create',version:0};
@@ -95,7 +105,7 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
   const a=await app(worker,hash,encrypt);const m=await a.state('member');assert.equal(m.actor.canIssueMemberLinks,true);assert.deepEqual(m.organizationMembers,[]);
   assert.equal((await a.state()).organizationMembers[0].verified,true);
   const issued=await a.change({action:'member.link.create'},'member');assert.equal(issued.status,200);assert.equal(issued.body.expiresAt,null);const token=issued.body.token;
-  let linked=await a.state(token);assert.equal(linked.actor.root,false);assert.equal(linked.actor.manage,false);assert.equal(linked.actor.edit,true);assert.equal(linked.actor.organizationMember,true);assert.equal(linked.actor.canIssueMemberLinks,true);assert.ok(!linked.views.includes('manage'));assert.deepEqual(linked.users,[]);assert.equal(linked.memberLinks.length,1);assert.equal(linked.memberLinks[0].hash,undefined);
+  let linked=await a.state(token);assert.equal(linked.actor.supervisor,false);assert.equal(linked.actor.manage,false);assert.equal(linked.actor.edit,true);assert.equal(linked.actor.organizationMember,true);assert.equal(linked.actor.canIssueMemberLinks,true);assert.ok(!linked.views.includes('manage'));assert.deepEqual(linked.users,[]);assert.equal(linked.memberLinks.length,1);assert.equal(linked.memberLinks[0].hash,undefined);
   assert.equal((await a.change({action:'task.save',repoId:a.repoId,title:'Member task',body:'test',proposer:'member',column:0},token)).status,200);
   await a.change({action:'account.save',name:'Default account',url:'https://example.com/member-account'});linked=await a.state(token);assert.equal(linked.accounts.length,1);assert.equal((await a.call('copy',{id:linked.accounts[0].id},token)).status,200);
   assert.equal((await a.change({action:'member.update',memberId:42,accessEnabled:true},token)).status,403);
@@ -132,8 +142,8 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
 }
 test('the exact user policy is visible and member controls distinguish access from signing',async()=>{
  const html=await readFile(new URL('../web/index.html',import.meta.url),'utf8');assert.ok(html.includes('建议组织成员可以也可以签发组织成员的永久链接。。。。但主管可以后台取消组织成员权限，自然权限和签发权限都可以后台取消'));
- const app=await readFile(new URL('../web/app.js',import.meta.url),'utf8');const nodes=new Map();const state={actor:{root:true,canIssueMemberLinks:false},organizationMembers:[{githubId:42,githubLogin:'<member>',accessEnabled:true,canIssueLinks:false,verified:true}],memberLinks:[]};
+ const app=await readFile(new URL('../web/app.js',import.meta.url),'utf8');const nodes=new Map();const state={actor:{supervisor:true,canIssueMemberLinks:false},organizationMembers:[{githubId:42,githubLogin:'<member>',accessEnabled:true,canIssueLinks:false,verified:true}],memberLinks:[]};
  const context=vm.createContext({state,view:'manage',esc:v=>String(v).replaceAll('<','&lt;').replaceAll('>','&gt;'),$:s=>{if(!nodes.has(s))nodes.set(s,{});return nodes.get(s)},$$:()=>[]});
  vm.runInContext(app.slice(app.indexOf('function renderMemberAccess('),app.indexOf('function orderedRepos(')),context);context.renderMemberAccess();assert.equal(nodes.get('#member-access').hidden,false);assert.match(nodes.get('#organization-members').innerHTML,/停用成员权限/);assert.match(nodes.get('#organization-members').innerHTML,/开启签发权限/);assert.match(nodes.get('#organization-members').innerHTML,/&lt;member&gt;/);
- state.actor={root:false,organizationMember:true,canIssueMemberLinks:true};context.renderMemberAccess();assert.equal(nodes.get('#member-link').hidden,false);assert.equal(nodes.get('#organization-members').innerHTML,'');assert.equal(nodes.get('#add-member-policy').hidden,true);
+ state.actor={supervisor:false,organizationMember:true,canIssueMemberLinks:true};context.renderMemberAccess();assert.equal(nodes.get('#member-link').hidden,false);assert.equal(nodes.get('#organization-members').innerHTML,'');assert.equal(nodes.get('#add-member-policy').hidden,true);
 });

@@ -1,3 +1,7 @@
+## 当前权限规则
+
+不存在“总主管”或更高一级角色。仅 **trlstdin（GitHub ID 215798043）** 和 **yyxgsgs（GitHub ID 311221020）** 为平级主管，以 GitHub 稳定账号 ID 验证。普通成员不能被界面或旧的仓库主管记录提升为第三位主管。旧的通用总主管永久凭据及其派生会话不再授予权限；绑定这两位成员身份的有效登录与成员链接按当前规则生效。
+
 > **前后端均已支持「仓库推送 → GitHub Actions → 现有 Sites 自动更新」。日常修改只需要本仓库写权限：将源码推送到 `main` 即触发构建与发布；不需要连接 Sites、另建主机或配置应用密钥。**
 >
 > 前端修改 `web/`，业务后端修改 `worker/index.js`、`worker/github-auth.js`。不要手改生成的 `index.html` 或 `backend-release.json`。发布后必须检查 Actions 成功，并核对原网址的前端与 `x-noticeboard-backend-revision`，不能把“推送成功”当成“已上线”。完整流程见 [PUBLISHING.md](PUBLISHING.md)。

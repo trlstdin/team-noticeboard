@@ -665,7 +665,7 @@ const requestHandler={async fetch(request,env,ctx){try{
  const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});
  if(!saved)transactionRetry();
  if(visibility==='public'&&env.GITHUB_TOKEN&&env.GITHUB_REPOSITORY)ctx.waitUntil(github(event,env).catch(()=>{}));
- return json({ok:true,state:'completed',requestId:b.requestId,version:s.version,...result,...(result.taskId?{task:taskPointSnapshot(s,s.tasks.find(t=>t.id===result.taskId),a)}:{})});
+ return json({ok:true,state:'completed',requestId:b.requestId,version:s.version,...result,...(result.taskId?{task:taskPointSnapshot(s,s.tasks.find(t=>t.id===result.taskId),a)}:{board:snapshot(s,a,env)})});
  }catch(e){return json({error:e.status?e.message:'服务暂时不可用，请稍后重试',...(e.code?{code:e.code}:{}),...(e.conflict?{conflict:e.conflict}:{})},e.status||500)}}};
 
 const handler={async fetch(request,env,ctx){

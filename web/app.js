@@ -30,7 +30,7 @@ function render(){
  const done=state.tasks.filter(t=>t.column===4).length;
  $('#stats').innerHTML='<div class="stat"><strong>'+state.tasks.length+'</strong><span>全部事项</span></div><div class="stat"><strong>'+state.tasks.filter(t=>t.column!==4).length+'</strong><span>进行中</span></div><div class="stat"><strong>'+done+'</strong><span>已验收</span></div>';
  const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter))$('#project-filter').value=filter;
- renderBoard();if(canAccounts){if(view==='accounts')renderAccounts();}else $('#accounts').replaceChildren();if(manage){if(view==='manage')renderManage();}else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();renderPointCenter();
+ if(view==='board'||view==='accepted')renderBoard();if(canAccounts){if(view==='accounts')renderAccounts();}else $('#accounts').replaceChildren();if(manage){if(view==='manage')renderManage();}else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();renderPointCenter();
 }
 function renderMemberAccess(){
  const supervisor=state.actor.supervisor,links=state.memberLinks||[],members=state.organizationMembers||[];

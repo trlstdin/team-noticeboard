@@ -528,7 +528,9 @@ const requestHandler={async fetch(request,env,ctx){try{
  if(p==='/design.md')return new Response(DESIGN_DOCUMENT,{headers:{'content-type':'text/markdown; charset=utf-8','content-disposition':'attachment; filename=noticeboard-design.md'}});
  if(p==='/'||p==='/index.html')return new Response(await repositoryPage(env),{headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store','referrer-policy':'no-referrer','x-content-type-options':'nosniff','content-security-policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com"}});
  if(!p.startsWith('/api/'))return json({error:'Not found'},404);
- let {s,etag}=await load(env);const a=await identity(request,env,s);
+ let {s,etag}=await load(env);
+ // A session exchange authenticates the incoming token in its body.
+ const a=p==='/api/session'&&request.method==='POST'?anonymousActor():await identity(request,env,s);
  if(a.signedIn&&a.githubOrganizationMember&&!a.supervisor){
   s.organizationMembers=s.organizationMembers||[];let member=s.organizationMembers.find(m=>String(m.githubId)===String(a.githubId));
   if(!member||!member.verified||member.githubLogin!==a.githubLogin){if(!member){member={githubId:a.githubId,githubLogin:a.githubLogin,accessEnabled:true,canIssueLinks:true,createdAt:new Date().toISOString()};s.organizationMembers.push(member);}member.verified=true;member.githubLogin=a.githubLogin;

@@ -30,8 +30,54 @@ function render(){
  const done=state.tasks.filter(t=>t.column===4).length;
  $('#stats').innerHTML='<div class="stat"><strong>'+state.tasks.length+'</strong><span>全部事项</span></div><div class="stat"><strong>'+state.tasks.filter(t=>t.column!==4).length+'</strong><span>进行中</span></div><div class="stat"><strong>'+done+'</strong><span>已验收</span></div>';
  const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.filter(isBoardProject).map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter&&isBoardProject(r)))$('#project-filter').value=filter;
- if(view==='board'||view==='accepted')renderBoard();if(canAccounts){if(view==='accounts')renderAccounts();}else $('#accounts').replaceChildren();if(manage){if(view==='manage')renderManage();}else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();renderPointCenter();
+ if(view==='board'||view==='accepted')renderBoard();if(canAccounts){if(view==='accounts')renderAccounts();}else $('#accounts').replaceChildren();if(manage){if(view==='manage')renderManage();}else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();renderPointCenter();if(view==='prompts')renderPromptPicker();
 }
+function renderPromptPicker(){
+ const column=$('#prompt-column'),tasks=$('#prompt-task');
+ const selectedColumn=column.value,selectedTask=tasks.value;
+ column.innerHTML='<option value="">选择栏目</option>'+state.columns.map((name,index)=>'<option value="'+index+'">'+esc(name)+'</option>').join('');
+ column.value=selectedColumn;
+ const items=selectedColumn===''?[]:state.tasks.filter(t=>t.column===Number(selectedColumn)&&state.repos.some(r=>r.id===t.repoId&&r.canEdit&&isBoardProject(r)));
+ items.sort((a,b)=>a.columnNumber-b.columnNumber);
+ tasks.innerHTML='<option value="">选择编号</option>'+items.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.columnNumber)+'. '+esc(t.title)+'</option>').join('');
+ tasks.value=items.some(t=>t.id===selectedTask)?selectedTask:'';
+ tasks.disabled=selectedColumn==='';
+ $('#open-prompts').disabled=!tasks.value;
+}
+$('#prompt-column').onchange=()=>{$('#prompt-task').value='';renderPromptPicker()};
+$('#prompt-task').onchange=()=>{$('#open-prompts').disabled=!$('#prompt-task').value};
+$('#open-prompts').onclick=async()=>{
+ const task=state.tasks.find(t=>t.id===$('#prompt-task').value);
+ if(!task)return;
+ const title=state.columns[task.column]+' '+task.columnNumber+'. '+task.title;
+ openDialog(title,[],null);
+ const scope=currentFormScope;
+ try{
+  const saved=await api('prompts?id='+encodeURIComponent(task.id));
+  if(currentFormScope!==scope||!$('#dialog').open)return;
+  openDialog(title,[{type:'html',value:'<div id="prompt-fields"></div><button type="button" id="add-prompt" aria-label="添加一段提示词">＋</button>'}],form=>{
+   const prompts=form.getAll('prompt').filter(value=>value.trim());
+   return change({action:'prompt.save',id:task.id,prompts,promptRevision:saved.revision});
+  });
+  const fields=$('#prompt-fields'),add=$('#add-prompt');
+  const append=(value='')=>{
+   const row=document.createElement('label');
+   row.className='field';
+   row.textContent='提示词 '+(fields.children.length+1);
+   const input=document.createElement('textarea');
+   input.name='prompt';
+   input.rows=5;
+   input.maxLength=20000;
+   input.value=value;
+   row.append(input);
+   fields.append(row);
+   add.disabled=fields.children.length>=30;
+   return input;
+  };
+  for(const value of saved.prompts.length?saved.prompts:[''])append(value);
+  add.onclick=()=>append().focus();
+ }catch(error){if(currentFormScope===scope&&$('#dialog').open)$('#form-error').textContent=error.message}
+};
 function renderMemberAccess(){
  const supervisor=state.actor.supervisor,links=state.memberLinks||[],members=state.organizationMembers||[];
  $('#member-access').hidden=supervisor?view!=='manage':!state.actor.organizationMember&&!links.length;

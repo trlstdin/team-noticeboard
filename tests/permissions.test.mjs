@@ -121,11 +121,11 @@ test('accepted page isolates visitors and preserves member and supervisor naviga
  for(const column of [0,4,5])await a.change({action:'task.save',repoId,title:'column '+column,proposer:'owner',column});
  await a.change({action:'note.save',repoId,column:0,note:'internal guidance'});
  const guest=await a.state('');assert.deepEqual(guest.views,['accepted']);assert.deepEqual(guest.tasks.map(t=>t.column),[4]);assert.equal(guest.repos[0].notes[0],'');assert.equal((await a.call('history',undefined,'')).status,403);
- assert.deepEqual((await a.state()).views,['board','accounts','manage','points','accepted']);
+ assert.deepEqual((await a.state()).views,['board','accounts','manage','points','prompts','accepted']);
  const {hash,encrypt}=await import('../worker/index.js');const key='navigation-member';
  a.env.BUCKET.other.set('auth/'+await hash(key),JSON.stringify({githubId:42,secret:await encrypt('member-navigation',a.env),expiresAt:Date.now()+100000}));
  a.env.GH_FETCH=async url=>url.endsWith('/user')?Response.json({id:42,login:'member'}):Response.json({state:'active',role:'member'});
- const member=await a.state(key);assert.deepEqual(member.views,['board','accounts','points','accepted']);assert.equal(member.tasks.length,3);assert.equal(member.actor.manage,false);
+ const member=await a.state(key);assert.deepEqual(member.views,['board','accounts','points','prompts','accepted']);assert.equal(member.tasks.length,3);assert.equal(member.actor.manage,false);
 });
 
 test('pinning persists, changes priority numbering, and requires edit permission',async()=>{
@@ -138,4 +138,20 @@ test('pinning persists, changes priority numbering, and requires edit permission
  await a.change({action:'task.save',...current,title:'edited'},token);assert.equal((await a.state()).tasks.find(t=>t.id===task.id).pinned,true);
  await a.change({action:'task.pin',id:task.id,pinned:false},token);assert.equal((await a.state()).tasks.find(t=>t.id===task.id).pinned,false);
  const accepted=(await a.state()).tasks.filter(t=>t.column===4).map(t=>t.id);assert.equal((await a.change({action:'task.place',id:task.id,column:4,order:[task.id,...accepted]},token)).status,200);assert.equal((await a.state('')).tasks[0].id,task.id);
+});
+
+
+test('task prompts persist privately and reject stale edits',async()=>{
+ const {a,repoId,token}=await setup();
+ assert.equal((await a.change({action:'task.save',repoId,title:'Prompt task',proposer:'owner',column:0})).status,200);
+ const task=(await a.state()).tasks[0];
+ const path='prompts?id='+task.id;
+ assert.deepEqual((await a.call(path,undefined,token)).body,{revision:0,prompts:[]});
+ const data={action:'prompt.save',id:task.id,promptRevision:0,prompts:['private prompt one','private prompt two']};
+ assert.equal((await a.change(data,token)).status,200);
+ assert.deepEqual((await a.call(path,undefined,token)).body,{revision:1,prompts:data.prompts});
+ assert.equal((await a.change({...data,prompts:['stale']},token)).status,409);
+ assert.equal((await a.call(path,undefined,'')).status,403);
+ assert.equal(JSON.stringify(await a.state()).includes('private prompt'),false);
+ assert.equal(JSON.stringify((await a.call('history')).body).includes('private prompt'),false);
 });

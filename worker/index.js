@@ -479,7 +479,7 @@ function canBoard(a){return !!(a.supervisor||a.organizationMember||a.edit||a.man
 function canAccounts(s,a){return !!(a.supervisor||((a.signedIn===true||!!a.memberLink)&&a.organizationMember===true&&!a.token)||a.token?.scopes.includes('copy')||s.accounts.some(v=>activeAccount(v)&&canAccount(a,v)))}
 function actorSnapshot(a,s){return {id:a.id,name:a.name,supervisor:a.supervisor,edit:a.edit,manage:a.manage,canAccounts:canAccounts(s,a),signedIn:a.signedIn,organizationMember:a.organizationMember===true,canIssueMemberLinks:!!a.canIssueMemberLinks,githubLogin:a.githubLogin||null,githubId:a.githubId||null}}
 function accountSnapshot(s,a){return s.accounts.filter(v=>activeAccount(v)&&(canAccount(a,v)||manageAccount(a,v))).map(({secret,...v})=>({...v,canCopy:canAccount(a,v)}))}
-function snapshot(s,a,env){return {points:pointSnapshot(s,a,env),version:s.version,columns:COLUMNS,notes:s.notes.map((note,col)=>canBoard(a)||col===4?note:''),views:[...(canBoard(a)?['board']:[]),...(canAccounts(s,a)?['accounts']:[]),...(a.manage?['manage']:[]),...(a.edit?['points']:[]),'accepted'],repos:s.repos.filter(r=>!r.deletedAt).map(r=>({...r,notes:r.notes?.map((note,col)=>canBoard(a)||col===4?note:''),role:repoRole(a,r.id),canEdit:canEdit(a,r.id),canManage:canManage(a,r.id)})),tasks:numberedTasks(s).filter(t=>canBoard(a)||t.column===4).map(t=>taskPointSnapshot(s,t,a)),accounts:accountSnapshot(s,a),users:s.users.filter(u=>!u.deletedAt&&canManage(a,u.repoId)).map(u=>({...u,role:isSupervisorId(u.githubId)?'supervisor':u.role==='supervisor'?'editor':u.role})),tokens:s.tokens.filter(t=>t.kind!=='organization-member'&&(a.supervisor||t.repoIds.length>0&&t.repoIds.every(r=>canManage(a,r)))).map(({hash,...t})=>t),organizationMembers:a.supervisor?(s.organizationMembers||[]):[],memberLinks:s.tokens.filter(t=>t.kind==='organization-member'&&(a.supervisor||String(t.memberId)===String(a.githubId))).map(({hash,...t})=>({...t,active:memberLinkActor(t,s).organizationMember===true})),actor:actorSnapshot(a,s),historyCount:s.events.length,storage:{shared:true,github:!!env.BOARD_SYNC_KEY,repository:'https://github.com/trlstdin/team-noticeboard',committedVersion:s.repositorySync?.version||0,commit:s.repositorySync?.commit||null,pending:Math.max(0,s.version-(s.repositorySync?.version||0))}};}
+function snapshot(s,a,env){return {points:pointSnapshot(s,a,env),version:s.version,columns:COLUMNS,notes:s.notes.map((note,col)=>canBoard(a)||col===4?note:''),views:[...(canBoard(a)?['board']:[]),...(canAccounts(s,a)?['accounts']:[]),...(a.manage?['manage']:[]),...(a.edit?['points','prompts']:[]),'accepted'],repos:s.repos.filter(r=>!r.deletedAt).map(r=>({...r,notes:r.notes?.map((note,col)=>canBoard(a)||col===4?note:''),role:repoRole(a,r.id),canEdit:canEdit(a,r.id),canManage:canManage(a,r.id)})),tasks:numberedTasks(s).filter(t=>canBoard(a)||t.column===4).map(t=>taskPointSnapshot(s,t,a)),accounts:accountSnapshot(s,a),users:s.users.filter(u=>!u.deletedAt&&canManage(a,u.repoId)).map(u=>({...u,role:isSupervisorId(u.githubId)?'supervisor':u.role==='supervisor'?'editor':u.role})),tokens:s.tokens.filter(t=>t.kind!=='organization-member'&&(a.supervisor||t.repoIds.length>0&&t.repoIds.every(r=>canManage(a,r)))).map(({hash,...t})=>t),organizationMembers:a.supervisor?(s.organizationMembers||[]):[],memberLinks:s.tokens.filter(t=>t.kind==='organization-member'&&(a.supervisor||String(t.memberId)===String(a.githubId))).map(({hash,...t})=>({...t,active:memberLinkActor(t,s).organizationMember===true})),actor:actorSnapshot(a,s),historyCount:s.events.length,storage:{shared:true,github:!!env.BOARD_SYNC_KEY,repository:'https://github.com/trlstdin/team-noticeboard',committedVersion:s.repositorySync?.version||0,commit:s.repositorySync?.commit||null,pending:Math.max(0,s.version-(s.repositorySync?.version||0))}};}
 
 // A publisher reuses its existing supervisor session. URL credentials stay
 // encrypted in private storage; presence renewals never enter public snapshots.
@@ -540,6 +540,11 @@ const requestHandler={async fetch(request,env,ctx){try{
 
  if(request.method==='GET'){
  if(p==='/api/state'){const since=new URL(request.url).searchParams.get('since');return json(await stateDelta(s,a,env,since===null?null:Number(since),JSON.stringify([etag,(typeof env.BUCKET.head==='function'?await env.BUCKET.head('noticeboard/presence-revision.json'):await env.BUCKET.get('noticeboard/presence-revision.json'))?.etag||'']),new URL(request.url).searchParams.get('accounts')==='1'));}
+ if(p==='/api/prompts'){
+  const task=get(s.tasks,new URL(request.url).searchParams.get('id'));
+  requireEdit(a,task.repoId);
+  return json(s.taskPrompts?.[task.id]||{revision:0,prompts:[]});
+ }
  if(p==='/api/directory'){const d=await directory(s,a,env),q=(new URL(request.url).searchParams.get('q')||'').toLowerCase();return json({...d,repositories:d.repositories.filter(r=>(r.name+' '+r.url).toLowerCase().includes(q)).slice(0,50)});}
  if(p==='/api/operation'){if(!a.edit&&!a.manage)fail(403,'需要成员权限');const key=new URL(request.url).searchParams.get('id');const op=s.operations?.find(r=>r.id===key&&r.account===pointKey(a));if(!op)return json({state:'unknown',requestId:key});if((op.supervisor||op.root)&&!a.supervisor)fail(403,'操作权限已改变');return json({state:'completed',requestId:key,version:s.version,...(op.resultSecret?JSON.parse(await decrypt(op.resultSecret,env)):op.result),...(op.result?.taskId&&s.tasks.find(t=>t.id===op.result.taskId)?{task:taskPointSnapshot(s,s.tasks.find(t=>t.id===op.result.taskId),a)}:{})});}
 
@@ -577,7 +582,18 @@ const requestHandler={async fetch(request,env,ctx){try{
  let result={},repoId=b.repoId,visibility='private',detail={},privateData;const now=new Date().toISOString();
  const pointBefore=b.id&&b.action?.startsWith('task.')?s.tasks.find(t=>t.id===b.id):null;const beforeTask=pointBefore?JSON.parse(JSON.stringify(pointBefore)):null;
  const pointsResult=await pointChange(s,a,b,env,now);
- if(pointsResult){repoId=pointsResult.repoId;detail=pointsResult.detail;result=pointsResult.result;}else if(b.action==='member.update'){
+ if(pointsResult){repoId=pointsResult.repoId;detail=pointsResult.detail;result=pointsResult.result;}else if(b.action==='prompt.save'){
+  const task=get(s.tasks,b.id);
+  repoId=task.repoId;
+  requireEdit(a,repoId);
+  if(!Array.isArray(b.prompts)||b.prompts.length>30||b.prompts.some(prompt=>typeof prompt!=='string'||prompt.length>20000))fail(400,'最多保存 30 段提示词，每段不超过 20000 字符');
+  const revision=s.taskPrompts?.[task.id]?.revision||0;
+  if(b.promptRevision!==revision)fail(409,'提示词已被修改，请保留你的输入并重新打开后再编辑');
+  const prompts=b.prompts.filter(prompt=>prompt.trim());
+  s.taskPrompts=s.taskPrompts||{};
+  s.taskPrompts[task.id]={revision:revision+1,prompts};
+  detail={id:task.id,count:prompts.length};
+ }else if(b.action==='member.update'){
  if(!a.supervisor)fail(403,'只有主管可管理组织成员权限');
  s.organizationMembers=s.organizationMembers||[];let member=s.organizationMembers.find(m=>String(m.githubId)===String(b.memberId));
  if(!member){const profile=await ghProfile(env,text(b.login,39));member=s.organizationMembers.find(m=>String(m.githubId)===String(profile.githubId));if(!member){member={githubId:profile.githubId,githubLogin:profile.githubLogin,verified:false,accessEnabled:true,canIssueLinks:true,createdAt:now};s.organizationMembers.push(member);}}

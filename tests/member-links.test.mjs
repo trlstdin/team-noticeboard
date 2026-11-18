@@ -66,6 +66,7 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
  assert.equal((await a.change({action:'user.save',repoId:a.repoId,name:'member',role:'supervisor'})).status,403);
  // A pre-existing legacy supervisor row cannot grant management to a third account.
  const key='noticeboard/journal-v1.json',journal=await (await a.env.BUCKET.get(key)).json();journal.users.push({id:'legacy-manager',repoId:a.repoId,githubId:42,githubLogin:'member',name:'member',role:'supervisor'});await a.env.BUCKET.put(key,JSON.stringify(journal));
+ assert.equal((await a.state()).users.find(u=>u.id==='legacy-manager').role,'editor');
  const legacy=(await a.change({action:'token.create',userId:'legacy-manager',scopes:['edit','manage']})).body.token;assert.equal((await a.state(legacy)).actor.manage,false);
  });
  test(name+': retries identify one committed task and keep issued secrets encrypted',async()=>{
@@ -120,7 +121,8 @@ for(const [name,worker,hash,encrypt] of [['native',native,nativeHash,nativeEncry
  });
  test(name+': signing controls, member cancellation and link revocation apply to existing sessions immediately',async()=>{
   const a=await app(worker,hash,encrypt);await a.state('member');const issued=await a.change({action:'member.link.create'},'member'),token=issued.body.token;let parent=(await a.state(token)).memberLinks[0];const oldSession=(await a.call('session',{token},'')).body.session;
-  await a.change({action:'user.save',repoId:a.repoId,name:'member',role:'editor'});const user=(await a.state()).users.find(u=>u.githubId===42);const legacy=(await a.change({action:'token.create',userId:user.id,scopes:['edit','copy']})).body.token;
+  await a.change({action:'user.save',repoId:a.repoId,name:'member',role:'editor'});const user=(await a.state()).users.find(u=>u.githubId===42);
+ const legacy=(await a.change({action:'token.create',userId:user.id,scopes:['edit','copy']})).body.token;
   assert.equal((await a.state(legacy)).actor.edit,true);
   await a.change({action:'member.update',memberId:42,canIssueLinks:false});assert.equal((await a.state(legacy)).actor.edit,false);assert.equal((await a.change({action:'token.create',userId:user.id,scopes:['edit','copy']})).status,403);
   assert.equal((await a.state('member')).actor.canIssueMemberLinks,false);assert.equal((await a.state(token)).actor.canIssueMemberLinks,false);assert.equal((await a.state(token)).actor.edit,false);assert.equal((await a.state(oldSession)).actor.edit,false);assert.equal((await a.change({action:'member.link.create',memberId:42})).status,403);

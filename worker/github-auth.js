@@ -73,7 +73,7 @@ async function poll(){
    finished=true;
    message.textContent='GitHub 已授权，正在返回告示板…';
    const destination=new URL(result.frontend);
-   destination.hash='session='+result.session;
+   destination.hash='github-session='+result.session;
    returnLink.href=destination.href;
    returnLink.hidden=false;
    location.replace(destination.href);

@@ -139,12 +139,14 @@ $('#export-history').onclick=async()=>{toast('正在导出历史记录…');try{
 async function consumeAuthorizationFragment(){
  const hash=location.hash;
  const fragment=new URLSearchParams(hash.slice(1));
- const token=fragment.get('session')||fragment.get('admin')||fragment.get('token')||fragment.get('edit');
+ const githubSession=fragment.get('github-session');
+ const token=githubSession||fragment.get('session')||fragment.get('admin')||fragment.get('token')||fragment.get('edit');
  if(!token)return '';
  const cleanUrl=location.pathname+location.search;
  history.replaceState(null,'',cleanUrl);
  try{
-  await activateToken(token);
+  if(githubSession)await restoreGithubSession(token);
+  else await activateToken(token);
   editing=true;
   return '';
  }catch(error){
@@ -188,6 +190,15 @@ function readAuthorizationCookie(){const match=/(?:^|;\s*)board_auth=([^;]+)/.ex
 function persistAuthorization(key){sessionToken=key;sessionStorage.setItem('board-session',key);sessionStorage.setItem('board-mode','edit');document.cookie='board_mode=edit; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=1209600';document.cookie='board_auth='+encodeURIComponent(key)+'; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=1209600';localStorage.setItem('board-auth-changed',crypto.randomUUID())}
 function readModeCookie(){return /(?:^|;\s*)board_mode=(edit|read)/.exec(document.cookie)?.[1]||''}
 function clearAuthorization(){sessionToken='';sessionStorage.removeItem('board-session');sessionStorage.removeItem('board-mode');document.cookie='board_auth=; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=0';document.cookie='board_mode=; Path='+authorizationPath()+'; Secure; SameSite=Strict; Max-Age=0'}
+async function restoreGithubSession(key){
+ sessionToken=key;
+ const snapshot=await api('state');
+ if(!snapshot.actor?.signedIn||!snapshot.actor.githubId){
+  throw Object.assign(new Error('告示板没有收到有效的 GitHub 会话，请重新登录。'),{status:403});
+ }
+ persistAuthorization(key);
+ applyStateUpdate(snapshot);
+}
 async function activateToken(key){const previous=sessionToken;sessionToken=key;try{const response=await api('session',{token:key});persistAuthorization(response.session||key)}catch(error){sessionToken=previous;throw error}}
 
 $('#supervisor-link').onclick=async()=>{toast('正在签发主管身份链接…');try{const r=await api('supervisor-link',{});openDialog('主管免登录链接',[field('link','直接打开即获得主管权限','text',r.url,{readonly:true,help:'有效期至 '+new Date(r.expiresAt).toLocaleString('zh-CN')}),{type:'html',value:'<button type="button" id="copy-supervisor">复制主管链接</button>'}],null);$('#copy-supervisor').onclick=()=>copyText(r.url)}catch(e){toast(e.message)}};

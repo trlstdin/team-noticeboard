@@ -62,32 +62,49 @@ function jumpToTaskPrompts(id){
 async function openTaskPrompts(task){
  if(!task)return;
  const title=state.columns[task.column]+' '+task.columnNumber+'. '+task.title;
- openDialog(title,[],null);
+ let revision=null;
+ openDialog(title,[{type:'html',value:'<div id="prompt-fields"></div><button type="button" id="add-prompt" aria-label="添加一段提示词">＋</button>'}],form=>{
+  if(revision===null)throw new Error('尚未取得此事项的已保存提示词');
+  const prompts=form.getAll('prompt').filter(value=>value.trim());
+  return change({action:'prompt.save',id:task.id,prompts,promptRevision:revision});
+ });
  const scope=currentFormScope;
+ const fields=$('#prompt-fields'),add=$('#add-prompt'),save=$('#save');
+ save.disabled=true;
+ const renumber=()=>{
+  [...fields.children].forEach((row,index)=>{row.firstChild.textContent='提示词 '+(index+1)});
+  add.disabled=fields.children.length>=30;
+ };
+ const insert=(value='',before=null)=>{
+  const row=document.createElement('label');
+  row.className='field';
+  const label=document.createElement('span');
+  const input=document.createElement('textarea');
+  input.name='prompt';
+  input.rows=5;
+  input.maxLength=20000;
+  input.value=value;
+  row.append(label,input);
+  fields.insertBefore(row,before);
+  return input;
+ };
+ const first=insert();
+ renumber();
+ add.onclick=()=>{const input=insert();renumber();input.focus()};
+ first.focus();
  try{
   const saved=await api('prompts?id='+encodeURIComponent(task.id));
   if(currentFormScope!==scope||!$('#dialog').open)return;
-  openDialog(title,[{type:'html',value:'<div id="prompt-fields"></div><button type="button" id="add-prompt" aria-label="添加一段提示词">＋</button>'}],form=>{
-   const prompts=form.getAll('prompt').filter(value=>value.trim());
-   return change({action:'prompt.save',id:task.id,prompts,promptRevision:saved.revision});
-  });
-  const fields=$('#prompt-fields'),add=$('#add-prompt');
-  const append=(value='')=>{
-   const row=document.createElement('label');
-   row.className='field';
-   row.textContent='提示词 '+(fields.children.length+1);
-   const input=document.createElement('textarea');
-   input.name='prompt';
-   input.rows=5;
-   input.maxLength=20000;
-   input.value=value;
-   row.append(input);
-   fields.append(row);
-   add.disabled=fields.children.length>=30;
-   return input;
-  };
-  for(const value of saved.prompts.length?saved.prompts:[''])append(value);
-  add.onclick=()=>append().focus();
+  if(saved.prompts.length){
+   const initial=first.parentElement;
+   const empty=!first.value&&fields.children.length===1;
+   if(empty)first.value=saved.prompts[0];
+   const before=empty?initial.nextSibling:initial;
+   for(const value of saved.prompts.slice(empty?1:0))insert(value,before);
+   renumber();
+  }
+  revision=saved.revision;
+  save.disabled=false;
  }catch(error){if(currentFormScope===scope&&$('#dialog').open)$('#form-error').textContent=error.message}
 }
 function renderMemberAccess(){
@@ -164,7 +181,7 @@ function renderManage(){
 async function grant(extra){if(!selection.size)return toast('请先选择公有账号');try{await change({action:'grant.set',repoId:manageRepo,accountIds:[...selection],userIds:[],...extra});toast('授权已更新')}catch(e){toast(e.message)}}
 function editToken(t){openDialog('修改链接权限',[field('label','链接名称','text',t.label,{required:true,max:100}),...['copy','edit','manage'].filter(k=>k!=='manage'||state.actor.supervisor).map(k=>({type:'html',value:'<label class="check"><input type="checkbox" name="'+k+'" '+(t.scopes.includes(k)?'checked':'')+'>'+({copy:'允许复制已分配账号',edit:'允许编辑（需用户为编辑者）',manage:'允许管理（需用户为主管）'}[k])+'</label>'}))],f=>change({action:'token.update',id:t.id,label:f.get('label'),scopes:['copy','edit','manage'].filter(k=>f.get(k))}))}
 function field(name,label,type='text',value='',opts={}){return {name,label,type,value,...opts}}
-function openDialog(title,fields,save){const promptLink=$('#dialog-task-prompts');promptLink.hidden=true;promptLink.onclick=null;currentFormScope=crypto.randomUUID();dialogSave=save;$('#dialog-title').textContent=title;$('#form-error').textContent='';$('#fields').innerHTML=fields.map(f=>{if(f.type==='html')return f.value;const attrs=(f.type==='number'?' step="any"':'')+(f.readonly?' readonly':'')+(f.required?' required':'')+(f.max?' maxlength="'+f.max+'"':'');return '<label class="field">'+esc(f.label)+(f.type==='textarea'?'<textarea name="'+f.name+'" rows="5"'+attrs+'>'+esc(f.value)+'</textarea>':f.type==='select'?'<select name="'+f.name+'">'+f.options.map(o=>'<option value="'+esc(o.value)+'" '+(String(o.value)===String(f.value)?'selected':'')+'>'+esc(o.label)+'</option>').join('')+'</select>':'<input name="'+f.name+'" type="'+f.type+'" value="'+esc(f.value)+'"'+attrs+'>')+(f.help?'<small>'+esc(f.help)+'</small>':'')+'</label>'}).join('');$('#save').hidden=!save;$('#cancel').textContent=save?'取消':'关闭';$('#dialog').showModal()}
+function openDialog(title,fields,save){const promptLink=$('#dialog-task-prompts');promptLink.hidden=true;promptLink.onclick=null;currentFormScope=crypto.randomUUID();dialogSave=save;$('#dialog-title').textContent=title;$('#form-error').textContent='';$('#fields').innerHTML=fields.map(f=>{if(f.type==='html')return f.value;const attrs=(f.type==='number'?' step="any"':'')+(f.readonly?' readonly':'')+(f.required?' required':'')+(f.max?' maxlength="'+f.max+'"':'');return '<label class="field">'+esc(f.label)+(f.type==='textarea'?'<textarea name="'+f.name+'" rows="5"'+attrs+'>'+esc(f.value)+'</textarea>':f.type==='select'?'<select name="'+f.name+'">'+f.options.map(o=>'<option value="'+esc(o.value)+'" '+(String(o.value)===String(f.value)?'selected':'')+'>'+esc(o.label)+'</option>').join('')+'</select>':'<input name="'+f.name+'" type="'+f.type+'" value="'+esc(f.value)+'"'+attrs+'>')+(f.help?'<small>'+esc(f.help)+'</small>':'')+'</label>'}).join('');$('#save').hidden=!save;$('#save').disabled=false;$('#cancel').textContent=save?'取消':'关闭';$('#dialog').showModal()}
 async function editTask(t,readonly=false){
  const repos=state.repos.filter(r=>readonly||r.canEdit);if(!repos.length)return toast('先添加项目，再添加事项');
  const d=directoryValue||{members:[]};

@@ -104,12 +104,15 @@ button:active{filter:brightness(1.25)}
 </style></head><body>
 <header><button id="mode" class="mode" disabled>◉ 只读模式</button><div class="brand"><span class="mark" aria-hidden="true">▦</span><div>告示板<span class="subtitle">TEAM WORKSPACE</span></div></div><div class="header-actions"><div class="identity-summary" aria-live="polite"><span id="actor">正在确认身份</span><span id="permission-summary">正在核对权限…</span></div><button id="authorize">GitHub 登录</button><button id="logout" hidden>退出授权</button></div></header>
 <main><section class="intro" hidden><div><div class="eyebrow">ONE TEAM. ONE PLACE.</div><h1>让每一件事，都有着落。</h1><p>从一个想法，到一次交付。团队的进展，在这里一起发生。</p></div><div id="stats" class="stats"></div></section>
-<nav aria-label="功能区"><button class="tab active" data-view="board">协作告示板 <span>01</span></button><button class="tab" data-view="accounts" hidden>公有账号 <span>02</span></button><button class="tab" data-view="manage" hidden>权限管理 <span>03</span></button><button class="tab" data-view="accepted">已验收 <span>04</span></button><button class="tab" data-view="points" hidden>积分中心 <span>05</span></button><div class="nav-tail"><span class="live-dot"></span><span id="sync-status">连接中</span><button id="refresh" title="刷新">↻</button></div></nav>
+<nav aria-label="功能区"><button class="tab active" data-view="board">协作告示板 <span>01</span></button><button class="tab" data-view="accounts" hidden>公有账号 <span>02</span></button><button class="tab" data-view="manage" hidden>权限管理 <span>03</span></button><button class="tab" data-view="accepted">已验收 <span>04</span></button><button class="tab" data-view="points" hidden>积分中心 <span>05</span></button><button class="tab" data-view="prompts" hidden>提示词</button><div class="nav-tail"><span class="live-dot"></span><span id="sync-status">连接中</span><button id="refresh" title="刷新">↻</button></div></nav>
 <div id="notice" role="status" aria-live="polite"></div>
 <div id="operation-status" role="status" aria-live="polite" hidden></div>
 <p id="member-policy" class="panel-hint">建议组织成员可以也可以签发组织成员的永久链接。。。。但主管可以后台取消组织成员权限，自然权限和签发权限都可以后台取消</p>
 <section id="member-access" class="management-panel" hidden><div class="section-head"><div><h2>组织成员永久链接</h2><p>成员链接不设到期时间。取消成员权限或签发权限，新旧链接及派生会话立即失效；恢复权限后须重新签发。</p></div><div class="section-actions"><button id="member-link" hidden>签发我的成员永久链接</button><button id="add-member-policy" hidden>设置成员权限…</button></div></div><div id="organization-members"></div><div id="member-links"></div></section>
 <section id="board-view" class="view"><div class="toolbar"><div class="filters"><label class="sr-only" for="project-filter">项目</label><select id="project-filter"><option value="">全部项目</option></select><label class="search">⌕ <input id="search" placeholder="搜索事项、提出者、完成者" aria-label="搜索事项"></label></div><div><button id="history">变更记录</button> <button id="add-project" hidden>＋ 新建项目</button> <button id="add-task" class="primary" hidden>＋ 添加事项</button></div></div><section id="points-panel" class="points-panel" hidden aria-label="积分账户"></section><div id="board" class="board"></div><div class="board-foot"><span>按项目折叠 · 新事项默认进入可开发池</span><span id="mode-hint">当前为只读，可展开项目查看详情</span></div></section>
+<section id="prompts-view" class="view" hidden>
+<div class="section-head"><div class="filters"><label>栏目 <select id="prompt-column"></select></label> <label>顺序编号 <select id="prompt-task"></select></label> <button type="button" id="open-prompts" disabled>编辑提示词</button></div></div>
+</section>
 <section id="points-view" class="view" hidden><div id="point-center"></div></section>
 <section id="accounts-view" class="view workspace-view" hidden>
 <div class="section-head"><div><div class="eyebrow">公有账号 · 02</div><h2>我的授权账号</h2><p>只显示你有权使用的账号，复制时会重新核对权限。</p></div><span id="accounts-count" class="count-badge"></span></div>
@@ -362,8 +365,54 @@ function render(){
  const done=state.tasks.filter(t=>t.column===4).length;
  $('#stats').innerHTML='<div class="stat"><strong>'+state.tasks.length+'</strong><span>全部事项</span></div><div class="stat"><strong>'+state.tasks.filter(t=>t.column!==4).length+'</strong><span>进行中</span></div><div class="stat"><strong>'+done+'</strong><span>已验收</span></div>';
  const filter=$('#project-filter').value;$('#project-filter').innerHTML='<option value="">全部项目</option>'+state.repos.filter(isBoardProject).map(r=>'<option value="'+esc(r.id)+'">'+esc(r.name)+'</option>').join('');if(state.repos.some(r=>r.id===filter&&isBoardProject(r)))$('#project-filter').value=filter;
- if(view==='board'||view==='accepted')renderBoard();if(canAccounts){if(view==='accounts')renderAccounts();}else $('#accounts').replaceChildren();if(manage){if(view==='manage')renderManage();}else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();renderPointCenter();
+ if(view==='board'||view==='accepted')renderBoard();if(canAccounts){if(view==='accounts')renderAccounts();}else $('#accounts').replaceChildren();if(manage){if(view==='manage')renderManage();}else {for(const selector of ['#pool','#users','#tokens'])$(selector).replaceChildren();}renderMemberAccess();renderPointCenter();if(view==='prompts')renderPromptPicker();
 }
+function renderPromptPicker(){
+ const column=$('#prompt-column'),tasks=$('#prompt-task');
+ const selectedColumn=column.value,selectedTask=tasks.value;
+ column.innerHTML='<option value="">选择栏目</option>'+state.columns.map((name,index)=>'<option value="'+index+'">'+esc(name)+'</option>').join('');
+ column.value=selectedColumn;
+ const items=selectedColumn===''?[]:state.tasks.filter(t=>t.column===Number(selectedColumn)&&state.repos.some(r=>r.id===t.repoId&&r.canEdit&&isBoardProject(r)));
+ items.sort((a,b)=>a.columnNumber-b.columnNumber);
+ tasks.innerHTML='<option value="">选择编号</option>'+items.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.columnNumber)+'. '+esc(t.title)+'</option>').join('');
+ tasks.value=items.some(t=>t.id===selectedTask)?selectedTask:'';
+ tasks.disabled=selectedColumn==='';
+ $('#open-prompts').disabled=!tasks.value;
+}
+$('#prompt-column').onchange=()=>{$('#prompt-task').value='';renderPromptPicker()};
+$('#prompt-task').onchange=()=>{$('#open-prompts').disabled=!$('#prompt-task').value};
+$('#open-prompts').onclick=async()=>{
+ const task=state.tasks.find(t=>t.id===$('#prompt-task').value);
+ if(!task)return;
+ const title=state.columns[task.column]+' '+task.columnNumber+'. '+task.title;
+ openDialog(title,[],null);
+ const scope=currentFormScope;
+ try{
+  const saved=await api('prompts?id='+encodeURIComponent(task.id));
+  if(currentFormScope!==scope||!$('#dialog').open)return;
+  openDialog(title,[{type:'html',value:'<div id="prompt-fields"></div><button type="button" id="add-prompt" aria-label="添加一段提示词">＋</button>'}],form=>{
+   const prompts=form.getAll('prompt').filter(value=>value.trim());
+   return change({action:'prompt.save',id:task.id,prompts,promptRevision:saved.revision});
+  });
+  const fields=$('#prompt-fields'),add=$('#add-prompt');
+  const append=(value='')=>{
+   const row=document.createElement('label');
+   row.className='field';
+   row.textContent='提示词 '+(fields.children.length+1);
+   const input=document.createElement('textarea');
+   input.name='prompt';
+   input.rows=5;
+   input.maxLength=20000;
+   input.value=value;
+   row.append(input);
+   fields.append(row);
+   add.disabled=fields.children.length>=30;
+   return input;
+  };
+  for(const value of saved.prompts.length?saved.prompts:[''])append(value);
+  add.onclick=()=>append().focus();
+ }catch(error){if(currentFormScope===scope&&$('#dialog').open)$('#form-error').textContent=error.message}
+};
 function renderMemberAccess(){
  const supervisor=state.actor.supervisor,links=state.memberLinks||[],members=state.organizationMembers||[];
  $('#member-access').hidden=supervisor?view!=='manage':!state.actor.organizationMember&&!links.length;

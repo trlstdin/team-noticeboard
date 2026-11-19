@@ -1,0 +1,32 @@
+{
+  "id": "1a182a4d-2832-435a-8ac7-6b08871d9d1b",
+  "seq": 1476,
+  "time": "2026-11-19T04:51:02.825Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 61,
+    "repositoryUrl": "https://github.com/trlstdin/team-noticeboard",
+    "personalRepositoryUrl": "",
+    "id": "3984656a-bf2b-4441-8daf-1efd636e615d",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "告示栏优化",
+    "body": "，2，告示栏问题分几个框，每一点分一个框。项里面还有未上传，位于哪台主机：联系：xxx，3，区分重要紧急四象限，每一栏分组，四栏里面不管有几组，都必须显示四组，默认折叠点击展开，，，每个项目根据时间顺序分配当前栏的序号，在管理后台可查看，，告示栏统计只显示百分比。加问题项和重难点项，，傻逼告示板，提示词页必须正常显示已有的，不然我要这个页干嘛",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 1,
+    "rank": 512,
+    "createdAt": "2026-11-07T15:52:45.565Z",
+    "updatedAt": "2026-11-19T04:51:02.825Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "85d21ef6da2a2a4aecdd1bfc2c64d40a01d6437705ce4e98a190a84afc2b247c",
+  "hash": "24c3dd4f0fc6af10389195de933674714f038f43e8aca3e3738a7b0297e9987f"
+}

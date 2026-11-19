@@ -116,6 +116,10 @@ button:active{filter:brightness(1.25)}
 @media(max-width:540px){#saved-prompt-items{grid-template-columns:minmax(0,1fr)}}
 
 #saved-prompt-items button{height:auto}
+
+#prompt-fields .prompt-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(0,3fr) auto;gap:8px;align-items:center}
+#prompt-fields textarea{min-height:0;height:42px;resize:none;white-space:pre;overflow:hidden;text-overflow:ellipsis;line-height:20px}
+#prompt-fields input{min-width:0;text-overflow:ellipsis}
 </style></head><body>
 <header><button id="mode" class="mode" disabled>◉ 只读模式</button><div class="brand"><span class="mark" aria-hidden="true">▦</span><div>告示板<span class="subtitle">TEAM WORKSPACE</span></div></div><div class="header-actions"><div class="identity-summary" aria-live="polite"><span id="actor">正在确认身份</span><span id="permission-summary">正在核对权限…</span></div><button id="authorize">GitHub 登录</button><button id="logout" hidden>退出授权</button></div></header>
 <main><section class="intro" hidden><div><div class="eyebrow">ONE TEAM. ONE PLACE.</div><h1>让每一件事，都有着落。</h1><p>从一个想法，到一次交付。团队的进展，在这里一起发生。</p></div><div id="stats" class="stats"></div></section>
@@ -444,7 +448,7 @@ async function openTaskPrompts(task){
  };
  const insert=(value='',heading='',before=null)=>{
   const row=document.createElement('div');
-  row.className='field';
+  row.className='field prompt-row';
   const titleInput=document.createElement('input');
   titleInput.type='text';
   titleInput.name='promptTitle';
@@ -452,10 +456,18 @@ async function openTaskPrompts(task){
   titleInput.value=heading;
   const input=document.createElement('textarea');
   input.name='prompt';
-  input.rows=5;
+  input.rows=1;
   input.maxLength=20000;
   input.value=value;
-  row.append(titleInput,input);
+  const copy=document.createElement('button');
+  copy.type='button';
+  copy.className='copy-prompt';
+  copy.textContent='复制';
+  copy.onclick=async()=>{
+   try{await navigator.clipboard.writeText(input.value);toast('提示词已复制')}
+   catch{input.focus();input.select();toast('请按 Ctrl+C 复制已选中的完整提示词')}
+  };
+  row.append(titleInput,input,copy);
   fields.insertBefore(row,before);
   return input;
  };

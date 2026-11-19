@@ -1,0 +1,33 @@
+{
+  "id": "2921f7a3-3263-48d3-9250-fd7e23ecbb9d",
+  "seq": 1480,
+  "time": "2026-11-19T16:46:01.188Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 122,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "5abb4eb9-8372-4068-9eae-ee3fcdeb741e",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "前后端统一提示词自用",
+    "body": "在提示词对应里面",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1795106761188,
+    "createdAt": "2026-11-19T16:46:01.188Z",
+    "updatedAt": "2026-11-19T16:46:01.188Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "7db777d45d99abf4b0905f4b616f07d371c5f1a2c39aa2225dce1e0475c4b782",
+  "hash": "16cf559a913111388d18c0aa2be773772413e7d2411514bb7b3d397348a2aac5"
+}

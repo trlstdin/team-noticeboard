@@ -152,6 +152,7 @@ test('task prompts persist privately and reject stale edits',async()=>{
  assert.deepEqual((await a.call(path,undefined,token)).body,{revision:1,prompts:data.prompts});
  assert.equal((await a.change({...data,prompts:['stale']},token)).status,409);
  assert.equal((await a.call(path,undefined,'')).status,403);
- assert.equal(JSON.stringify(await a.state()).includes('private prompt'),false);
+ assert.deepEqual((await a.state(token)).savedPrompts[task.id].prompts,data.prompts);
+ assert.equal(JSON.stringify(await a.state('')).includes('private prompt'),false);
  assert.equal(JSON.stringify((await a.call('history')).body).includes('private prompt'),false);
 });

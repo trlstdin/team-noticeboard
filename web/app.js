@@ -47,7 +47,7 @@ function renderPromptPicker(){
  $('#open-prompts').disabled=!tasks.value;
  const saved=editableTasks.filter(t=>state.savedPromptCounts?.[t.id])
   .sort((a,b)=>a.column-b.column||a.columnNumber-b.columnNumber);
- patchHTML($('#saved-prompt-items'),saved.map(t=>'<li><button type="button" data-saved-prompt-task="'+esc(t.id)+'"><strong>'+esc(state.columns[t.column])+' '+esc(t.columnNumber)+'. '+esc(t.title)+'</strong><span>'+state.savedPromptCounts[t.id]+' 段</span></button></li>').join(''));
+ patchHTML($('#saved-prompt-items'),saved.map(t=>'<li><button type="button" data-saved-prompt-task="'+esc(t.id)+'"><strong>'+esc(state.columns[t.column])+' '+esc(t.columnNumber)+'. '+esc(t.title)+'</strong><span>'+state.savedPromptCounts[t.id]+' 段</span></button>'+((state.savedPrompts?.[t.id]?.prompts||[]).map((body,index)=>'<section class="saved-prompt-text"><strong>'+esc(state.savedPrompts[t.id].titles?.[index]||'提示词 '+(index+1))+'</strong><pre>'+esc(body)+'</pre></section>').join(''))+'</li>').join(''));
 }
 $('#saved-prompt-items').onclick=event=>{
  const item=event.target.closest('[data-saved-prompt-task]');

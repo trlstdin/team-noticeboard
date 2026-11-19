@@ -114,3 +114,7 @@ button:active{filter:brightness(1.25)}
 #saved-prompt-items button strong{min-width:0;overflow-wrap:anywhere}
 @media(max-width:900px){#saved-prompt-items{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){#saved-prompt-items{grid-template-columns:minmax(0,1fr)}}
+
+#saved-prompt-items button{height:auto}
+.saved-prompt-text{padding:12px;border:1px solid var(--line);border-radius:9px;margin-top:8px}
+.saved-prompt-text pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin-bottom:0}

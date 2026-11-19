@@ -116,3 +116,7 @@ button:active{filter:brightness(1.25)}
 @media(max-width:540px){#saved-prompt-items{grid-template-columns:minmax(0,1fr)}}
 
 #saved-prompt-items button{height:auto}
+
+#prompt-fields .prompt-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(0,3fr) auto;gap:8px;align-items:center}
+#prompt-fields textarea{min-height:0;height:42px;resize:none;white-space:pre;overflow:hidden;text-overflow:ellipsis;line-height:20px}
+#prompt-fields input{min-width:0;text-overflow:ellipsis}

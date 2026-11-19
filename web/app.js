@@ -93,7 +93,7 @@ async function openTaskPrompts(task){
  };
  const insert=(value='',heading='',before=null)=>{
   const row=document.createElement('div');
-  row.className='field';
+  row.className='field prompt-row';
   const titleInput=document.createElement('input');
   titleInput.type='text';
   titleInput.name='promptTitle';
@@ -101,10 +101,18 @@ async function openTaskPrompts(task){
   titleInput.value=heading;
   const input=document.createElement('textarea');
   input.name='prompt';
-  input.rows=5;
+  input.rows=1;
   input.maxLength=20000;
   input.value=value;
-  row.append(titleInput,input);
+  const copy=document.createElement('button');
+  copy.type='button';
+  copy.className='copy-prompt';
+  copy.textContent='复制';
+  copy.onclick=async()=>{
+   try{await navigator.clipboard.writeText(input.value);toast('提示词已复制')}
+   catch{input.focus();input.select();toast('请按 Ctrl+C 复制已选中的完整提示词')}
+  };
+  row.append(titleInput,input,copy);
   fields.insertBefore(row,before);
   return input;
  };

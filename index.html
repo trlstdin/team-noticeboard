@@ -114,6 +114,10 @@ button:active{filter:brightness(1.25)}
 #saved-prompt-items button strong{min-width:0;overflow-wrap:anywhere}
 @media(max-width:900px){#saved-prompt-items{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){#saved-prompt-items{grid-template-columns:minmax(0,1fr)}}
+
+#saved-prompt-items button{height:auto}
+.saved-prompt-text{padding:12px;border:1px solid var(--line);border-radius:9px;margin-top:8px}
+.saved-prompt-text pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin-bottom:0}
 </style></head><body>
 <header><button id="mode" class="mode" disabled>◉ 只读模式</button><div class="brand"><span class="mark" aria-hidden="true">▦</span><div>告示板<span class="subtitle">TEAM WORKSPACE</span></div></div><div class="header-actions"><div class="identity-summary" aria-live="polite"><span id="actor">正在确认身份</span><span id="permission-summary">正在核对权限…</span></div><button id="authorize">GitHub 登录</button><button id="logout" hidden>退出授权</button></div></header>
 <main><section class="intro" hidden><div><div class="eyebrow">ONE TEAM. ONE PLACE.</div><h1>让每一件事，都有着落。</h1><p>从一个想法，到一次交付。团队的进展，在这里一起发生。</p></div><div id="stats" class="stats"></div></section>
@@ -243,7 +247,7 @@ function patchBoard(html){const template=document.createElement('div');template.
 function captureView(){const active=document.activeElement;return {active,focusId:active?.id,focusName:active?.name,selection:typeof active?.selectionStart==='number'?[active.selectionStart,active.selectionEnd]:null,x:scrollX,y:scrollY,scrolls:$$('#board .column-projects,#point-center [class*=list]').map(e=>[e,e.scrollTop,e.scrollLeft])};}
 function restoreView(saved){for(const [e,y,x] of saved.scrolls)if(e.isConnected){e.scrollTop=y;e.scrollLeft=x;}const active=saved.active?.isConnected?saved.active:saved.focusId?document.getElementById(saved.focusId):saved.focusName?$('#fields [name="'+saved.focusName+'"]'):null;if(active&&document.activeElement!==active){active.focus({preventScroll:true});if(saved.selection&&active.setSelectionRange)try{active.setSelectionRange(...saved.selection)}catch{}}window.scrollTo(saved.x,saved.y);}
 function applyStateUpdate(updated){
- if(updated.delta&&state&&JSON.stringify(updated.savedPromptCounts)===JSON.stringify(state.savedPromptCounts)&&updated.version===state.version&&!taskIntents.size&&!(updated.tasks?.length||updated.removedTaskIds?.length)&&!updated.accounts&&JSON.stringify(updated.actor)===JSON.stringify(state.actor)){state={...state,cursor:updated.cursor};return;}
+ if(updated.delta&&state&&JSON.stringify(updated.savedPrompts)===JSON.stringify(state.savedPrompts)&&JSON.stringify(updated.savedPromptCounts)===JSON.stringify(state.savedPromptCounts)&&updated.version===state.version&&!taskIntents.size&&!(updated.tasks?.length||updated.removedTaskIds?.length)&&!updated.accounts&&JSON.stringify(updated.actor)===JSON.stringify(state.actor)){state={...state,cursor:updated.cursor};return;}
  if(updated.delta){if(!state||updated.version<state.version)return;const byId=new Map(state.tasks.map(t=>[t.id,t]));for(const id of updated.removedTaskIds||[])byId.delete(id);for(const task of updated.tasks||[])byId.set(task.id,task);const changed={...updated};delete changed.tasks;delete changed.delta;delete changed.removedTaskIds;state={...state,...changed,tasks:[...byId.values()]};}
  else {if(state&&!state.offlineSnapshot&&updated.version<state.version)return;state=updated;}
  for(const [id,confirmed] of confirmedTasks){if(updated.version>=confirmed.version){confirmedTasks.delete(id);continue;}const current=state.tasks.find(t=>t.id===id);if(current)Object.assign(current,confirmed.task);else if(!confirmed.task.deletedAt)state.tasks.push({...confirmed.task});}
@@ -396,7 +400,7 @@ function renderPromptPicker(){
  $('#open-prompts').disabled=!tasks.value;
  const saved=editableTasks.filter(t=>state.savedPromptCounts?.[t.id])
   .sort((a,b)=>a.column-b.column||a.columnNumber-b.columnNumber);
- patchHTML($('#saved-prompt-items'),saved.map(t=>'<li><button type="button" data-saved-prompt-task="'+esc(t.id)+'"><strong>'+esc(state.columns[t.column])+' '+esc(t.columnNumber)+'. '+esc(t.title)+'</strong><span>'+state.savedPromptCounts[t.id]+' 段</span></button></li>').join(''));
+ patchHTML($('#saved-prompt-items'),saved.map(t=>'<li><button type="button" data-saved-prompt-task="'+esc(t.id)+'"><strong>'+esc(state.columns[t.column])+' '+esc(t.columnNumber)+'. '+esc(t.title)+'</strong><span>'+state.savedPromptCounts[t.id]+' 段</span></button>'+((state.savedPrompts?.[t.id]?.prompts||[]).map((body,index)=>'<section class="saved-prompt-text"><strong>'+esc(state.savedPrompts[t.id].titles?.[index]||'提示词 '+(index+1))+'</strong><pre>'+esc(body)+'</pre></section>').join(''))+'</li>').join(''));
 }
 $('#saved-prompt-items').onclick=event=>{
  const item=event.target.closest('[data-saved-prompt-task]');

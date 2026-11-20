@@ -1,0 +1,33 @@
+{
+  "id": "64ba54b6-d9b4-4cbf-80b6-c04d01cb4302",
+  "seq": 1488,
+  "time": "2026-11-20T08:22:56.711Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 125,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "837682bc-2b91-4e7b-b1b9-e729fbd3479f",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "虚拟机稳定出卡死的bug",
+    "body": "没有重装系统的虚拟机稳定出现卡死的bug，据说重装了也有",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 1,
+    "rank": -1795162976711,
+    "createdAt": "2026-11-20T08:22:56.711Z",
+    "updatedAt": "2026-11-20T08:22:56.711Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "0478af6fdae82a9a5b128ff96662f9aacab716c3b190a7070da367d2e376de4b",
+  "hash": "a7c8e9cbef87f11693bfbd809a575b3a02f1263e9b8a5aa8c8fbe876f94f8196"
+}

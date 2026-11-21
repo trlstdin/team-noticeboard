@@ -1,0 +1,33 @@
+{
+  "id": "1d7b9390-4e3c-4b7d-bff1-29402e577306",
+  "seq": 1498,
+  "time": "2026-11-21T05:05:26.729Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 129,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "76a54275-f347-46dd-b800-f0a459543246",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "ai直播和视频",
+    "body": "ai直播和视频，第一次自动成功运行，ai写一下索引",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": -1795237526729,
+    "createdAt": "2026-11-21T05:05:26.729Z",
+    "updatedAt": "2026-11-21T05:05:26.729Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "8b793465e8b5f8be40a76f2d46401959ede948a2aec85cae3a28fa9c7ab77b66",
+  "hash": "d231b4e133926a95abb054cd90a62d34f59f1c4e8c7719495a504e1d26acf92c"
+}

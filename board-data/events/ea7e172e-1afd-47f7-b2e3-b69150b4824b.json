@@ -1,0 +1,17 @@
+{
+  "id": "ea7e172e-1afd-47f7-b2e3-b69150b4824b",
+  "seq": 1507,
+  "time": "2026-11-21T05:11:20.937Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.pin",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "id": "76a54275-f347-46dd-b800-f0a459543246",
+    "pinned": true
+  },
+  "previousHash": "73aabb7a7adc70d99d3c10fe1d4c8089fa6ba72d7564d9844f80e8ee280a396f",
+  "hash": "2c5c4dfd5d2b03fcd7907623f41117aa3c55ee4f55af2f7f02ab16f4c378f7b6"
+}

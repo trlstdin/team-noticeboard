@@ -1,0 +1,33 @@
+{
+  "id": "d2300311-2b5d-47be-abc4-71757106dec0",
+  "seq": 1491,
+  "time": "2026-11-21T04:58:48.520Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 126,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "eabce715-ed70-426f-9fe3-3480bfbb82e4",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "上传装机盘，李",
+    "body": "上传装机盘，李",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1795237128520,
+    "createdAt": "2026-11-21T04:58:48.520Z",
+    "updatedAt": "2026-11-21T04:58:48.520Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "6092b28461c2abeef1bb558fc1ded31818ae58fa25efad115db9829c7406c2e7",
+  "hash": "08ad3ce9a27851e62fe26cf98202d4f1bb17c227a84825b641016b1a8c7c8b82"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "0dfa7c24-7696-442d-8f05-d0a78af0de49",
+  "seq": 1499,
+  "time": "2026-11-21T05:07:11.013Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 130,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "a5b1c8f3-be06-4335-b589-18487f00cebd",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "优化qq搜索引擎，采用非模型算法为主",
+    "body": "",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1795237631013,
+    "createdAt": "2026-11-21T05:07:11.013Z",
+    "updatedAt": "2026-11-21T05:07:11.013Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "d231b4e133926a95abb054cd90a62d34f59f1c4e8c7719495a504e1d26acf92c",
+  "hash": "aef0c5f00be3241afdd272286d803224d721a28e3acf8ef42d9fb9c6e3ccb099"
+}

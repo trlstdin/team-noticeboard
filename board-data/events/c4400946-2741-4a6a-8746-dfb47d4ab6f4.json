@@ -1,0 +1,33 @@
+{
+  "id": "c4400946-2741-4a6a-8746-dfb47d4ab6f4",
+  "seq": 1523,
+  "time": "2026-11-22T05:47:03.309Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 132,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "fb9b7148-bb25-4160-86c0-20e8d110bc39",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "ssh的手机版",
+    "body": "把我的6.0做一个手机版，6.0有的功能都尽量在手机端实现，设计文档和手机端可能存在的也必须实现，每五分钟列表下个五分钟规划的表，必须输出在对话里，完成所有工作之前不能停下，你必须在云端连接手机成功并且全部功能都正常才能停下，",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1795326423309,
+    "createdAt": "2026-11-22T05:47:03.309Z",
+    "updatedAt": "2026-11-22T05:47:03.309Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "6c4f4026187210621d1ce48dcefe9f3f2680436206097828d6825543b2417d21",
+  "hash": "e0aa74fff178b226cd8ea6574c6a0248e3b71ce5fb0a0e0d484ca85d02b7ee9f"
+}

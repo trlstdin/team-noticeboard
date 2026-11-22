@@ -1,0 +1,33 @@
+{
+  "id": "82897d67-e10e-4f2e-a28a-b5daeecd7c82",
+  "seq": 1525,
+  "time": "2026-11-22T05:48:27.278Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 133,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "feb9d609-2835-4869-b77e-7d7235d94830",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "寻找并选型gemini调用gpt的开源项目，要适配各类设备",
+    "body": "",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1795326507278,
+    "createdAt": "2026-11-22T05:48:27.278Z",
+    "updatedAt": "2026-11-22T05:48:27.278Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "c12ed902e94bb1331b6ea70c7efb7d674b8bed816ff8592c24db9009ce4ac3aa",
+  "hash": "0f8c5e14c8f4c355d9c6cda5b76387bb31a7d1f065a76d34c9f39214c8d8a5a4"
+}

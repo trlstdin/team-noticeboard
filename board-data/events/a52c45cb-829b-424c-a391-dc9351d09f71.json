@@ -1,0 +1,32 @@
+{
+  "id": "a52c45cb-829b-424c-a391-dc9351d09f71",
+  "seq": 1526,
+  "time": "2026-11-22T12:25:14.658Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 27,
+    "repositoryUrl": "https://github.com/alistrode/open-deploy",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/open-deploy",
+    "id": "e7565359-d653-4a9e-aa7d-d2ccae09f380",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "27. 装机盘",
+    "body": "装机盘\n完美系统方案一键做盘，，底层装一个虚拟机系统，在里面虚拟linux、和tiny10之类的极简win10切换，目的是ai可以在底层无缝调试系统的bug和修改，三台电脑的重装系统问题，采用自动重装开源项目，有gpt和鲸鱼版\n\n目前pvxirt方向缺少显卡直通，本地语音模型需要用",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 5,
+    "rank": -897230706336.5,
+    "createdAt": "2026-11-07T06:15:57.717Z",
+    "updatedAt": "2026-11-22T12:25:14.658Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "0f8c5e14c8f4c355d9c6cda5b76387bb31a7d1f065a76d34c9f39214c8d8a5a4",
+  "hash": "dce5cd188323394a2a55d6a81b551ad302c85e6adc240f246436b92078c18428"
+}

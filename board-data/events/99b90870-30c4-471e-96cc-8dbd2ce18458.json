@@ -1,0 +1,32 @@
+{
+  "id": "99b90870-30c4-471e-96cc-8dbd2ce18458",
+  "seq": 1536,
+  "time": "2026-11-25T11:54:50.646Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 35,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "3ab2e1ce-52ba-4c1e-a80c-ef89c3900e46",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "35. 人格化ai助手，日程规划项目管理。",
+    "body": "人格化ai助手，日程规划。基于人的有限注意力以及传统视觉注意力的饱和占用，我认为提高产能从并行开发五个项目扩产能到十个项目的关键是优化ai的语音汇报和开发状态汇报，开源项目管理，接入记忆和性格，绕过视觉用对话汇报项目状态，像安排行程一样安排大量开源项目进度，把开源项目管理从大脑托管到行程表,沉淀项目管理习惯进行托管\n\n给我做一个思维导图一样的桌面端画布，节点可以互相连线，可以手绘，也可以创建组件和连线，要求包含xmind的所有常见功能。",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 9216,
+    "createdAt": "2026-11-07T06:16:37.697Z",
+    "updatedAt": "2026-11-25T11:54:50.646Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "2b473e1343232245e4dcafdc9880899919ccd3b139baeae484d968647a3a7878",
+  "hash": "093c444346149bc58226cf30425d6c908b5793610abc59ed2aa92a4284704b88"
+}

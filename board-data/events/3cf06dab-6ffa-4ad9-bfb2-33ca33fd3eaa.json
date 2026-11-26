@@ -1,0 +1,32 @@
+{
+  "id": "3cf06dab-6ffa-4ad9-bfb2-33ca33fd3eaa",
+  "seq": 1541,
+  "time": "2026-11-26T13:29:27.995Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 116,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "9523de69-7876-47c7-b05b-f62f9f6a1704",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "oracle3.0，必须在pvxirt里面编译，",
+    "body": "oracle3.0，1：私有仓库里有设计文档，必须在pvxirt里面编译，\n2：为什么oracle不能压缩磁盘压有快照的？没在快照链条的部分不就能压缩了？",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1794484545744,
+    "createdAt": "2026-11-12T11:55:45.744Z",
+    "updatedAt": "2026-11-26T13:29:27.995Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "bcfbd1ef58d68bd146ef47fbf683f1413ff46c3cf07c6ffbaf7711450a4e8892",
+  "hash": "d1a9408aecb374464c9f55beb2d609690c89f1d1d767cf5787a84aec304438c1"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "e7ee85cd-3a0c-4fad-b862-690a2dbf4992",
+  "seq": 1551,
+  "time": "2026-11-27T06:12:09.958Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 136,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "c0689549-73ef-47cb-94f6-92ae34ee53a7",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "6.0手机通用版",
+    "body": "看换中继放不方便，主要解决再不能谷歌框架的国产手机上运行",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1795759906282,
+    "createdAt": "2026-11-27T06:11:46.282Z",
+    "updatedAt": "2026-11-27T06:12:09.958Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "afb9676d845d2b9fb6e65daeb8483389e4d54d24a1b2882b7364ed16d3345176",
+  "hash": "345f59138b0f46aeb0a3e86609d1ffe5a3385760bf739a9b0bfdb1741d2539ce"
+}

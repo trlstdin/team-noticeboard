@@ -1,0 +1,32 @@
+{
+  "id": "0a63ef9c-898f-4603-86c3-2dc7765505c4",
+  "seq": 1547,
+  "time": "2026-11-27T06:05:04.457Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 72,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "https://github.com/trlstdin/rororororo/tree/projects/alistrode-live",
+    "id": "aa87167f-0900-4971-9044-190f756857e0",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "栗灯AI主播",
+    "body": "按节目单进行AI说话、游戏和弹幕互动，结合记忆、语音与OBS做直播演练。\n已有原型及直播适配；完整外部平台直播流程待验收。\n\nqq部分先做zzz妥协，转发聊天记录和发表情包，再尝试鲸鱼和gemini\n\n优化qq搜索引擎，采用非大模型算法为主，qq群分析需要做效率优化，不然链五个群的消息都处理不了",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 2,
+    "rank": -673181214869.875,
+    "createdAt": "2026-11-09T07:09:58.703Z",
+    "updatedAt": "2026-11-27T06:05:04.457Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "461524055e490a87cad48b04b947a688e960c768ec3e2f246baafeacb7fa2565",
+  "hash": "16453cbf0993e81a44ba5e960ddae745c746f7269c03451b8764c0fe274356aa"
+}

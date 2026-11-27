@@ -1,0 +1,54 @@
+{
+  "id": "316dbe06-f56a-4b42-a06b-bc7b0aea2af1",
+  "seq": 1556,
+  "time": "2026-11-27T12:30:51.026Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.archive",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 123,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "1b4c9bbf-7e74-435a-a4cb-2dbf41055448",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "通用的常驻程序的托盘和自启，彻底关闭，关闭自启托盘右键模块",
+    "body": "不允许自动恢复桌面图标，用于ssh，信道，输入法和剪贴板",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 768,
+    "createdAt": "2026-11-20T04:16:10.718Z",
+    "updatedAt": "2026-11-27T12:30:20.665Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 2,
+    "fieldWriters": {
+      "column": {
+        "github:215798043": {
+          "seq": 1555,
+          "revision": 2
+        }
+      },
+      "rank": {
+        "github:215798043": {
+          "seq": 1555,
+          "revision": 2
+        }
+      },
+      "deletedAt": {
+        "github:215798043": {
+          "seq": 1556,
+          "revision": 3
+        }
+      }
+    },
+    "deletedAt": "2026-11-27T12:30:51.026Z"
+  },
+  "previousHash": "d80366c0630e63c22b9a0516096579f38158a5b359206ee6a36320db54d73384",
+  "hash": "af2c22d2f4c3737d64e72809afa6c0d94e9e07891d794a4731d3ed52fbea3c33"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "63ccceb0-8d48-41b7-8f5c-0022115b4723",
+  "seq": 1566,
+  "time": "2026-11-28T15:28:41.781Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 137,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "3e50cff2-c5c8-4cb5-b319-75505140cc6d",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "pvxirt常态快照和坏了插u盘快照",
+    "body": "pvxirt常态快照和坏了进不了系统插u盘进入快照",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 6,
+    "rank": -1795879721781,
+    "createdAt": "2026-11-28T15:28:41.781Z",
+    "updatedAt": "2026-11-28T15:28:41.781Z",
+    "proposerId": 215798043,
+    "assigneeId": null,
+    "revision": 1
+  },
+  "previousHash": "46a0453ff3e917bc06c0c9f1a2d8e2d4eda585a2a251e1f29042f2bd94aebbcf",
+  "hash": "0e329749890cf76aabcf188b65ae61c1687e7b548652481419cc378c06256a03"
+}

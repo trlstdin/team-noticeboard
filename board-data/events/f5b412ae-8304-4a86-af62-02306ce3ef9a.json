@@ -1,0 +1,32 @@
+{
+  "id": "f5b412ae-8304-4a86-af62-02306ce3ef9a",
+  "seq": 1568,
+  "time": "2026-11-28T15:29:19.071Z",
+  "actor": "trlstdin",
+  "actorId": "github:215798043",
+  "editor": "github:215798043",
+  "action": "task.save",
+  "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+  "visibility": "public",
+  "detail": {
+    "historyNumber": 137,
+    "repositoryUrl": "",
+    "personalRepositoryUrl": "",
+    "id": "3e50cff2-c5c8-4cb5-b319-75505140cc6d",
+    "repoId": "7d22d89f-9eac-410c-9b29-27f52e26d63c",
+    "title": "pvxirt常态快照和坏了插u盘快照",
+    "body": "pvxirt常态快照和坏了进不了系统插u盘进入快照，顺便修好装机盘的连接器和显卡直通",
+    "proposer": "trlstdin",
+    "assignee": "",
+    "host": "",
+    "finisher": "",
+    "column": 0,
+    "rank": 384,
+    "createdAt": "2026-11-28T15:28:41.781Z",
+    "updatedAt": "2026-11-28T15:29:19.071Z",
+    "proposerId": 215798043,
+    "assigneeId": null
+  },
+  "previousHash": "d523757af0f77d9bf4e8c29bf7a76a48f40d8964dc7fc2ab23a617e9b0ecf359",
+  "hash": "cc177cf4ce3c18a86a032be7c8a47094230de25d9f6d8cc9cb49143fad635821"
+}

@@ -1,7 +1,7 @@
 import { isSupervisorId, ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute } from './github-auth.js';
 const KEY='noticeboard/journal-v1.json';
 // Source-bound machine credentials contain only public digests here.
-const CAST_PUBLISHERS=[{"sourceId": "81c936ce0abed2d2fde907ee99bfafadfaacbc91748a44a11b95dcd3d892c092", "keyHash": "caeecac3806d580393beff6a30598b4cdf272d8999b604e7a61ba45054a35067"}];
+const CAST_PUBLISHERS=[{"sourceId": "81c936ce0abed2d2fde907ee99bfafadfaacbc91748a44a11b95dcd3d892c092", "keyHash": "a416ca758af7213f10535fffc40073f87f7c7f8ae93b05c061afec5d9c404393"}];
 async function castPublisher(request,env,sourceId){
  const key=request.headers.get('X-Cast-Publisher-Key');
  if(!key)return null;

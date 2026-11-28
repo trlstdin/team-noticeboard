@@ -8,6 +8,8 @@ const ORIGIN='https://team-noticeboard-rebuilt.loneivy1.chatgpt.site';
 function create({suite,home,log,start,link}){
  const file=path.join(home,'noticeboard-publisher.json');let cfg=read(file,{});
  if(cfg.enabled!==true)return {observe(){},status:()=>({enabled:false}),async close(){}};
+ const publisherKeyFile=path.join(home,'noticeboard-publisher-key');
+ if(fs.existsSync(publisherKeyFile))cfg.publisherCredential=fs.readFileSync(publisherKeyFile,'utf8').trim();
  const control=read(path.join(home,'control.json'),{});
  cfg.sourceId ||= crypto.createHash('sha256').update(fs.realpathSync(suite)).update(String(control.key)).digest('hex');cfg.seen ||= {};
  const unknownSince=new Map();

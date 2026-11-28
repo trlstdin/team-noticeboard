@@ -1,5 +1,15 @@
 import { isSupervisorId, ghRequest, ghRepo, ghProfile, githubIdentity, githubAuthRoute } from './github-auth.js';
 const KEY='noticeboard/journal-v1.json';
+// Source-bound machine credentials contain only public digests here.
+const CAST_PUBLISHERS=[{"sourceId": "81c936ce0abed2d2fde907ee99bfafadfaacbc91748a44a11b95dcd3d892c092", "keyHash": "caeecac3806d580393beff6a30598b4cdf272d8999b604e7a61ba45054a35067"}];
+async function castPublisher(request,env,sourceId){
+ const key=request.headers.get('X-Cast-Publisher-Key');
+ if(!key)return null;
+ const digest=await hash(key);
+ const registration=(env.CAST_PUBLISHERS||CAST_PUBLISHERS).find(value=>value.sourceId===sourceId&&value.keyHash===digest);
+ if(!registration)fail(403,'投屏发布凭据无效');
+ return {sourceId,id:'cast:'+sourceId,name:'投屏自动同步'};
+}
 const COLUMNS=['待开发','修复','优化','先接单后开发','已验收','待验收','可开发池'];
 const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
 const fail=(status,message)=>{throw Object.assign(new Error(message),{status})};
@@ -491,20 +501,29 @@ function snapshot(s,a,env){return {...(a.edit?{savedPromptCounts:savedPromptCoun
 
 // A publisher reuses its existing supervisor session. URL credentials stay
 // encrypted in private storage; presence renewals never enter public snapshots.
-async function syncCastAccounts(b,a,s,etag,env){
- if(!a.manage)fail(403,'需要主管权限');
+async function syncCastAccounts(b,a,s,etag,env,publisher=null){
+ if(!publisher&&!a.manage)fail(403,'需要主管权限');
  const source=text(b.sourceId,128);if(!/^[a-zA-Z0-9_-]+$/.test(source)||!Array.isArray(b.entries))fail(400,'账号同步参数无效');
- if(s.accounts.some(v=>v.castSource===source&&v.castOwner!==a.id&&!a.supervisor))fail(403,'不能修改其他发布者的账号');
+ if(!publisher&&s.accounts.some(v=>v.castSource===source&&v.castOwner!==a.id&&!a.supervisor))fail(403,'不能修改其他发布者的账号');
+ const actor=publisher||a;
  const now=new Date().toISOString(),expiresAt=Date.now()+30000,published=[],seen=new Set(),removed=[],publisherId=b.publisherId?text(b.publisherId,128):'legacy';let changed=false;
  for(const item of b.entries){
   const address=url(item.url),fingerprint=await hash(address);if(seen.has(fingerprint))continue;seen.add(fingerprint);
   const environmentId=text(item.environmentId,200),name=text(item.name,100);
-  let acc=s.accounts.find(v=>v.castLinkHash===fingerprint&&manageAccount(a,v));
-  if(!acc){for(const candidate of s.accounts){if(!candidate.deletedAt&&candidate.secret&&manageAccount(a,candidate)&&await decrypt(candidate.secret,env)===address){acc=candidate;break;}}}
+  let acc=s.accounts.find(v=>v.castSource===source&&v.castEnvironmentId===environmentId&&!v.deletedAt);
+  if(!acc)acc=s.accounts.find(v=>v.castSource===source&&v.castEnvironmentId===environmentId);
+  if(!acc&&!publisher)acc=s.accounts.find(v=>v.castLinkHash===fingerprint&&manageAccount(a,v));
+  if(!acc&&!publisher){for(const candidate of s.accounts){if(!candidate.deletedAt&&candidate.secret&&manageAccount(a,candidate)&&await decrypt(candidate.secret,env)===address){acc=candidate;break;}}}
   if(acc?.castSource&&acc.castSource!==source)fail(409,'该账号已由其他来源发布');
   if(!acc){acc={id:id(),repoId:null,name,grants:[],createdAt:now,secret:await encrypt(address,env)};s.accounts.push(acc);changed=true;}
+  if(acc.castLinkHash!==fingerprint){acc.secret=await encrypt(address,env);changed=true;}
   if(acc.deletedAt||acc.castSource!==source||acc.castEnvironmentId!==environmentId||acc.name!==name)changed=true;
-  delete acc.deletedAt;acc.name=name;acc.castSource=source;acc.castOwner=a.id;acc.castEnvironmentId=environmentId;acc.castLinkHash=fingerprint;acc.castExpiresAt=expiresAt;
+  for(const previous of s.accounts){
+   if(previous.id!==acc.id&&previous.castSource===source&&previous.castEnvironmentId===environmentId&&!previous.deletedAt){
+    previous.deletedAt=now;previous.castExpiresAt=0;removed.push(previous.id);changed=true;
+   }
+  }
+  delete acc.deletedAt;acc.name=name;acc.castSource=source;acc.castOwner=actor.id;acc.castEnvironmentId=environmentId;acc.castLinkHash=fingerprint;acc.castExpiresAt=expiresAt;
   published.push({id:acc.id,environmentId});
  }
  // A partial list never withdraws another publisher's accounts. Closing is explicit;
@@ -513,7 +532,7 @@ async function syncCastAccounts(b,a,s,etag,env){
   const object=await env.BUCKET.get('noticeboard/account-presence/'+acc.id+'.json'),lease=object?await object.json():null;
   if(lease&&lease.publisherId!==publisherId)continue;acc.deletedAt=now;acc.castExpiresAt=0;removed.push(acc.id);changed=true;
  }}
- if(changed){const event={id:id(),seq:s.version+1,time:now,actor:a.name,actorId:a.id,action:'cast.sync',repoId:null,visibility:'private',detail:{sourceId:source,published:published.map(v=>v.id),removed},previousHash:s.events.at(-1)?.hash||null};event.hash=await hash(JSON.stringify(event));s.events.push(event);s.version++;
+ if(changed){const event={id:id(),seq:s.version+1,time:now,actor:actor.name,actorId:actor.id,action:'cast.sync',repoId:null,visibility:'private',detail:{sourceId:source,published:published.map(v=>v.id),removed},previousHash:s.events.at(-1)?.hash||null};event.hash=await hash(JSON.stringify(event));s.events.push(event);s.version++;
   const saved=await env.BUCKET.put(KEY,JSON.stringify(s),{onlyIf:etag?{etagMatches:etag}:{etagDoesNotMatch:'*'},httpMetadata:{contentType:'application/json'}});if(!saved)transactionRetry();
  }
  await Promise.all(published.map(v=>env.BUCKET.put('noticeboard/account-presence/'+v.id+'.json',JSON.stringify({expiresAt,publisherId}))));
@@ -575,7 +594,7 @@ const requestHandler={async fetch(request,env,ctx){try{
  }
  if(p==='/api/logout'){const key=a.sessionLookupKey||(a.signedIn&&a.sessionKey?'auth/'+await hash(a.sessionKey):null);if(key)await env.BUCKET.put(key,JSON.stringify({revokedAt:Date.now(),expiresAt:0}));const res=json({ok:true});res.headers.set('set-cookie','board_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0');return res;}
  if(p==='/api/copy'){const acc=get(s.accounts,b.id);if(!activeAccount(acc))fail(410,'对应环境已关闭或离线');if(!canAccount(a,acc))fail(403,'没有该账号的复制权限');return json({url:await decrypt(acc.secret,env)});}
- if(p==='/api/cast/sync')return await syncCastAccounts(b,a,s,etag,env);
+ if(p==='/api/cast/sync')return await syncCastAccounts(b,a,s,etag,env,await castPublisher(request,env,b.sourceId));
  if(p==='/api/sync'){if(!a.supervisor)fail(403,'仅主管可同步');if(!env.GITHUB_TOKEN||!env.GITHUB_REPOSITORY)fail(503,'尚未配置 GitHub 仓库存储凭据');let count=0;for(const e of s.events.filter(e=>e.visibility==='public')){await github(e,env);count++}return json({count});}
  if(p==='/api/points/model-test')return json(await pointModelConnectionTest(request,env));
  if(p==='/api/points/ai'||p==='/api/points/assistant')return json(await pointAiRequestHandler(request,env,b));
